@@ -5,7 +5,7 @@ DIRECSRC := ./src
 DIRECBIN := ./bin
 DIRECOBJ := ./obj
 
-CC := gcc -std=c++14 -g#-O3 -s
+CC := g++ -std=c++14 -g#-O3 -s
 CFLAGS := -Wall -Wextra
 
 LIBS :=
