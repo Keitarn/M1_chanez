@@ -8,11 +8,11 @@ DIRECOBJ := ./obj
 CC := g++ -std=c++14 -g#-O3 -s
 CFLAGS := -Wall -Wextra
 
-LIBS := 
+LIBS :=
 INCLUDES :=
 
-SRC := $(shell find $(DIRECSRC) -name '*.cpp')
-OBJ := $(SRC:.cpp=.o)
+SRC := $(shell find $(DIRECSRC) -name '*.c')
+OBJ := $(SRC:.c=.o)
 
 
 all: $(EXENAME) install
@@ -26,7 +26,7 @@ $(EXENAME): $(OBJ)
 
 install:
 	@echo "** Installing..."
-	sh ./rsc/Tools/create_directories.sh
+	sh ./create_directories.sh
 	cp $(DIRECSRC)/$(EXENAME) $(DIRECBIN)
 	cp $(OBJ) $(DIRECOBJ)
 	chmod u+x $(DIRECBIN)/$(EXENAME)
@@ -38,4 +38,4 @@ clean:
 
 execute:
 	@echo "** start the game.."
-$(DIRECBIN)/$(EXENAME) $(ARG)
+	$(DIRECBIN)/$(EXENAME) $(ARG)
