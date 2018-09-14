@@ -5,14 +5,14 @@ DIRECSRC := ./src
 DIRECBIN := ./bin
 DIRECOBJ := ./obj
 
-CC := g++ -std=c++14 -g#-O3 -s
+CC := gcc -std=c++14 -g#-O3 -s
 CFLAGS := -Wall -Wextra
 
 LIBS := 
 INCLUDES :=
 
-SRC := $(shell find $(DIRECSRC) -name '*.cpp')
-OBJ := $(SRC:.cpp=.o)
+SRC := $(shell find $(DIRECSRC) -name '*.c')
+OBJ := $(SRC:.c=.o)
 
 
 all: $(EXENAME) install
