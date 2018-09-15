@@ -5,10 +5,10 @@ DIRECSRC := ./src
 DIRECBIN := ./bin
 DIRECOBJ := ./obj
 
-CC := g++ -std=c++14 -g#-O3 -s
+CC := gcc# -std=c++14 -g#-O3 -s
 CFLAGS := -Wall -Wextra
 
-LIBS :=
+LIBS := -lm
 INCLUDES :=
 
 SRC := $(shell find $(DIRECSRC) -name '*.c')
@@ -21,7 +21,7 @@ $(EXENAME): $(OBJ)
 	@echo "** Building the game"
 	$(CC) -o $(DIRECSRC)/$@ $^ $(LIBS)
 
-%.o: %.cpp
+%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 install:
