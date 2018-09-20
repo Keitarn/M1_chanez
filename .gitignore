@@ -1,0 +1,14 @@
+
+/SAMP/TP1/.gradle/
+Supprimerait .idea/codeStyles/
+Supprimerait .idea/vcs.xml
+Supprimerait .idea/workspace.xml
+Supprimerait GRAF/chap1exercice3.2/cmake-build-debug/CMakeFiles/3.12.1/CompilerIdC/tmp/
+Supprimerait GRAF/chap1exercice3.2/cmake-build-debug/CMakeFiles/3.12.1/CompilerIdCXX/tmp/
+Supprimerait GRAF/chap1exercice3.2/cmake-build-debug/CMakeFiles/3.12.2/CompilerIdC/tmp/
+Supprimerait GRAF/chap1exercice3.2/cmake-build-debug/CMakeFiles/3.12.2/CompilerIdCXX/tmp/
+Supprimerait GRAF/chap1exercice3.2/cmake-build-debug/CMakeFiles/CMakeTmp/
+/SAMP/TP1/.idea/
+/SAMP/TP1/build/
+/GRAF/chap1exercice3.2/.idea/
+/GRAF/chap1exercice3.2/cmake-build-debug/

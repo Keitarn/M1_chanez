@@ -14,16 +14,31 @@ int main() {
         AFP[i] = i;
     }
 
-    for (int i = 0; i < size_AFS; ++i) {
-        for (int j = i; j < size_SA; ++j) {
-            if (SA[j] == 0)
-                break;
-            PA[SA[j] - 1] = i + 1;
-            for (int k = SA[j]; k < size_AFS; ++k) {
-                AFP[k]++;
+    int i = 0;
+    for (int j = i; j < size_SA; ++j) {
+        if (SA[j] == 0) {
+            i++;
+        }
+
+        int nbZero = 0;
+        for (int k = 0; k < size_SA; ++k) {
+            if (PA[k] == 0) {
+                nbZero++;
+            }
+
+            if (nbZero == SA[j]) {
+                for (int l = size_SA - 1; l > k; --l) {
+                    PA[l] = PA[l - 1];
+                }
+                PA[k] = i + 1;
+
+                for (int l = SA[j]; l < size_AFS; ++l) {
+                    AFP[l]++;
+                }
             }
         }
     }
+
 
     // result
     for (int i = 0; i < size_SA; ++i) {
