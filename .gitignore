@@ -12,3 +12,18 @@ Supprimerait GRAF/chap1exercice3.2/cmake-build-debug/CMakeFiles/CMakeTmp/
 /SAMP/TP1/build/
 /GRAF/chap1exercice3.2/.idea/
 /GRAF/chap1exercice3.2/cmake-build-debug/
+/SAMP/TP2/exercice2/.idea/
+Supprimerait .idea/
+Supprimerait GL/
+Supprimerait GRAF/TP1/bin/
+Supprimerait GRAF/TP1/obj/
+Supprimerait GRAF/TP1/src/app
+Supprimerait GRAF/TP1/src/fctPremier.o
+Supprimerait GRAF/TP1/src/premier.o
+Supprimerait GRAF/TP1/src/saisie.o
+Supprimerait SAMP/TP1/app/libs/
+Supprimerait SAMP/TP1/app/src/main/res/drawable/
+Supprimerait SAMP/TP2/
+/SAMP/TP2/.idea/
+/SAMP/TP2/exercice1/gradle/
+/SAMP/TP2/exercice2/gradle/
