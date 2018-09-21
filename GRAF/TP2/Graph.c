@@ -1,6 +1,12 @@
+#include <stdlib.h>
 #include "Graph.h"
 
-struct Graph *createGraph(struct Graph *graph) {
+struct Graph * createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected)
+{
+    graph =  malloc(sizeof(struct Graph));
+    graph->isDirected = isDirected;
+    graph->nbMaxNodes = nbMaxNodes;
+    graph->adjList = malloc((sizeof(struct Neighbour)*nbMaxNodes));
     return graph;
 }
 

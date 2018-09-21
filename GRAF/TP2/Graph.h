@@ -16,7 +16,7 @@ struct Graph {
     struct Neighbour *adjList;
 };
 
-struct Graph *createGraph(struct Graph *graph);
+struct Graph *createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected);
 
 struct Graph *loadGraph();
 

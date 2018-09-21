@@ -4,7 +4,6 @@
 int main() {
 
     struct Graph *graph = NULL;
-    createGraph(graph);
-
+    createGraph(graph, 4, false);
     return 0;
 }
