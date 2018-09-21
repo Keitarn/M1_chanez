@@ -4,8 +4,7 @@
 int main() {
 
     struct Graph *graph = NULL;
-    create(graph);
+    createGraph(graph);
 
-    printf("Hello, World!\n");
     return 0;
 }
