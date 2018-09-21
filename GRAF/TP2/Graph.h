@@ -23,7 +23,7 @@ struct Graph *loadGraph(struct Graph *graph);
 
 struct Graph *addNode(struct Graph *graph);
 
-struct Graph *addEdge(struct Graph *graph);
+struct Graph *addEdge(struct Graph *graph, int from, char name, int to);
 
 struct Graph *removeNode(struct Graph *graph);
 

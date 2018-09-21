@@ -8,11 +8,11 @@ struct Graph *loadGraph(struct Graph *graph) {
     return graph;
 }
 
-struct Graph *addNode(struct Graph *graph) {
+struct Graph *addNode(struct Graph *graph, int node) {
     return graph;
 }
 
-struct Graph *addEdge(struct Graph *graph) {
+struct Graph *addEdge(struct Graph *graph, int from, char name, int to) {
     return graph;
 }
 
