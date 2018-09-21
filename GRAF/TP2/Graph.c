@@ -24,6 +24,15 @@ struct Graph *removeEdge(struct Graph *graph) {
     return graph;
 }
 
-void viewGraph() {}
+void viewGraph(struct Graph *graph) {}
 
-void saveGraph() {}
+void saveGraph(struct Graph *graph, FILE *out, char *path) {
+    out = fopen(path, "w+");
+    if (out == NULL) {
+        perror("ERROR : fa_pretty_print() -> fopen()");
+    }
+
+    fclose(out);
+}
+
+void quit() {}
