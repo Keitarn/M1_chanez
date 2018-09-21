@@ -16,6 +16,20 @@ struct Graph {
     struct Neighbour *adjList;
 };
 
-struct Graph *create(struct Graph *graph, int);
+struct Graph *createGraph(struct Graph *graph);
+
+struct Graph *loadGraph();
+
+struct Graph *addNode();
+
+struct Graph *addEdge();
+
+struct Graph *removeNode();
+
+struct Graph *removeEdge();
+
+void viewGraph();
+
+void saveGraph();
 
 #endif //TP2_GRAPH_H
