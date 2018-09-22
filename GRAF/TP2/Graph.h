@@ -14,12 +14,10 @@ struct Neighbour {
 struct Graph {
     bool isDirected;
     int nbMaxNodes;
-    struct Neighbour **adjList;
+    struct Neighbour *adjList;
 };
 
 void createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected);
-
-void loadGraph(struct Graph **graph);
 
 void addNode(struct Graph **graph, int node);
 
@@ -30,6 +28,8 @@ void removeNode(struct Graph **graph, int node);
 void removeEdge(struct Graph **graph, int from, char name, int to);
 
 void viewGraph(struct Graph **graph);
+
+void loadGraph(struct Graph **graph);
 
 void saveGraph(struct Graph **graph, FILE *out, char *path);
 

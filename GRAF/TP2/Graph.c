@@ -5,14 +5,11 @@ void createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
     *graph = (struct Graph *) malloc(sizeof(struct Graph));
     (*graph)->isDirected = isDirected;
     (*graph)->nbMaxNodes = nbMaxNodes;
-    (*graph)->adjList = (struct Neighbour **) malloc((sizeof(struct Neighbour *) * nbMaxNodes));
+    (*graph)->adjList = (struct Neighbour *) malloc((sizeof(struct Neighbour ) * nbMaxNodes));
 }
 
 void addNode(struct Graph **graph, int node) {
 
-struct Graph *loadGraph(struct Graph *graph) {
-    return graph;
-}
 
 struct Graph *addNode(struct Graph *graph, int node) {
     return graph;
