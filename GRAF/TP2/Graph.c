@@ -10,11 +10,15 @@ void createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
 
 void addNode(struct Graph **graph, int node) {
 
-    struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
-    (*graph)->adjList[node] = *neighbour;
+    if (!(0 < node && node <= (*graph)->nbMaxNodes)) {
+        printf("ERROR\n");
+        return;
+    }
 
-    size_t n = sizeof((*graph)->adjList) / sizeof(struct Neighbour);
-    printf("%i nb nodes \n", (int) n);
+    struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
+    (*graph)->adjList[node - 1] = *neighbour;
+
+
 }
 
 void addEdge(struct Graph **graph, int from, char name, int to) {
