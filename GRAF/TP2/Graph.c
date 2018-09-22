@@ -14,8 +14,6 @@ void addNode(struct Graph **graph, int node) {
         return;
     }
 
-    printf("%i", (*graph)->nbMaxNodes);
-
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     neighbour->neighbour = -1;
     neighbour->weigh = -1;
