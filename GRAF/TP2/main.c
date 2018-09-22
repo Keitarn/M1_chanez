@@ -3,7 +3,8 @@
 
 int main() {
 
-    struct Graph graph;
+    struct Graph *graph;
+
     createGraph(&graph, 4, false);
     addNode(&graph, 0); // error
     addNode(&graph, 1);
