@@ -14,15 +14,13 @@ void addNode(struct Graph **graph, int node) {
         return;
     }
 
-    printf("%i", (*graph)->nbMaxNodes);
-
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     neighbour->neighbour = -1;
     neighbour->weigh = -1;
     neighbour->nextNeighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     neighbour->nextNeighbour = neighbour;
     neighbour->previousNeighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
-    neighbour->nextNeighbour = neighbour;
+    neighbour->previousNeighbour = neighbour;
 
    (*graph)->adjList[node - 1] = *neighbour;
 }
