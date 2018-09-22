@@ -10,6 +10,7 @@ struct Graph * createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected)
     return graph;
 }
 
+
 struct Graph *loadGraph(struct Graph *graph) {
     return graph;
 }

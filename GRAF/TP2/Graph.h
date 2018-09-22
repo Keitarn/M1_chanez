@@ -19,6 +19,7 @@ struct Graph {
 
 struct Graph *createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected);
 
+
 struct Graph *loadGraph(struct Graph *graph);
 
 struct Graph *addNode(struct Graph *graph);
