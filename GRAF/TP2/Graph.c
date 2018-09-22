@@ -1,15 +1,14 @@
 #include <stdlib.h>
 #include "Graph.h"
 
-struct Graph * createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected)
-{
-    graph =  malloc(sizeof(struct Graph));
-    graph->isDirected = isDirected;
-    graph->nbMaxNodes = nbMaxNodes;
-    graph->adjList = malloc((sizeof(struct Neighbour)*nbMaxNodes));
-    return graph;
+void createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
+    *graph = (struct Graph *) malloc(sizeof(struct Graph));
+    (*graph)->isDirected = isDirected;
+    (*graph)->nbMaxNodes = nbMaxNodes;
+    (*graph)->adjList = (struct Neighbour **) malloc((sizeof(struct Neighbour *) * nbMaxNodes));
 }
 
+void addNode(struct Graph **graph, int node) {
 
 struct Graph *loadGraph(struct Graph *graph) {
     return graph;
@@ -19,24 +18,24 @@ struct Graph *addNode(struct Graph *graph, int node) {
     return graph;
 }
 
-struct Graph *addEdge(struct Graph *graph, int from, char name, int to) {
-    return graph;
+void addEdge(struct Graph **graph, int from, char name, int to) {
 }
 
-struct Graph *removeNode(struct Graph *graph) {
-    return graph;
+void removeNode(struct Graph **graph, int node) {
 }
 
-struct Graph *removeEdge(struct Graph *graph) {
-    return graph;
+void removeEdge(struct Graph **graph, int from, char name, int to) {
 }
 
-void viewGraph(struct Graph *graph) {}
+void viewGraph(struct Graph **graph) {}
 
-void saveGraph(struct Graph *graph, FILE *out, char *path) {
+void loadGraph(struct Graph **graph) {
+}
+
+void saveGraph(struct Graph **graph, FILE *out, char *path) {
     out = fopen(path, "w+");
     if (out == NULL) {
-        perror("ERROR : fa_pretty_print() -> fopen()");
+        perror("ERROR : saveGraph() -> fopen()");
     }
 
     fclose(out);
