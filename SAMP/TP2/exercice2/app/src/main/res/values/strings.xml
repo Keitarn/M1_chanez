@@ -1,8 +1,11 @@
 <resources>
-    <string name="app_name">exercice2</string>
+    <string name="app_name">Quiz Animaux</string>
 
     <string name="btn_vrai">Vrai</string>
     <string name="btn_faux">Faux</string>
     <string name="btn_voirReponse">Voir reponse</string>
     <string name="btn_suivant">Suivante</string>
+    <string name="btn_montrezLaReponse">Montrez la reponse</string>
+
+    <string name="tv_sur">Etes vous sur de vouloir le faire ?</string>
 </resources>
