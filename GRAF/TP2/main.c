@@ -3,7 +3,7 @@
 
 int main() {
 
-    struct Graph *graph = NULL;
+    struct Graph graph;
     createGraph(&graph, 4, false);
     addNode(&graph, 1);
     addNode(&graph, 2);

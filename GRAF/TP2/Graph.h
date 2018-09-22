@@ -17,21 +17,21 @@ struct Graph {
     struct Neighbour *adjList;
 };
 
-void createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected);
+void createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected);
 
-void addNode(struct Graph **graph, int node);
+void addNode(struct Graph *graph, int node);
 
-void addEdge(struct Graph **graph, int from, char name, int to);
+void addEdge(struct Graph *graph, int from, char name, int to);
 
-void removeNode(struct Graph **graph, int node);
+void removeNode(struct Graph *graph, int node);
 
-void removeEdge(struct Graph **graph, int from, char name, int to);
+void removeEdge(struct Graph *graph, int from, char name, int to);
 
-void viewGraph(struct Graph **graph);
+void viewGraph(struct Graph *graph);
 
-void loadGraph(struct Graph **graph);
+void loadGraph(struct Graph *graph);
 
-void saveGraph(struct Graph **graph, FILE *out, char *path);
+void saveGraph(struct Graph *graph, FILE *out, char *path);
 
 void quit();
 
