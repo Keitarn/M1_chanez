@@ -5,7 +5,7 @@ int main() {
 
     struct Graph graph;
 
-    createGraph(&graph, 4, false);
+    createGraph(&graph, 4, true);
     addNode(&graph, 0); // error
     addNode(&graph, 1);
     addNode(&graph, 2);
@@ -15,12 +15,13 @@ int main() {
     addEdge(&graph, 1, 11, 1);
     addEdge(&graph, 1, 12, 2);
     addEdge(&graph, 1, 13, 4);
-    addEdge(&graph, 1, 14, 5);
-    addEdge(&graph, 1, -1, 2);// error
-    addEdge(&graph, 1, 40, 3);// error
-    addEdge(&graph, 3, 40, 4);// error
+    addEdge(&graph, 1, 14, 5); // error
+    addEdge(&graph, 1, -1, 5); // error
+    addEdge(&graph, 1, 40, 3); // error
+    addEdge(&graph, 3, 40, 4); // error
     addEdge(&graph, 0, 40, 2); // error
-    printf("%i\n", graph.adjList[0]->weigh);
-    printf("%i\n", graph.adjList[1]->weigh);
+
+    viewGraph(&graph);
+
     return 0;
 }

@@ -95,7 +95,25 @@ void removeEdge(struct Graph *graph, int from, int weigth, int to) {
 
 }
 
-void viewGraph(struct Graph *graph) {}
+void viewGraph(struct Graph *graph) {
+    printf("# maximum number of nodes\n");
+    printf("%i\n", graph->nbMaxNodes);
+    printf("# directed\n");
+    printf("%s\n", (graph->isDirected ? "y" : "n"));
+    printf("# node: neighbours\n");
+    for (int i = 0; i < graph->nbMaxNodes; ++i) {
+        if (graph->adjList[i] == NULL) {
+            continue;
+        }
+        printf("%i: ", i + 1);
+        struct Neighbour *parcours = graph->adjList[i];
+        while (parcours->neighbour != -1) {
+            printf("(%i: %i), ", parcours->neighbour, parcours->weigh);
+            parcours = parcours->nextNeighbour;
+        }
+        printf("\n");
+    }
+}
 
 void loadGraph(struct Graph *graph) {
 }
