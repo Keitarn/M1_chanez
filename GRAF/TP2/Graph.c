@@ -39,7 +39,6 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
                 graph->nbMaxNodes);
         return;
     }
-
     if (weight <= 0) {
         fprintf(stderr, "ERROR : addEdge() -> weight : %i, poids incorrect\n", weight);
         return;
@@ -121,7 +120,26 @@ void loadGraph(struct Graph *graph) {
 void saveGraph(struct Graph *graph, FILE *out, char *path) {
     out = fopen(path, "w+");
     if (out == NULL) {
-        perror("ERROR : saveGraph() -> fopen()");
+        fprintf(stderr, "ERROR : saveGraph() -> fopen()");
+        return;
+    }
+
+    fprintf(out, "# maximum number of nodes\n");
+    fprintf(out, "%i\n", graph->nbMaxNodes);
+    fprintf(out, "# directed\n");
+    fprintf(out, "%s\n", (graph->isDirected ? "y" : "n"));
+    fprintf(out, "# node: neighbours\n");
+    for (int i = 0; i < graph->nbMaxNodes; ++i) {
+        if (graph->adjList[i] == NULL) {
+            continue;
+        }
+        fprintf(out, "%i: ", i + 1);
+        struct Neighbour *parcours = graph->adjList[i];
+        while (parcours->neighbour != -1) {
+            fprintf(out, "(%i: %i), ", parcours->neighbour, parcours->weigh);
+            parcours = parcours->nextNeighbour;
+        }
+        fprintf(out, "\n");
     }
 
     fclose(out);

@@ -5,7 +5,7 @@ int main() {
 
     struct Graph graph;
 
-    createGraph(&graph, 4, true);
+    createGraph(&graph, 4, false);
     addNode(&graph, 0); // error
     addNode(&graph, 1);
     addNode(&graph, 2);
@@ -14,6 +14,8 @@ int main() {
     addNode(&graph, 5); // error
     addEdge(&graph, 1, 11, 1);
     addEdge(&graph, 1, 12, 2);
+    addEdge(&graph, 1, 12, 2);
+    addEdge(&graph, 2, 12, 1);
     addEdge(&graph, 1, 13, 4);
     addEdge(&graph, 1, 14, 5); // error
     addEdge(&graph, 1, -1, 5); // error
@@ -22,6 +24,9 @@ int main() {
     addEdge(&graph, 0, 40, 2); // error
 
     viewGraph(&graph);
+
+    FILE *file = NULL;
+    saveGraph(&graph, file, "graph.txt");
 
     return 0;
 }
