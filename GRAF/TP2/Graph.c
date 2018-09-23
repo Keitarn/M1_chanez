@@ -54,10 +54,11 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     }
 
     struct Neighbour *parcours = graph->adjList[from - 1];
-    while (parcours->neighbour != -1 & (parcours->weigh != weight & parcours->neighbour != to)) {
-        if(parcours->weigh != weight & parcours->neighbour != to){
+    while (parcours->neighbour != -1 && (parcours->weigh != weight && parcours->neighbour != to)) {
+        if(parcours->weigh != weight && parcours->neighbour != to){
             present = true;
         }
+        parcours = parcours->nextNeighbour;
     }
 
     if (present) {
