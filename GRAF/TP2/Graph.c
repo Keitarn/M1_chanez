@@ -27,8 +27,6 @@ void addNode(struct Graph *graph, int node) {
 }
 
 void addEdge(struct Graph *graph, int from, int weight, int to) {
-    bool present = false;
-
     if (!(0 < from && from <= graph->nbMaxNodes)) {
         fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]:\n", from, 0,
                 graph->nbMaxNodes);
@@ -53,16 +51,11 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     }
 
     struct Neighbour *parcours = graph->adjList[from - 1];
-    while (parcours->neighbour != -1 && (parcours->weigh != weight && parcours->neighbour != to)) {
+    while (parcours->neighbour != -1) {
         if (parcours->weigh == weight && parcours->neighbour == to) {
-            present = true;
+           return;
         }
         parcours = parcours->nextNeighbour;
-    }
-
-    if (present) {
-        fprintf(stderr, "ERROR : addEdge(), existe déja\n", to);
-        return;
     }
 
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
