@@ -27,6 +27,8 @@ void addNode(struct Graph *graph, int node) {
 }
 
 void addEdge(struct Graph *graph, int from, int weight, int to) {
+    bool present = false;
+
     if (!(0 < from && from <= graph->nbMaxNodes)) {
         fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]:\n", from, 0,
                 graph->nbMaxNodes);
@@ -37,6 +39,7 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
                 graph->nbMaxNodes);
         return;
     }
+
     if (weight <= 0) {
         fprintf(stderr, "ERROR : addEdge() -> weight : %i, poids incorrect\n", weight);
         return;
@@ -50,6 +53,18 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
         return;
     }
 
+    struct Neighbour *parcours = graph->adjList[from - 1];
+    while (parcours->neighbour != -1 & (parcours->weigh != weight & parcours->neighbour != to)) {
+        if(parcours->weigh != weight & parcours->neighbour != to){
+            present = true;
+        }
+    }
+
+    if (present) {
+        fprintf(stderr, "ERROR : addEdge(), existe déja\n", to);
+        return;
+    }
+
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     neighbour->neighbour = to;
     neighbour->weigh = weight;
@@ -58,12 +73,25 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     graph->adjList[from - 1]->previousNeighbour->nextNeighbour = neighbour;
     graph->adjList[from - 1]->previousNeighbour = neighbour;
     graph->adjList[from - 1] = neighbour;
+
+    if (graph->isDirected == false) {
+        struct Neighbour *neighbour2 = (struct Neighbour *) malloc(sizeof(struct Neighbour));
+        neighbour2->neighbour = from;
+        neighbour2->weigh = weight;
+        neighbour2->nextNeighbour = graph->adjList[to - 1];
+        neighbour2->previousNeighbour = graph->adjList[to - 1]->previousNeighbour;
+        graph->adjList[to - 1]->previousNeighbour->nextNeighbour = neighbour2;
+        graph->adjList[to - 1]->previousNeighbour = neighbour2;
+        graph->adjList[to - 1] = neighbour2;
+    }
 }
 
 void removeNode(struct Graph *graph, int node) {
+
 }
 
 void removeEdge(struct Graph *graph, int from, int weigth, int to) {
+
 }
 
 void viewGraph(struct Graph *graph) {}
