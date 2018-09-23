@@ -55,7 +55,7 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
 
     struct Neighbour *parcours = graph->adjList[from - 1];
     while (parcours->neighbour != -1 && (parcours->weigh != weight && parcours->neighbour != to)) {
-        if(parcours->weigh != weight && parcours->neighbour != to){
+        if (parcours->weigh == weight && parcours->neighbour == to) {
             present = true;
         }
         parcours = parcours->nextNeighbour;
@@ -75,7 +75,7 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     graph->adjList[from - 1]->previousNeighbour = neighbour;
     graph->adjList[from - 1] = neighbour;
 
-    if (graph->isDirected == false) {
+    if (graph->isDirected == false && from != to) {
         struct Neighbour *neighbour2 = (struct Neighbour *) malloc(sizeof(struct Neighbour));
         neighbour2->neighbour = from;
         neighbour2->weigh = weight;
