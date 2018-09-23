@@ -29,10 +29,10 @@ void removeEdge(struct Graph *graph, int from, int weight, int to);
 
 void viewGraph(struct Graph *graph);
 
-void loadGraph(struct Graph *graph);
+void loadGraph(struct Graph *graph, char *path);
 
-void saveGraph(struct Graph *graph, FILE *out, char *path);
+void saveGraph(struct Graph *graph, char *path);
 
-void quit();
+void quit(struct Graph *graph);
 
 #endif //TP2_GRAPH_H

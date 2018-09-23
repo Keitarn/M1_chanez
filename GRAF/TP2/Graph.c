@@ -53,7 +53,8 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     struct Neighbour *parcours = graph->adjList[from - 1];
     while (parcours->neighbour != -1) {
         if (parcours->weigh == weight && parcours->neighbour == to) {
-           return;
+            fprintf(stderr, "ERROR : addEdge(), existe déja\n");
+            return;
         }
         parcours = parcours->nextNeighbour;
     }
@@ -107,13 +108,25 @@ void viewGraph(struct Graph *graph) {
     }
 }
 
-void loadGraph(struct Graph *graph) {
+void loadGraph(struct Graph *graph, char *path) {
+    FILE *in;
+    in = fopen(path, "r");
+    if (!in) {
+        fprintf(stderr, "ERROR : loadGraph() -> fopen()\n");
+        return;
+    }
+
+    int c;
+    while ((c = getc(in)) != EOF)
+        putchar(c);
+    fclose(in);
 }
 
-void saveGraph(struct Graph *graph, FILE *out, char *path) {
+void saveGraph(struct Graph *graph, char *path) {
+    FILE *out;
     out = fopen(path, "w+");
-    if (out == NULL) {
-        fprintf(stderr, "ERROR : saveGraph() -> fopen()");
+    if (!out) {
+        fprintf(stderr, "ERROR : saveGraph() -> fopen()\n");
         return;
     }
 
@@ -138,4 +151,4 @@ void saveGraph(struct Graph *graph, FILE *out, char *path) {
     fclose(out);
 }
 
-void quit() {}
+void quit(struct Graph *graph) {}
