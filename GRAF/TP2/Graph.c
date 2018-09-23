@@ -27,6 +27,16 @@ void addNode(struct Graph *graph, int node) {
 }
 
 void addEdge(struct Graph *graph, int from, int weight, int to) {
+    if (!(0 < from && from <= graph->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]:\n", from, 0,
+                graph->nbMaxNodes);
+        return;
+    }
+    if (!(0 < to && to <= graph->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]:\n", to, 0,
+                graph->nbMaxNodes);
+        return;
+    }
     if (weight <= 0) {
         fprintf(stderr, "ERROR : addEdge() -> weight : %i, poids incorrect\n", weight);
         return;
