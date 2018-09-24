@@ -222,14 +222,6 @@ void loadGraph(struct Graph *graph, char *path) {
                 nodes = realloc(nodes, (indice - 4) * sizeof(int));
                 memcpy(str1, buffer, strlen(buffer) + 1);
                 nodes[indice - 5] = atoi(strtok(str1, ":"));
-
-                char *token;
-                memcpy(str1, buffer, strlen(buffer) + 1);
-                token = strtok(str1, "");
-                while (token != NULL) {
-                    printf(" %s\n", token);
-                    token = strtok(NULL, "");
-                }
                 break;
         }
     }
