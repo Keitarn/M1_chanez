@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <memory.h>
 #include "Graph.h"
 
 void createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected) {
@@ -94,35 +95,28 @@ void removeNode(struct Graph *graph, int node) {
 
     struct Neighbour *current = graph->adjList[node - 1];
     struct Neighbour *next;
-
     while (current->neighbour != -1) {
         next = current->nextNeighbour;
         free(current);
         current = next;
     }
-
     free(current);
     graph->adjList[node - 1] = NULL;
 
     int passage;
     for (int i = 1; i <= graph->nbMaxNodes; i++) {
-
         if (graph->adjList[i - 1] == NULL) {
             continue;
         }
-
         passage = 0;
         current = graph->adjList[i - 1];
-
         while (current->neighbour != -1) {
             next = current->nextNeighbour;
             passage++;
-
             if (current->neighbour == node) {
                 current->previousNeighbour->nextNeighbour = next;
                 current->nextNeighbour->previousNeighbour = current->previousNeighbour;
                 free(current);
-
                 if (passage == 1) {
                     graph->adjList[i - 1] = next;
                     passage = 0;
@@ -174,7 +168,6 @@ void removeEdge(struct Graph *graph, int from, int weight, int to) {
     }
 
     fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , n'existe pas\n", to, weight);
-
 }
 
 void viewGraph(struct Graph *graph) {
@@ -205,10 +198,46 @@ void loadGraph(struct Graph *graph, char *path) {
         return;
     }
 
-    int c;
-    while ((c = getc(in)) != EOF)
-        putchar(c);
-    fclose(in);
+    char buffer[200];
+    char *str1 = buffer;
+    int indice = -1;
+    int nbMaxNodes = 0;
+    bool isDirected = false;
+    int *nodes = NULL;
+    while (fgets(buffer, 200, in) != NULL) {
+        indice++;
+        switch (indice) {
+            case 0:
+            case 2:
+            case 4:
+                break;
+            case 1:
+                nbMaxNodes = atoi(strtok(buffer, "\n"));
+                break;
+            case 3:
+                memcpy(str1, buffer, strlen(buffer) + 1);
+                isDirected = strcmp(strtok(str1, "\n"), "y") == 0 ? true : false;
+                break;
+            default:
+                nodes = realloc(nodes, (indice - 4) * sizeof(int));
+                memcpy(str1, buffer, strlen(buffer) + 1);
+                nodes[indice - 5] = atoi(strtok(str1, ":"));
+
+                char *token;
+                memcpy(str1, buffer, strlen(buffer) + 1);
+                token = strtok(str1, "");
+                while (token != NULL) {
+                    printf(" %s\n", token);
+                    token = strtok(NULL, "");
+                }
+                break;
+        }
+    }
+
+    createGraph(graph, nbMaxNodes, isDirected);
+    for (int i = 0; i < indice - 4; ++i) {
+        addNode(graph, nodes[i]);
+    }
 }
 
 void saveGraph(struct Graph *graph, char *path) {
@@ -241,8 +270,8 @@ void saveGraph(struct Graph *graph, char *path) {
 }
 
 void quit(struct Graph *graph) {
-    for(int i = 0; i < graph->nbMaxNodes; i++){
-        if(graph->adjList[i] == NULL){
+    for (int i = 0; i < graph->nbMaxNodes; i++) {
+        if (graph->adjList[i] == NULL) {
             continue;
         }
 
