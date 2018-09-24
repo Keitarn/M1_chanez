@@ -133,7 +133,46 @@ void removeNode(struct Graph *graph, int node) {
     }
 }
 
-void removeEdge(struct Graph *graph, int from, int weigth, int to) {
+void removeEdge(struct Graph *graph, int from, int weight, int to) {
+    if (!(0 < from && from <= graph->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]:\n", from, 0,
+                graph->nbMaxNodes);
+        return;
+    }
+    if (!(0 < to && to <= graph->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : removeEdge() -> to : %i, non comprise dans ]%i,%i]:\n", to, 0,
+                graph->nbMaxNodes);
+        return;
+    }
+    if (weight <= 0) {
+        fprintf(stderr, "ERROR : removeEdge() -> weight : %i, poids incorrect\n", weight);
+        return;
+    }
+    if (graph->adjList[from - 1] == NULL) {
+        fprintf(stderr, "ERROR : removeEdge() -> from : %i, n'existe pas\n", from);
+        return;
+    }
+    if (graph->adjList[to - 1] == NULL) {
+        fprintf(stderr, "ERROR : removeEdge() -> to : %i, n'existe pas\n", to);
+        return;
+    }
+
+    int passage = 0;
+    struct Neighbour *parcours = graph->adjList[from - 1];
+    while (parcours->neighbour != -1) {
+        passage++;
+        if (parcours->weigh == weight && parcours->neighbour == to) {
+            parcours->previousNeighbour->nextNeighbour = parcours->nextNeighbour;
+            parcours->nextNeighbour->previousNeighbour = parcours->previousNeighbour;
+            if (passage == 1) {
+                graph->adjList[from - 1] = parcours->nextNeighbour;
+            }
+            return;
+        }
+        parcours = parcours->nextNeighbour;
+    }
+
+    fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , n'existe pas\n", to, weight);
 
 }
 
@@ -200,6 +239,6 @@ void saveGraph(struct Graph *graph, char *path) {
     fclose(out);
 }
 
-void quit() {
+void quit(struct Graph *graph) {
 
 }
