@@ -28,12 +28,12 @@ void addNode(struct Graph *graph, int node) {
 
 void addEdge(struct Graph *graph, int from, int weight, int to) {
     if (!(0 < from && from <= graph->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]:\n", from, 0,
+        fprintf(stderr, "ERROR : addEdge() -> from : %i, non comprise dans ]%i,%i]:\n", from, 0,
                 graph->nbMaxNodes);
         return;
     }
     if (!(0 < to && to <= graph->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]:\n", to, 0,
+        fprintf(stderr, "ERROR : addEdge() -> to : %i, non comprise dans ]%i,%i]:\n", to, 0,
                 graph->nbMaxNodes);
         return;
     }
@@ -81,7 +81,56 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
 }
 
 void removeNode(struct Graph *graph, int node) {
+    if (!(0 < node && node <= graph->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : removeNode() -> node : %i, non comprise dans ]%i,%i]:\n", node, 0,
+                graph->nbMaxNodes);
+        return;
+    }
 
+    if (graph->adjList[node - 1] == NULL) {
+        fprintf(stderr, "ERROR : removeEdge() -> node : %i, n'existe pas\n", node);
+        return;
+    }
+
+    struct Neighbour *current = graph->adjList[node - 1];
+    struct Neighbour *next;
+
+    while (current->neighbour != -1) {
+        next = current->nextNeighbour;
+        free(current);
+        current = next;
+    }
+
+    free(current);
+    graph->adjList[node - 1] = NULL;
+
+    int passage;
+    for (int i = 1; i <= graph->nbMaxNodes; i++) {
+
+        if (graph->adjList[i - 1] == NULL) {
+            continue;
+        }
+
+        passage = 0;
+        current = graph->adjList[i - 1];
+
+        while (current->neighbour != -1) {
+            next = current->nextNeighbour;
+            passage++;
+
+            if (current->neighbour == node) {
+                current->previousNeighbour->nextNeighbour = next;
+                current->nextNeighbour->previousNeighbour = current->previousNeighbour;
+                free(current);
+
+                if (passage == 1) {
+                    graph->adjList[i - 1] = next;
+                    passage = 0;
+                }
+            }
+            current = next;
+        }
+    }
 }
 
 void removeEdge(struct Graph *graph, int from, int weigth, int to) {
@@ -151,4 +200,6 @@ void saveGraph(struct Graph *graph, char *path) {
     fclose(out);
 }
 
-void quit(struct Graph *graph) {}
+void quit() {
+
+}
