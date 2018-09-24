@@ -167,6 +167,7 @@ void removeEdge(struct Graph *graph, int from, int weight, int to) {
             if (passage == 1) {
                 graph->adjList[from - 1] = parcours->nextNeighbour;
             }
+            free(parcours);
             return;
         }
         parcours = parcours->nextNeighbour;
@@ -240,5 +241,23 @@ void saveGraph(struct Graph *graph, char *path) {
 }
 
 void quit(struct Graph *graph) {
+    for(int i = 0; i < graph->nbMaxNodes; i++){
+        if(graph->adjList[i] == NULL){
+            continue;
+        }
 
+        struct Neighbour *current = graph->adjList[i];
+        struct Neighbour *next;
+
+        while (current->neighbour != -1) {
+            next = current->nextNeighbour;
+            free(current);
+            current = next;
+        }
+
+        free(current);
+        graph->adjList[i] = NULL;
+    }
+
+    free(graph->adjList);
 }
