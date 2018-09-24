@@ -200,7 +200,7 @@ void loadGraph(struct Graph *graph, char *path) {
 
     int position = 0;
     char buffer[200];
-    char *str1 = buffer;
+    char *str1;
     int indice = -1;
     int nbMaxNodes = 0;
     bool isDirected = false;
@@ -219,51 +219,60 @@ void loadGraph(struct Graph *graph, char *path) {
                 nbMaxNodes = atoi(strtok(buffer, "\n"));
                 break;
             case 3:
-                memcpy(str1, buffer, strlen(buffer) + 1);
-                isDirected = strcmp(strtok(str1, "\n"), "y") == 0 ? true : false;
+
+                isDirected = buffer[0] == 'y' ? true : false;
 
                 break;
             default:
                 nodes = realloc(nodes, (indice - 4) * sizeof(int));
-                memcpy(str1, buffer, strlen(buffer) + 1);
-                nodes[indice - 5] = atoi(strtok(str1, ":"));
-
-
-                int weight;
-                int to;
-                int tailleChaine = strlen(buffer);
-                for (int parcoursChaine = 0; parcoursChaine < tailleChaine; parcoursChaine++) {
-                    if (buffer[parcoursChaine] == '(') {
-                        parcoursChaine++;
-                        to = (int) buffer[parcoursChaine];
-                        while (buffer[parcoursChaine] != ':') {
-                            to *= 10;
-                            to += (int) buffer[parcoursChaine];
-                            parcoursChaine++;
-                        }
-                        parcoursChaine++;
-                        weight;
-                        parcoursChaine++;
-                        while (buffer[parcoursChaine] != ')') {
-                            weight *= 10;
-                            weight += (int) buffer[parcoursChaine];
-                            parcoursChaine++;
-                        }
-
-
-                    }
-                    tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
-                    tabTo = realloc(tabTo, (position + 1) * sizeof(int));
-                    tabWeight[position] = weight;
-                    tabTo[position] = to;
-                    position++;
+                int parcoursChaine = 0;
+                int node = (int)buffer[parcoursChaine]-'0';
+                parcoursChaine++;
+                printf("la node avant le while est : %i\n",node);
+                while(buffer[parcoursChaine] != ':'){
+                    node *= 10;
+                    node += (int)buffer[parcoursChaine]-'0';
+                    parcoursChaine++;
                 }
+                printf("la node est : %i\n",node);
+                nodes[indice - 5] = node;
 
-                tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
-                tabTo = realloc(tabTo, (position + 1) * sizeof(int));
-                tabWeight[position] = -1;
-                tabTo[position] = -1;
-                position++;
+//                int weight;
+//                int to;
+//                int tailleChaine = strlen(buffer);
+////                printf("la taille de la chaine est : %i et la chaine est %s\n",tailleChaine,buffer);
+//                for (parcoursChaine = parcoursChaine; parcoursChaine < tailleChaine; parcoursChaine++) {
+//                    if (buffer[parcoursChaine] == '(') {
+//                        parcoursChaine++;
+//                        to = (int) buffer[parcoursChaine];
+//                        while (buffer[parcoursChaine] != ':') {
+//                            to *= 10;
+//                            to += (int) buffer[parcoursChaine];
+//                            parcoursChaine++;
+//                        }
+//                        parcoursChaine++;
+//                        weight;
+//                        parcoursChaine++;
+//                        while (buffer[parcoursChaine] != ')') {
+//                            weight *= 10;
+//                            weight += (int) buffer[parcoursChaine];
+//                            parcoursChaine++;
+//                        }
+//
+//
+//                    }
+//                    tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
+//                    tabTo = realloc(tabTo, (position + 1) * sizeof(int));
+//                    tabWeight[position] = weight;
+//                    tabTo[position] = to;
+//                    position++;
+//                }
+//
+//                tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
+//                tabTo = realloc(tabTo, (position + 1) * sizeof(int));
+//                tabWeight[position] = -1;
+//                tabTo[position] = -1;
+//                position++;
                 break;
         }
     }
@@ -271,15 +280,16 @@ void loadGraph(struct Graph *graph, char *path) {
     createGraph(graph, nbMaxNodes, isDirected);
     for (int i = 0; i < indice - 4; ++i) {
         addNode(graph, nodes[i]);
+
     }
-    int node =0;
-    for (int i = 0; i < position; ++i) {
-        if(tabTo[i] == -1 ){
-            node++;
-        } else{
-            addEdge(graph, node, tabWeight[i], tabTo[i] );
-        }
-    }
+//    int node = 0;
+//    for (int i = 0; i < position; ++i) {
+//        if (tabTo[i] == -1) {
+//            node++;
+//        } else {
+//            addEdge(graph, nodes[i], tabWeight[i], tabTo[i]);
+//        }
+//    }
 }
 
 void saveGraph(struct Graph *graph, char *path) {
