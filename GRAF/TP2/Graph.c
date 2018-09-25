@@ -200,7 +200,6 @@ void loadGraph(struct Graph *graph, char *path) {
 
     int position = 0;
     char buffer[200];
-    char *str1;
     int indice = -1;
     int nbMaxNodes = 0;
     bool isDirected = false;
@@ -226,53 +225,54 @@ void loadGraph(struct Graph *graph, char *path) {
             default:
                 nodes = realloc(nodes, (indice - 4) * sizeof(int));
                 int parcoursChaine = 0;
-                int node = (int)buffer[parcoursChaine]-'0';
+                int node = (int) buffer[parcoursChaine] - '0';
                 parcoursChaine++;
-                printf("la node avant le while est : %i\n",node);
-                while(buffer[parcoursChaine] != ':'){
+                printf("la node avant le while est : %i\n", node);
+                while (buffer[parcoursChaine] != ':') {
                     node *= 10;
-                    node += (int)buffer[parcoursChaine]-'0';
+                    node += (int) buffer[parcoursChaine] - '0';
                     parcoursChaine++;
                 }
-                printf("la node est : %i\n",node);
+                printf("la node est : %i\n", node);
                 nodes[indice - 5] = node;
 
-//                int weight;
-//                int to;
-//                int tailleChaine = strlen(buffer);
-////                printf("la taille de la chaine est : %i et la chaine est %s\n",tailleChaine,buffer);
-//                for (parcoursChaine = parcoursChaine; parcoursChaine < tailleChaine; parcoursChaine++) {
-//                    if (buffer[parcoursChaine] == '(') {
-//                        parcoursChaine++;
-//                        to = (int) buffer[parcoursChaine];
-//                        while (buffer[parcoursChaine] != ':') {
-//                            to *= 10;
-//                            to += (int) buffer[parcoursChaine];
-//                            parcoursChaine++;
-//                        }
-//                        parcoursChaine++;
-//                        weight;
-//                        parcoursChaine++;
-//                        while (buffer[parcoursChaine] != ')') {
-//                            weight *= 10;
-//                            weight += (int) buffer[parcoursChaine];
-//                            parcoursChaine++;
-//                        }
-//
-//
-//                    }
-//                    tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
-//                    tabTo = realloc(tabTo, (position + 1) * sizeof(int));
-//                    tabWeight[position] = weight;
-//                    tabTo[position] = to;
-//                    position++;
-//                }
-//
-//                tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
-//                tabTo = realloc(tabTo, (position + 1) * sizeof(int));
-//                tabWeight[position] = -1;
-//                tabTo[position] = -1;
-//                position++;
+                int weight = 0;
+                int to = 0;
+                int tailleChaine = strlen(buffer);
+//                printf("la taille de la chaine est : %i et la chaine est %s\n",tailleChaine,buffer);
+                for (parcoursChaine = parcoursChaine; parcoursChaine < tailleChaine; parcoursChaine++) {
+                    if (buffer[parcoursChaine] == '(') {
+                        parcoursChaine++;
+                        to = (int) buffer[parcoursChaine] - '0';
+                        parcoursChaine++;
+                        while (buffer[parcoursChaine] != ':') {
+                            to *= 10;
+                            to += (int) buffer[parcoursChaine] - '0';
+                            parcoursChaine++;
+                        }
+                        parcoursChaine+=2;
+                        weight = (int) buffer[parcoursChaine] - '0';
+                        parcoursChaine++;
+                        while (buffer[parcoursChaine] != ')') {
+                            weight *= 10;
+                            weight += (int) buffer[parcoursChaine] - '0';
+                            parcoursChaine++;
+                        }
+
+                        tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
+                        tabTo = realloc(tabTo, (position + 1) * sizeof(int));
+                        tabWeight[position] = weight;
+                        tabTo[position] = to;
+                        position++;
+                    }
+
+                }
+
+                tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
+                tabTo = realloc(tabTo, (position + 1) * sizeof(int));
+                tabWeight[position] = -1;
+                tabTo[position] = -1;
+                position++;
                 break;
         }
     }
@@ -282,14 +282,14 @@ void loadGraph(struct Graph *graph, char *path) {
         addNode(graph, nodes[i]);
 
     }
-//    int node = 0;
-//    for (int i = 0; i < position; ++i) {
-//        if (tabTo[i] == -1) {
-//            node++;
-//        } else {
-//            addEdge(graph, nodes[i], tabWeight[i], tabTo[i]);
-//        }
-//    }
+    int node = 0;
+    for (int i = 0; i < position; ++i) {
+        if (tabTo[i] == -1) {
+            node++;
+        } else {
+            addEdge(graph, nodes[node], tabWeight[i], tabTo[i]);
+        }
+    }
 }
 
 void saveGraph(struct Graph *graph, char *path) {
