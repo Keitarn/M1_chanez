@@ -200,7 +200,6 @@ void loadGraph(struct Graph *graph, char *path) {
 
     int position = 0;
     char buffer[200];
-    char *str1 = buffer;
     int indice = -1;
     int nbMaxNodes = 0;
     bool isDirected = false;
@@ -219,43 +218,51 @@ void loadGraph(struct Graph *graph, char *path) {
                 nbMaxNodes = atoi(strtok(buffer, "\n"));
                 break;
             case 3:
-                memcpy(str1, buffer, strlen(buffer) + 1);
-                isDirected = strcmp(strtok(str1, "\n"), "y") == 0 ? true : false;
+
+                isDirected = buffer[0] == 'y' ? true : false;
+
                 break;
             default:
                 nodes = realloc(nodes, (indice - 4) * sizeof(int));
-                memcpy(str1, buffer, strlen(buffer) + 1);
-                nodes[indice - 5] = atoi(strtok(str1, ":"));
+                int parcoursChaine = 0;
+                int node = (int) buffer[parcoursChaine] - '0';
+                parcoursChaine++;
+                while (buffer[parcoursChaine] != ':') {
+                    node *= 10;
+                    node += (int) buffer[parcoursChaine] - '0';
+                    parcoursChaine++;
+                }
+                nodes[indice - 5] = node;
 
-
-                int weight;
-                int to;
+                int weight = 0;
+                int to = 0;
                 int tailleChaine = strlen(buffer);
-                for (int parcoursChaine = 0; parcoursChaine < tailleChaine; parcoursChaine++) {
+                for (parcoursChaine = parcoursChaine; parcoursChaine < tailleChaine; parcoursChaine++) {
                     if (buffer[parcoursChaine] == '(') {
                         parcoursChaine++;
-                        to = (int) buffer[parcoursChaine];
+                        to = (int) buffer[parcoursChaine] - '0';
+                        parcoursChaine++;
                         while (buffer[parcoursChaine] != ':') {
                             to *= 10;
-                            to += (int) buffer[parcoursChaine];
+                            to += (int) buffer[parcoursChaine] - '0';
                             parcoursChaine++;
                         }
-                        parcoursChaine++;
-                        weight;
+                        parcoursChaine += 2;
+                        weight = (int) buffer[parcoursChaine] - '0';
                         parcoursChaine++;
                         while (buffer[parcoursChaine] != ')') {
                             weight *= 10;
-                            weight += (int) buffer[parcoursChaine];
+                            weight += (int) buffer[parcoursChaine] - '0';
                             parcoursChaine++;
                         }
 
-
+                        tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
+                        tabTo = realloc(tabTo, (position + 1) * sizeof(int));
+                        tabWeight[position] = weight;
+                        tabTo[position] = to;
+                        position++;
                     }
-                    tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
-                    tabTo = realloc(tabTo, (position + 1) * sizeof(int));
-                    tabWeight[position] = weight;
-                    tabTo[position] = to;
-                    position++;
+
                 }
 
                 tabWeight = realloc(tabWeight, (position + 1) * sizeof(int));
@@ -270,15 +277,19 @@ void loadGraph(struct Graph *graph, char *path) {
     createGraph(graph, nbMaxNodes, isDirected);
     for (int i = 0; i < indice - 4; ++i) {
         addNode(graph, nodes[i]);
+
     }
-    int node =0;
+    int node = 0;
     for (int i = 0; i < position; ++i) {
-        if(tabTo[i] == -1 ){
+        if (tabTo[i] == -1) {
             node++;
-        } else{
-            addEdge(graph, node, tabWeight[i], tabTo[i] );
+        } else {
+            addEdge(graph, nodes[node], tabWeight[i], tabTo[i]);
         }
     }
+    free(tabTo);
+    free(tabWeight);
+    free(nodes);
 }
 
 void saveGraph(struct Graph *graph, char *path) {
