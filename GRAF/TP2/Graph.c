@@ -227,19 +227,16 @@ void loadGraph(struct Graph *graph, char *path) {
                 int parcoursChaine = 0;
                 int node = (int) buffer[parcoursChaine] - '0';
                 parcoursChaine++;
-                printf("la node avant le while est : %i\n", node);
                 while (buffer[parcoursChaine] != ':') {
                     node *= 10;
                     node += (int) buffer[parcoursChaine] - '0';
                     parcoursChaine++;
                 }
-                printf("la node est : %i\n", node);
                 nodes[indice - 5] = node;
 
                 int weight = 0;
                 int to = 0;
                 int tailleChaine = strlen(buffer);
-//                printf("la taille de la chaine est : %i et la chaine est %s\n",tailleChaine,buffer);
                 for (parcoursChaine = parcoursChaine; parcoursChaine < tailleChaine; parcoursChaine++) {
                     if (buffer[parcoursChaine] == '(') {
                         parcoursChaine++;
@@ -290,6 +287,9 @@ void loadGraph(struct Graph *graph, char *path) {
             addEdge(graph, nodes[node], tabWeight[i], tabTo[i]);
         }
     }
+    free(tabTo);
+    free(tabWeight);
+    free(nodes);
 }
 
 void saveGraph(struct Graph *graph, char *path) {
