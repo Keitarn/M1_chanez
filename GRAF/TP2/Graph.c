@@ -247,7 +247,7 @@ void loadGraph(struct Graph *graph, char *path) {
                             to += (int) buffer[parcoursChaine] - '0';
                             parcoursChaine++;
                         }
-                        parcoursChaine+=2;
+                        parcoursChaine += 2;
                         weight = (int) buffer[parcoursChaine] - '0';
                         parcoursChaine++;
                         while (buffer[parcoursChaine] != ')') {
