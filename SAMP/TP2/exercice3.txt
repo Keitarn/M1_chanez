@@ -1,0 +1,4 @@
+Modifier votre application pour que l'activite principale vous permette de chosiir entre gerer les questions
+(visualiser, ajouter, supprimer une question) et jouer le quizz.
+
+il faudra utiliser un recycler viewer.
