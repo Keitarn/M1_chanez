@@ -13,21 +13,21 @@ struct Graph {
     struct Neighbour **adjList;
 };
 
-void createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected);
+int createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected);
 
-void addNode(struct Graph *graph, int node);
+int addNode(struct Graph *graph, int node);
 
-void addEdge(struct Graph *graph, int from, int weight, int to);
+int addEdge(struct Graph *graph, int from, int weight, int to);
 
-void removeNode(struct Graph *graph, int node);
+int removeNode(struct Graph *graph, int node);
 
-void removeEdge(struct Graph *graph, int from, int weight, int to);
+int removeEdge(struct Graph *graph, int from, int weight, int to);
 
 void viewGraph(struct Graph *graph);
 
-void loadGraph(struct Graph *graph, char *path);
+int loadGraph(struct Graph *graph, char *path);
 
-void saveGraph(struct Graph *graph, char *path);
+int saveGraph(struct Graph *graph, char *path);
 
 void quit(struct Graph *graph);
 
