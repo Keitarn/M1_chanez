@@ -3,7 +3,7 @@
 
 int createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected) {
     if (nbMaxNodes <= 0) {
-        fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value: \n", nbMaxNodes);
+        fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value\n", nbMaxNodes);
         return -1;
     }
     graph->isDirected = isDirected;
@@ -13,7 +13,7 @@ int createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected) {
 }
 
 int addNode(struct Graph *graph, int node) {
-    if (graph->adjList == 0) {
+    if (graph->nbMaxNodes <= 0) {
         fprintf(stderr, "ERROR : addNode() -> graph non cree\n");
         return -1;
     }
@@ -32,7 +32,7 @@ int addNode(struct Graph *graph, int node) {
 }
 
 int addEdge(struct Graph *graph, int from, int weight, int to) {
-    if (graph->adjList == NULL) {
+    if (graph->nbMaxNodes <= 0) {
         fprintf(stderr, "ERROR : addEdge() -> graph non cree\n");
         return -1;
     }
@@ -76,6 +76,10 @@ int addEdge(struct Graph *graph, int from, int weight, int to) {
 }
 
 int removeNode(struct Graph *graph, int node) {
+    if (graph->nbMaxNodes <= 0) {
+        fprintf(stderr, "ERROR : removeNode() -> graph non cree\n");
+        return -1;
+    }
     if (!(0 < node && node <= graph->nbMaxNodes)) {
         fprintf(stderr, "ERROR : removeNode() -> node : %i, non comprise dans ]%i,%i]\n", node, 0,
                 graph->nbMaxNodes);
@@ -99,6 +103,10 @@ int removeNode(struct Graph *graph, int node) {
 }
 
 int removeEdge(struct Graph *graph, int from, int weight, int to) {
+    if (graph->nbMaxNodes <= 0) {
+        fprintf(stderr, "ERROR : removeEdge() -> graph non cree\n");
+        return -1;
+    }
     if (!(0 < from && from <= graph->nbMaxNodes)) {
         fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0, graph->nbMaxNodes);
         return -1;
@@ -130,6 +138,9 @@ int removeEdge(struct Graph *graph, int from, int weight, int to) {
 }
 
 void viewGraph(struct Graph *graph) {
+    if (graph->nbMaxNodes <= 0) {
+        return;
+    }
     printf("# maximum number of nodes\n");
     printf("%i\n", graph->nbMaxNodes);
     printf("# directed\n");
@@ -274,6 +285,9 @@ int saveGraph(struct Graph *graph, char *path) {
 }
 
 void quit(struct Graph *graph) {
+    if (graph->nbMaxNodes <= 0) {
+        return;
+    }
     for (int i = 0; i < graph->nbMaxNodes; i++) {
         if (graph->adjList[i] == NULL) {
             continue;
