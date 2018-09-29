@@ -9,7 +9,6 @@ struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
     list->previousNeighbour->nextNeighbour = neighbour;
     list->previousNeighbour = neighbour;
     list = neighbour;
-    return list;
 }
 
 struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight) {
@@ -75,22 +74,18 @@ struct Neighbour *removeMultipleNeighbour(struct Neighbour *list, int to) {
 }
 
 
-void viewList(struct Neighbour *list, int i) {
-    printf("%i: ", i + 1);
+void viewList(struct Neighbour *list) {
     struct Neighbour *parcours = list;
     while (parcours->neighbour != -1) {
         printf("(%i: %i), ", parcours->neighbour, parcours->weigh);
         parcours = parcours->nextNeighbour;
     }
-    printf("\n");
 }
 
-void saveList(struct Neighbour *list, FILE *out, int i) {
-    fprintf(out, "%i: ", i + 1);
+void saveList(struct Neighbour *list, FILE *out) {
     struct Neighbour *parcours = list;
     while (parcours->neighbour != -1) {
         fprintf(out, "(%i: %i), ", parcours->neighbour, parcours->weigh);
         parcours = parcours->nextNeighbour;
     }
-    fprintf(out, "\n");
 }

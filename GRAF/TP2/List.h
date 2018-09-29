@@ -21,8 +21,8 @@ struct Neighbour *removeList(struct Neighbour *list);
 
 struct Neighbour *removeMultipleNeighbour(struct Neighbour *list, int to);
 
-void viewList(struct Neighbour *list, int i);
+void viewList(struct Neighbour *list);
 
-void saveList(struct Neighbour *list, FILE *out, int i);
+void saveList(struct Neighbour *list, FILE *out);
 
 #endif //TP2_LIST_H
