@@ -1,6 +1,5 @@
-#include <stdlib.h>
-#include <memory.h>
 #include "Graph.h"
+
 
 void createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected) {
     graph->isDirected = isDirected;
@@ -19,12 +18,9 @@ void addNode(struct Graph *graph, int node) {
         return;
     }
 
-    struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
-    neighbour->neighbour = -1;
-    neighbour->weigh = -1;
-    neighbour->nextNeighbour = neighbour;
-    neighbour->previousNeighbour = neighbour;
-    graph->adjList[node - 1] = neighbour;
+    graph->adjList[node - 1] = createList(graph->adjList[node - 1]);
+
+
 }
 
 void addEdge(struct Graph *graph, int from, int weight, int to) {
@@ -60,24 +56,12 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
         parcours = parcours->nextNeighbour;
     }
 
-    struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
-    neighbour->neighbour = to;
-    neighbour->weigh = weight;
-    neighbour->nextNeighbour = graph->adjList[from - 1];
-    neighbour->previousNeighbour = graph->adjList[from - 1]->previousNeighbour;
-    graph->adjList[from - 1]->previousNeighbour->nextNeighbour = neighbour;
-    graph->adjList[from - 1]->previousNeighbour = neighbour;
-    graph->adjList[from - 1] = neighbour;
+    graph->adjList[from - 1] = addNeighbourList(graph->adjList[from - 1], to, weight);
 
     if (graph->isDirected == false && from != to) {
-        struct Neighbour *neighbour2 = (struct Neighbour *) malloc(sizeof(struct Neighbour));
-        neighbour2->neighbour = from;
-        neighbour2->weigh = weight;
-        neighbour2->nextNeighbour = graph->adjList[to - 1];
-        neighbour2->previousNeighbour = graph->adjList[to - 1]->previousNeighbour;
-        graph->adjList[to - 1]->previousNeighbour->nextNeighbour = neighbour2;
-        graph->adjList[to - 1]->previousNeighbour = neighbour2;
-        graph->adjList[to - 1] = neighbour2;
+
+        graph->adjList[to - 1] = addNeighbourList(graph->adjList[to - 1], from, weight);
+
     }
 }
 
@@ -93,37 +77,13 @@ void removeNode(struct Graph *graph, int node) {
         return;
     }
 
-    struct Neighbour *current = graph->adjList[node - 1];
-    struct Neighbour *next;
-    while (current->neighbour != -1) {
-        next = current->nextNeighbour;
-        free(current);
-        current = next;
-    }
-    free(current);
-    graph->adjList[node - 1] = NULL;
+    graph->adjList[node - 1] = removeList(graph->adjList[node - 1]);
 
-    int passage;
     for (int i = 1; i <= graph->nbMaxNodes; i++) {
         if (graph->adjList[i - 1] == NULL) {
             continue;
         }
-        passage = 0;
-        current = graph->adjList[i - 1];
-        while (current->neighbour != -1) {
-            next = current->nextNeighbour;
-            passage++;
-            if (current->neighbour == node) {
-                current->previousNeighbour->nextNeighbour = next;
-                current->nextNeighbour->previousNeighbour = current->previousNeighbour;
-                free(current);
-                if (passage == 1) {
-                    graph->adjList[i - 1] = next;
-                    passage = 0;
-                }
-            }
-            current = next;
-        }
+        graph->adjList[i - 1] = removeMultipleNeighbour(graph->adjList[i - 1], node);
     }
 }
 
@@ -151,23 +111,12 @@ void removeEdge(struct Graph *graph, int from, int weight, int to) {
         return;
     }
 
-    int passage = 0;
-    struct Neighbour *parcours = graph->adjList[from - 1];
-    while (parcours->neighbour != -1) {
-        passage++;
-        if (parcours->weigh == weight && parcours->neighbour == to) {
-            parcours->previousNeighbour->nextNeighbour = parcours->nextNeighbour;
-            parcours->nextNeighbour->previousNeighbour = parcours->previousNeighbour;
-            if (passage == 1) {
-                graph->adjList[from - 1] = parcours->nextNeighbour;
-            }
-            free(parcours);
-            return;
-        }
-        parcours = parcours->nextNeighbour;
+    struct Neighbour *test = removeNeighbourList(graph->adjList[from - 1], to, weight);
+    if (test == NULL) {
+        fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , n'existe pas\n", to, weight);
+    } else {
+        graph->adjList[from - 1] = test;
     }
-
-    fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , n'existe pas\n", to, weight);
 }
 
 void viewGraph(struct Graph *graph) {
@@ -180,13 +129,7 @@ void viewGraph(struct Graph *graph) {
         if (graph->adjList[i] == NULL) {
             continue;
         }
-        printf("%i: ", i + 1);
-        struct Neighbour *parcours = graph->adjList[i];
-        while (parcours->neighbour != -1) {
-            printf("(%i: %i), ", parcours->neighbour, parcours->weigh);
-            parcours = parcours->nextNeighbour;
-        }
-        printf("\n");
+        viewList(graph->adjList[i],i);
     }
 }
 
@@ -309,15 +252,8 @@ void saveGraph(struct Graph *graph, char *path) {
         if (graph->adjList[i] == NULL) {
             continue;
         }
-        fprintf(out, "%i: ", i + 1);
-        struct Neighbour *parcours = graph->adjList[i];
-        while (parcours->neighbour != -1) {
-            fprintf(out, "(%i: %i), ", parcours->neighbour, parcours->weigh);
-            parcours = parcours->nextNeighbour;
-        }
-        fprintf(out, "\n");
+        saveList(graph->adjList[i],out,i);
     }
-
     fclose(out);
 }
 
@@ -326,18 +262,7 @@ void quit(struct Graph *graph) {
         if (graph->adjList[i] == NULL) {
             continue;
         }
-
-        struct Neighbour *current = graph->adjList[i];
-        struct Neighbour *next;
-
-        while (current->neighbour != -1) {
-            next = current->nextNeighbour;
-            free(current);
-            current = next;
-        }
-
-        free(current);
-        graph->adjList[i] = NULL;
+        graph->adjList[i] = removeList(graph->adjList[i]);
     }
 
     free(graph->adjList);
