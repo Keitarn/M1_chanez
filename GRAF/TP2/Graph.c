@@ -55,11 +55,8 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     }
 
     graph->adjList[from - 1] = addNeighbourList(graph->adjList[from - 1], to, weight);
-
     if (graph->isDirected == false && from != to) {
-
         graph->adjList[to - 1] = addNeighbourList(graph->adjList[to - 1], from, weight);
-
     }
 }
 

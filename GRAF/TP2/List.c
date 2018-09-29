@@ -9,6 +9,7 @@ struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
     list->previousNeighbour->nextNeighbour = neighbour;
     list->previousNeighbour = neighbour;
     list = neighbour;
+    return list;
 }
 
 struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight) {
