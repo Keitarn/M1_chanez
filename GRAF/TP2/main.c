@@ -28,7 +28,7 @@ int main() {
     saveGraph(&graph, "graph.txt");
     loadGraph(&graph, "graph.txt");
 
-   // viewGraph(&graph);
+    // viewGraph(&graph);
 
     return 0;
 }
