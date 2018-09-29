@@ -1,7 +1,3 @@
-//
-// Created by keitarn on 29/09/18.
-//
-
 #ifndef TP2_LIST_H
 #define TP2_LIST_H
 

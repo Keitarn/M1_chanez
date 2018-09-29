@@ -1,8 +1,3 @@
-//
-// Created by keitarn on 29/09/18.
-//
-
-
 #include "List.h"
 
 struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
