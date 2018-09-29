@@ -7,13 +7,6 @@
 #include <memory.h>
 #include "List.h"
 
-//struct Neighbour {
-//    int neighbour;
-//    int weigh;
-//    struct Neighbour *nextNeighbour;
-//    struct Neighbour *previousNeighbour;
-//};
-
 struct Graph {
     bool isDirected;
     int nbMaxNodes;

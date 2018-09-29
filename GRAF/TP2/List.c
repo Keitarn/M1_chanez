@@ -32,7 +32,7 @@ struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight
     return NULL;
 }
 
-struct Neighbour *createList(struct Neighbour *list) {
+struct Neighbour *createList() {
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     neighbour->neighbour = -1;
     neighbour->weigh = -1;

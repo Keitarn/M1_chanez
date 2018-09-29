@@ -14,7 +14,7 @@ int main() {
 //    addNode(&graph, 5); // error
     addEdge(&graph, 1, 11, 1);
     addEdge(&graph, 1, 12, 2);
-    addEdge(&graph, 1, 12, 2);
+//    addEdge(&graph, 1, 12, 2);// error
     addEdge(&graph, 2, 12, 1);
     addEdge(&graph, 1, 13, 4);
 //    addEdge(&graph, 1, 14, 5); // error
@@ -22,13 +22,13 @@ int main() {
 //    addEdge(&graph, 1, 40, 3); // error
 //    addEdge(&graph, 3, 40, 4); // error
 //    addEdge(&graph, 0, 40, 2); // error
-
+//
+//    removeNode(&graph,2);
+//    removeNode(&graph,2);
+//    viewGraph(&graph);
+//    saveGraph(&graph, "graph.txt");
+//    loadGraph(&graph, "graph.txt");
     viewGraph(&graph);
-    printf("\n\n\n\n\n");
-    saveGraph(&graph, "graph.txt");
-    loadGraph(&graph, "graph.txt");
-
-    // viewGraph(&graph);
-
+    quit(&graph);
     return 0;
 }

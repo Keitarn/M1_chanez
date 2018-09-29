@@ -18,7 +18,9 @@ void addNode(struct Graph *graph, int node) {
         return;
     }
 
-    graph->adjList[node - 1] = createList(graph->adjList[node - 1]);
+    graph->adjList[node - 1] = createList();
+
+
 }
 
 void addEdge(struct Graph *graph, int from, int weight, int to) {
@@ -59,6 +61,7 @@ void addEdge(struct Graph *graph, int from, int weight, int to) {
     if (graph->isDirected == false && from != to) {
 
         graph->adjList[to - 1] = addNeighbourList(graph->adjList[to - 1], from, weight);
+
     }
 }
 

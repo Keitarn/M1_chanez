@@ -15,7 +15,7 @@ struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight);
 
 struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight);
 
-struct Neighbour *createList(struct Neighbour *list);
+struct Neighbour *createList();
 
 struct Neighbour *removeList(struct Neighbour *list);
 
