@@ -4,7 +4,6 @@
 
 int main() {
 
-    initiateMenu();
 //    struct Graph graph;
 //    struct Graph graph1;
 //
@@ -65,6 +64,8 @@ int main() {
 //
 //    quit(&graph);
 //    quit(&graph1);
+
+    initiateMenu();
 
     return 0;
 }
