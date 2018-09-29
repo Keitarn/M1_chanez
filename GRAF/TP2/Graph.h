@@ -13,7 +13,7 @@ struct Graph {
     struct Neighbour **adjList;
 };
 
-int createGraph(struct Graph *graph, int nbMaxNodes, bool isDirected);
+int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected);
 
 int addNode(struct Graph *graph, int node);
 
