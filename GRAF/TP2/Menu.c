@@ -7,7 +7,7 @@
 void initiateMenu() {
     messageBienvenu();
 
-    struct Graph graph;
+    struct Graph * graph;
     bool stay = true;
     bool create = false;
     int res;
@@ -47,7 +47,7 @@ void initiateMenu() {
                 clear();
                 break;
             case 7:
-                callViewGraphEdge(&graph);
+                callViewGraph(&graph);
                 clear();
                 break;
             case 8:
@@ -126,7 +126,7 @@ void clear() {
     printf("\n\n\n\n\n\n\n\n\n\n");
 }
 
-int callCreate(struct Graph *graph, bool create) {
+int callCreate(struct Graph **graph, bool create) {
     bool isDirected;
     int nbMaxNode ;
     if (create) {
@@ -156,32 +156,70 @@ int callCreate(struct Graph *graph, bool create) {
     return res;
 }
 
-
-void callAddNode(struct Graph *graph) {
+void callAddNode(struct Graph **graph) {
     int node;
+    printf("Entrez le numéro de node à ajouter\n");
+    scanf("%i", &node);
+    viderBuffer();
     addNode(graph,node);
 }
 
-void callDeleteNode(struct Graph *graph) {
-
+void callDeleteNode(struct Graph **graph) {
+    int node;
+    printf("Entrez le numéro de node à supprimer \n");
+    scanf("%i", &node);
+    viderBuffer();
+    addNode(graph,node);
 }
 
-void callViewGraphEdge(struct Graph *graph) {
-
+void callViewGraph(struct Graph **graph) {
+    viewGraph(graph);
 }
 
-void callDeleteEdge(struct Graph *graph) {
-
+void callDeleteEdge(struct Graph **graph) {
+    int weight;
+    int from;
+    int to;
+    printf("Entrez le numéro de la node de départ \n");
+    scanf("%i", &from);
+    viderBuffer();
+    printf("Entrez le poids de la edge \n");
+    scanf("%i", &weight);
+    viderBuffer();
+    printf("Entrez le numéro de la node d'arrivé \n");
+    scanf("%i", &to);
+    viderBuffer();
+    removeEdge(graph,from,weight,to);
 }
 
-void callAddEdge(struct Graph *graph) {
-
+void callAddEdge(struct Graph **graph) {
+    int weight;
+    int from;
+    int to;
+    printf("Entrez le numéro de la node de départ\n");
+    scanf("%i", &from);
+    viderBuffer();
+    printf("Entrez le poids de la edge\n");
+    scanf("%i", &weight);
+    viderBuffer();
+    printf("Entrez le numéro de la node d'arrivé\n");
+    scanf("%i", &to);
+    viderBuffer();
+    addEdge(graph,from,weight,to);
 }
 
-void callLoadGraph(struct Graph *graph) {
-
+void callLoadGraph(struct Graph **graph) {
+    char nameFile[50];
+    printf("Entrez le nom du fichier a charger\n");
+    scanf("%s", &nameFile);
+    viderBuffer();
+    loadGraph(graph,nameFile);
 }
 
-void callSaveGraph(struct Graph *graph) {
-
+void callSaveGraph(struct Graph **graph) {
+    char nameFile[50];
+    printf("Entrez le nom du fichier a sauvegarder\n");
+    scanf("%s", &nameFile);
+    viderBuffer();
+    saveGraph(graph,nameFile);
 }
