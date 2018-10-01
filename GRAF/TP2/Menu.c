@@ -1,3 +1,7 @@
+/**
+ * @authors Florian Joriot, Bastien Chanez
+ */
+
 #include "Menu.h"
 
 void initiateMenu() {

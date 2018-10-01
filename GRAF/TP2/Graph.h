@@ -1,3 +1,7 @@
+/**
+ * @authors Florian Joriot, Bastien Chanez
+ */
+
 #ifndef TP2_GRAPH_H
 #define TP2_GRAPH_H
 
