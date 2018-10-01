@@ -2,14 +2,16 @@
 
 
 int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
-    if (graph != NULL) {
-        fprintf(stderr, "WARNING : createGraph() -> le graph a été remplacé\n");
-        quit(*graph);
-    }
+
     if (nbMaxNodes <= 0) {
         fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value: \n", nbMaxNodes);
         return -1;
     }
+    if (graph != NULL) {
+        fprintf(stderr, "WARNING : createGraph() -> le graph a été remplacé\n");
+        quit(*graph);
+    }
+
     (*graph) = (struct Graph *) malloc(sizeof(struct Graph *));
     (*graph)->isDirected = isDirected;
     (*graph)->nbMaxNodes = nbMaxNodes;
@@ -20,24 +22,24 @@ int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
     return 1;
 }
 
-int addNode(struct Graph *graph, int node) {
-    if (graph == NULL) {
+int addNode(struct Graph **graph, int node) {
+    if ((*graph) == NULL) {
         fprintf(stderr, "ERROR : addNode() -> graph non cree\n");
         return -1;
     }
 
-    if (!(0 < node && node <= graph->nbMaxNodes)) {
+    if (!(0 < node && node <= (*graph)->nbMaxNodes)) {
         fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]\n", node, 0,
-                graph->nbMaxNodes);
+                (*graph)->nbMaxNodes);
         return -1;
     }
 
-    if (graph->adjList[node - 1] != NULL) {
+    if ((*graph)->adjList[node - 1] != NULL) {
         fprintf(stderr, "ERROR : addNode() -> node : %i, existe déjà\n", node);
         return -1;
     }
 
-    graph->adjList[node - 1] = createList();
+    (*graph)->adjList[node - 1] = createList();
     return 1;
 }
 
@@ -90,46 +92,46 @@ int addEdge(struct Graph *graph, int from, int weight, int to) {
     return 1;
 }
 
-int removeNode(struct Graph *graph, int node) {
-    if (graph == NULL) {
+int removeNode(struct Graph **graph, int node) {
+    if ((*graph) == NULL) {
         fprintf(stderr, "ERROR : removeNode() -> graph non cree\n");
         return -1;
     }
 
-    if (!(0 < node && node <= graph->nbMaxNodes)) {
+    if (!(0 < node && node <= (*graph)->nbMaxNodes)) {
         fprintf(stderr, "ERROR : removeNode() -> node : %i, non comprise dans ]%i,%i]\n", node, 0,
-                graph->nbMaxNodes);
+                (*graph)->nbMaxNodes);
         return -1;
     }
 
-    if (graph->adjList[node - 1] == NULL) {
+    if ((*graph)->adjList[node - 1] == NULL) {
         fprintf(stderr, "ERROR : removeNode() -> node : %i, n'existe pas\n", node);
         return -1;
     }
 
-    graph->adjList[node - 1] = removeList(graph->adjList[node - 1]);
-    for (int i = 1; i <= graph->nbMaxNodes; i++) {
-        if (graph->adjList[i - 1] == NULL) {
+    (*graph)->adjList[node - 1] = removeList((*graph)->adjList[node - 1]);
+    for (int i = 1; i <= (*graph)->nbMaxNodes; i++) {
+        if ((*graph)->adjList[i - 1] == NULL) {
             continue;
         }
-        graph->adjList[i - 1] = removeMultipleNeighbour(graph->adjList[i - 1], node);
+        (*graph)->adjList[i - 1] = removeMultipleNeighbour((*graph)->adjList[i - 1], node);
     }
     return 1;
 }
 
-int removeEdge(struct Graph *graph, int from, int weight, int to) {
-    if (graph == NULL) {
+int removeEdge(struct Graph **graph, int from, int weight, int to) {
+    if ((*graph) == NULL) {
         fprintf(stderr, "ERROR : removeEdge() -> graph non cree\n");
         return -1;
     }
 
-    if (!(0 < from && from <= graph->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0, graph->nbMaxNodes);
+    if (!(0 < from && from <= (*graph)->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0, (*graph)->nbMaxNodes);
         return -1;
     }
 
-    if (!(0 < to && to <= graph->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : removeEdge() -> to : %i, non comprise dans ]%i,%i]\n", to, 0, graph->nbMaxNodes);
+    if (!(0 < to && to <= (*graph)->nbMaxNodes)) {
+        fprintf(stderr, "ERROR : removeEdge() -> to : %i, non comprise dans ]%i,%i]\n", to, 0, (*graph)->nbMaxNodes);
         return -1;
     }
 
@@ -138,41 +140,41 @@ int removeEdge(struct Graph *graph, int from, int weight, int to) {
         return -1;
     }
 
-    if (graph->adjList[from - 1] == NULL) {
+    if ((*graph)->adjList[from - 1] == NULL) {
         fprintf(stderr, "ERROR : removeEdge() -> from : %i, n'existe pas\n", from);
         return -1;
     }
 
-    if (graph->adjList[to - 1] == NULL) {
+    if ((*graph)->adjList[to - 1] == NULL) {
         fprintf(stderr, "ERROR : removeEdge() -> to : %i, n'existe pas\n", to);
         return -1;
     }
 
-    struct Neighbour *test = removeNeighbourList(graph->adjList[from - 1], to, weight);
+    struct Neighbour *test = removeNeighbourList((*graph)->adjList[from - 1], to, weight);
     if (test == NULL) {
         fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , n'existe pas\n", to, weight);
     } else {
-        graph->adjList[from - 1] = test;
+        (*graph)->adjList[from - 1] = test;
     }
     return 1;
 }
 
-void viewGraph(struct Graph *graph) {
-    if (graph == NULL) {
+void viewGraph(struct Graph **graph) {
+    if ((*graph) == NULL) {
         return;
     }
 
     printf("# maximum number of nodes\n");
-    printf("%i\n", graph->nbMaxNodes);
+    printf("%i\n", (*graph)->nbMaxNodes);
     printf("# directed\n");
-    printf("%s\n", (graph->isDirected ? "y" : "n"));
+    printf("%s\n", ((*graph)->isDirected ? "y" : "n"));
     printf("# node: neighbours\n");
-    for (int i = 0; i < graph->nbMaxNodes; ++i) {
-        if (graph->adjList[i] == NULL) {
+    for (int i = 0; i < (*graph)->nbMaxNodes; ++i) {
+        if ((*graph)->adjList[i] == NULL) {
             continue;
         }
         printf("%i: ", i + 1);
-        viewList(graph->adjList[i]);
+        viewList((*graph)->adjList[i]);
         printf("\n");
     }
 }
@@ -282,8 +284,8 @@ int loadGraph(struct Graph *graph, char *path) {
     return 1;
 }
 
-int saveGraph(struct Graph *graph, char *path) {
-    if (graph == NULL) {
+int saveGraph(struct Graph **graph, char *path) {
+    if ((*graph) == NULL) {
         fprintf(stderr, "ERROR : saveGraph() -> graph non cree\n");
         return -1;
     }
@@ -296,34 +298,34 @@ int saveGraph(struct Graph *graph, char *path) {
     }
 
     fprintf(out, "# maximum number of nodes\n");
-    fprintf(out, "%i\n", graph->nbMaxNodes);
+    fprintf(out, "%i\n", (*graph)->nbMaxNodes);
     fprintf(out, "# directed\n");
-    fprintf(out, "%s\n", (graph->isDirected ? "y" : "n"));
+    fprintf(out, "%s\n", ((*graph)->isDirected ? "y" : "n"));
     fprintf(out, "# node: neighbours\n");
-    for (int i = 0; i < graph->nbMaxNodes; ++i) {
-        if (graph->adjList[i] == NULL) {
+    for (int i = 0; i < (*graph)->nbMaxNodes; ++i) {
+        if ((*graph)->adjList[i] == NULL) {
             continue;
         }
         fprintf(out, "%i: ", i + 1);
-        saveList(graph->adjList[i], out);
+        saveList((*graph)->adjList[i], out);
         fprintf(out, "\n");
     }
     fclose(out);
     return 1;
 }
 
-void quit(struct Graph *graph) {
-    if (graph == NULL) {
+void quit(struct Graph **graph) {
+    if ((*graph) == NULL) {
         return;
     }
 
-    graph->nbMaxNodes = 0;
-    for (int i = 0; i < graph->nbMaxNodes; i++) {
-        if (graph->adjList[i] == NULL) {
+    (*graph)->nbMaxNodes = 0;
+    for (int i = 0; i < (*graph)->nbMaxNodes; i++) {
+        if ((*graph)->adjList[i] == NULL) {
             continue;
         }
-        graph->adjList[i] = removeList(graph->adjList[i]);
+        (*graph)->adjList[i] = removeList((*graph)->adjList[i]);
     }
-    free(graph->adjList);
-    free(graph);
+    free((*graph)->adjList);
+    free((*graph));
 }
