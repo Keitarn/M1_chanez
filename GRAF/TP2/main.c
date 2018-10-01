@@ -7,8 +7,8 @@ int main() {
     struct graph *graph = NULL;
     struct graph *graph1 = NULL;
 
-//    createGraph(&graph, -1, true); // error
-//    createGraph(&graph, 0, true); // error
+    createGraph(&graph, -1, true); // error
+    createGraph(&graph, 0, true); // error
     createGraph(&graph, 8, true);
 
     addNode(&graph, 1);
@@ -27,11 +27,13 @@ int main() {
     addNode(&graph, 2);
     addNode(&graph, 4);
 
-//    addNode(&graph1, 1); // error
-//    addNode(&graph, 0); // error
-//    addNode(&graph, 5); // error
+    addNode(&graph1, 1); // error
+    addNode(&graph, 0); // error
+    addNode(&graph, 5); // error
 
     addEdge(&graph, 1, 11, 1);
+    addEdge(&graph, 2, 11, 2);
+    addEdge(&graph, 4, 11, 2);
     addEdge(&graph, 1, 12, 2);
     addEdge(&graph, 2, 12, 1);
     addEdge(&graph, 1, 13, 4);
@@ -43,34 +45,34 @@ int main() {
     addEdge(&graph, 3, 40, 4); // error
 
     viewGraph(&graph);
-//    viewGraph(&graph1); // error
+    viewGraph(&graph1); // error
 
-//    removeEdge(&graph, 1, 12, 2);
-//    removeEdge(&graph1, 1, 12, 2); // error
-//    removeEdge(&graph, 0, 12, 2); // error
-//    removeEdge(&graph, 1, 12, 5); // error
-//    removeEdge(&graph, 3, 12, 2); // error
-//
-//    removeNode(&graph, 1);
-//    removeNode(&graph1, 1); // error
-//    removeNode(&graph, 1); // error
-//    removeNode(&graph, 3); // error
-//    removeNode(&graph, 0); // error
-//    removeNode(&graph, 5); // error
+    removeEdge(&graph, 1, 12, 2);
+    removeEdge(&graph1, 1, 12, 2); // error
+    removeEdge(&graph, 0, 12, 2); // error
+    removeEdge(&graph, 1, 12, 5); // error
+    removeEdge(&graph, 3, 12, 2); // error
 
-//    addEdge(&&graph1, 1, 13, 4); // error
-//
+    removeNode(&graph, 1);
+    removeNode(&graph1, 1); // error
+    removeNode(&graph, 1); // error
+    removeNode(&graph, 3); // error
+    removeNode(&graph, 0); // error
+    removeNode(&graph, 5); // error
+
+    addEdge(&graph1, 1, 13, 4); // error
+
     viewGraph(&graph);
-//
-//    quit(&graph1); // error
+
+    quit(&graph1); // error
 
     saveGraph(&graph, "graph.txt");
-//    saveGraph(&graph1, "graph.txt"); // error
-//
-//    loadGraph(&graph1, "graph.txt"); // error
-//    loadGraph(&graph1, "&graph1.txt"); // error
+    saveGraph(&graph1, "graph.txt"); // error
 
-//    viewGraph(&graph1);
+    loadGraph(&graph1, "graph.txt"); // error
+    loadGraph(&graph1, "&graph1.txt"); // error
+
+    viewGraph(&graph1);
 
     quit(&graph);
     quit(&graph1);

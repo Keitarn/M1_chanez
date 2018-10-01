@@ -4,7 +4,7 @@
 int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
 
     if (nbMaxNodes <= 0) {
-        fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value: \n", nbMaxNodes);
+        fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value\n", nbMaxNodes);
         return -1;
     }
     if ((*graph) != NULL) {
@@ -262,7 +262,7 @@ int loadGraph(struct Graph **graph, char *path) {
                 break;
         }
     }
-    if (graph != NULL) {
+    if ((*graph) != NULL) {
         quit(graph);
     }
     createGraph(graph, nbMaxNodes, isDirected);
@@ -319,7 +319,6 @@ void quit(struct Graph **graph) {
         return;
     }
 
-    (*graph)->nbMaxNodes = 0;
     for (int i = 0; i < (*graph)->nbMaxNodes; i++) {
         if ((*graph)->adjList[i] == NULL) {
             continue;
