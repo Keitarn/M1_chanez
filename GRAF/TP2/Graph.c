@@ -7,9 +7,9 @@ int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
         fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value: \n", nbMaxNodes);
         return -1;
     }
-    if (graph != NULL) {
+    if ((*graph) != NULL) {
         fprintf(stderr, "WARNING : createGraph() -> le graph a été remplacé\n");
-        quit(*graph);
+        quit(graph);
     }
 
     (*graph) = (struct Graph *) malloc(sizeof(struct Graph *));
@@ -44,7 +44,7 @@ int addNode(struct Graph **graph, int node) {
 }
 
 int addEdge(struct Graph **graph, int from, int weight, int to) {
-    if (graph == NULL) {
+    if ((*graph) == NULL) {
         fprintf(stderr, "ERROR : addEdge() -> graph non cree\n");
         return -1;
     }

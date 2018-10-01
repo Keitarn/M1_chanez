@@ -42,7 +42,7 @@ int main() {
     addEdge(&graph, 1, 40, 3); // error
     addEdge(&graph, 3, 40, 4); // error
 
-    viewGraph(graph);
+    viewGraph(&graph);
 //    viewGraph(&graph1); // error
 
 //    removeEdge(&graph, 1, 12, 2);
