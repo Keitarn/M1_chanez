@@ -7,7 +7,7 @@
 void initiateMenu() {
     messageBienvenu();
 
-    struct Graph * graph;
+    struct Graph * graph = NULL;
     bool stay = true;
     bool create = false;
     int res;
@@ -72,12 +72,12 @@ void initiateMenu() {
 }
 
 void messageBienvenu() {
-    printf(" ____  _\n"
-           "|  _ \\(_)\n"
-           "| |_) |_  ___ _ ____   _____ _ __  _   _\n"
-           "|  _ <| |/ _ \\ '_ \\ \\ / / _ \\ '_ \\| | | |\n"
-           "| |_) | |  __/ | | \\ V /  __/ | | | |_| |\n"
-           "|____/|_|\\___|_| |_|\\_/ \\___|_| |_|\\__,_|\n");
+    printf("\n\n __          __  _                          \n"
+           " \\ \\        / / | |                         \n"
+           "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___ \n"
+           "   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\\n"
+           "    \\  /\\  /  __/ | (_| (_) | | | | | |  __/\n"
+           "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|\n\n");
 }
 
 void afficheListCommande() {
