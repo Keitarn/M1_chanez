@@ -2,9 +2,8 @@
 
 
 int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
-
     if (nbMaxNodes <= 0) {
-        fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value: \n", nbMaxNodes);
+        fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value\n", nbMaxNodes);
         return -1;
     }
     if ((*graph) != NULL) {
@@ -13,10 +12,18 @@ int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
     }
 
     (*graph) = (struct Graph *) malloc(sizeof(struct Graph *));
+    if ((*graph) == NULL) {
+        fprintf(stderr, "Allocation impossible \n");
+        exit(EXIT_FAILURE);
+    }
     (*graph)->isDirected = isDirected;
     (*graph)->nbMaxNodes = nbMaxNodes;
     (*graph)->adjList = (struct Neighbour **) malloc(nbMaxNodes * sizeof(struct Neighbour *));
-    for(int i = 0; i < nbMaxNodes; i++){
+    if ((*graph)->adjList == NULL) {
+        fprintf(stderr, "Allocation impossible \n");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < nbMaxNodes; i++) {
         (*graph)->adjList[i] = NULL;
     }
     return 1;
@@ -126,7 +133,8 @@ int removeEdge(struct Graph **graph, int from, int weight, int to) {
     }
 
     if (!(0 < from && from <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0, (*graph)->nbMaxNodes);
+        fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0,
+                (*graph)->nbMaxNodes);
         return -1;
     }
 
@@ -319,7 +327,6 @@ void quit(struct Graph **graph) {
         return;
     }
 
-    (*graph)->nbMaxNodes = 0;
     for (int i = 0; i < (*graph)->nbMaxNodes; i++) {
         if ((*graph)->adjList[i] == NULL) {
             continue;

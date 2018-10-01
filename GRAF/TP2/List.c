@@ -2,6 +2,10 @@
 
 struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
+    if (neighbour == NULL) {
+        fprintf(stderr, "Allocation impossible \n");
+        exit(EXIT_FAILURE);
+    }
     neighbour->neighbour = to;
     neighbour->weigh = weight;
     neighbour->nextNeighbour = list;
@@ -34,6 +38,10 @@ struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight
 
 struct Neighbour *createList() {
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
+    if (neighbour == NULL) {
+        fprintf(stderr, "Allocation impossible \n");
+        exit(EXIT_FAILURE);
+    }
     neighbour->neighbour = -1;
     neighbour->weigh = -1;
     neighbour->nextNeighbour = neighbour;
