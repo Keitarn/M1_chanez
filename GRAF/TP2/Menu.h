@@ -1,3 +1,7 @@
+/**
+ * @authors Florian Joriot, Bastien Chanez
+ */
+
 #ifndef TP2_MENU_H
 #define TP2_MENU_H
 

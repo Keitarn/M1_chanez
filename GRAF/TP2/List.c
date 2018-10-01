@@ -1,9 +1,20 @@
+/**
+ * @authors Florian Joriot, Bastien Chanez
+ */
+
 #include "List.h"
 
+/**
+ *
+ * @param list
+ * @param to
+ * @param weight
+ * @return
+ */
 struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     if (neighbour == NULL) {
-        fprintf(stderr, "Allocation impossible \n");
+        fprintf(stderr, "Unable to allocate\n");
         exit(EXIT_FAILURE);
     }
     neighbour->neighbour = to;
@@ -16,6 +27,13 @@ struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
     return list;
 }
 
+/**
+ *
+ * @param list
+ * @param to
+ * @param weight
+ * @return
+ */
 struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight) {
     int passage = 0;
     struct Neighbour *parcours = list;
@@ -36,10 +54,14 @@ struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight
     return NULL;
 }
 
+/**
+ *
+ * @return
+ */
 struct Neighbour *createList() {
     struct Neighbour *neighbour = (struct Neighbour *) malloc(sizeof(struct Neighbour));
     if (neighbour == NULL) {
-        fprintf(stderr, "Allocation impossible \n");
+        fprintf(stderr, "Unable to allocate\n");
         exit(EXIT_FAILURE);
     }
     neighbour->neighbour = -1;
@@ -49,6 +71,11 @@ struct Neighbour *createList() {
     return neighbour;
 }
 
+/**
+ *
+ * @param list
+ * @return
+ */
 struct Neighbour *removeList(struct Neighbour *list) {
     struct Neighbour *current = list;
     struct Neighbour *next;
@@ -61,6 +88,12 @@ struct Neighbour *removeList(struct Neighbour *list) {
     return NULL;
 }
 
+/**
+ *
+ * @param list
+ * @param to
+ * @return
+ */
 struct Neighbour *removeMultipleNeighbour(struct Neighbour *list, int to) {
     struct Neighbour *next;
     struct Neighbour *first = list;
@@ -82,7 +115,10 @@ struct Neighbour *removeMultipleNeighbour(struct Neighbour *list, int to) {
     return first;
 }
 
-
+/**
+ *
+ * @param list
+ */
 void viewList(struct Neighbour *list) {
     struct Neighbour *parcours = list;
     while (parcours->neighbour != -1) {
@@ -91,6 +127,11 @@ void viewList(struct Neighbour *list) {
     }
 }
 
+/**
+ *
+ * @param list
+ * @param out
+ */
 void saveList(struct Neighbour *list, FILE *out) {
     struct Neighbour *parcours = list;
     while (parcours->neighbour != -1) {

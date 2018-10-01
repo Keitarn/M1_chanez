@@ -1,26 +1,36 @@
+/**
+ * @authors Florian Joriot, Bastien Chanez
+ */
+
 #include "Graph.h"
 
-
+/**
+ *
+ * @param graph
+ * @param nbMaxNodes
+ * @param isDirected
+ * @return
+ */
 int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
     if (nbMaxNodes <= 0) {
         fprintf(stderr, "ERROR : createGraph() -> nbMaxNodes : %i, need a positive value\n", nbMaxNodes);
         return -1;
     }
     if ((*graph) != NULL) {
-        fprintf(stderr, "WARNING : createGraph() -> le graph a été remplacé\n");
+        fprintf(stderr, "WARNING : createGraph() -> the graph has been replaced\n");
         quit(graph);
     }
 
     (*graph) = (struct Graph *) malloc(sizeof(struct Graph *));
     if ((*graph) == NULL) {
-        fprintf(stderr, "Allocation impossible \n");
+        fprintf(stderr, "Unable to allocate\n");
         exit(EXIT_FAILURE);
     }
     (*graph)->isDirected = isDirected;
     (*graph)->nbMaxNodes = nbMaxNodes;
     (*graph)->adjList = (struct Neighbour **) malloc(nbMaxNodes * sizeof(struct Neighbour *));
     if ((*graph)->adjList == NULL) {
-        fprintf(stderr, "Allocation impossible \n");
+        fprintf(stderr, "Unable to allocate\n");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < nbMaxNodes; i++) {
@@ -29,20 +39,26 @@ int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ * @param node
+ * @return
+ */
 int addNode(struct Graph **graph, int node) {
     if ((*graph) == NULL) {
-        fprintf(stderr, "ERROR : addNode() -> graph non cree\n");
+        fprintf(stderr, "ERROR : addNode() -> uncreated graph\n");
         return -1;
     }
 
     if (!(0 < node && node <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : addNode() -> node : %i, non comprise dans ]%i,%i]\n", node, 0,
+        fprintf(stderr, "ERROR : addNode() -> node : %i, not included in ]%i,%i]\n", node, 0,
                 (*graph)->nbMaxNodes);
         return -1;
     }
 
     if ((*graph)->adjList[node - 1] != NULL) {
-        fprintf(stderr, "ERROR : addNode() -> node : %i, existe déjà\n", node);
+        fprintf(stderr, "ERROR : addNode() -> node : %i, already exists\n", node);
         return -1;
     }
 
@@ -50,43 +66,51 @@ int addNode(struct Graph **graph, int node) {
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ * @param from
+ * @param weight
+ * @param to
+ * @return
+ */
 int addEdge(struct Graph **graph, int from, int weight, int to) {
     if ((*graph) == NULL) {
-        fprintf(stderr, "ERROR : addEdge() -> graph non cree\n");
+        fprintf(stderr, "ERROR : addEdge() -> uncreated graph\n");
         return -1;
     }
 
     if (!(0 < from && from <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : addEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0,
+        fprintf(stderr, "ERROR : addEdge() -> from : %i, not included in ]%i,%i]\n", from, 0,
                 (*graph)->nbMaxNodes);
         return -1;
     }
 
     if (!(0 < to && to <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : addEdge() -> to : %i, non comprise dans ]%i,%i]\n", to, 0,
+        fprintf(stderr, "ERROR : addEdge() -> to : %i, not included in ]%i,%i]\n", to, 0,
                 (*graph)->nbMaxNodes);
         return -1;
     }
 
     if (weight <= 0) {
-        fprintf(stderr, "ERROR : addEdge() -> weight : %i, poids incorrect\n", weight);
+        fprintf(stderr, "ERROR : addEdge() -> weight : %i, incorrect weight\n", weight);
         return -1;
     }
 
     if ((*graph)->adjList[from - 1] == NULL) {
-        fprintf(stderr, "ERROR : addEdge() -> from : %i, n'existe pas\n", from);
+        fprintf(stderr, "ERROR : addEdge() -> from : %i, does not exist\n", from);
         return -1;
     }
 
     if ((*graph)->adjList[to - 1] == NULL) {
-        fprintf(stderr, "ERROR : addEdge() -> to : %i, n'existe pas\n", to);
+        fprintf(stderr, "ERROR : addEdge() -> to : %i, does not exist\n", to);
         return -1;
     }
 
     struct Neighbour *parcours = (*graph)->adjList[from - 1];
     while (parcours->neighbour != -1) {
         if (parcours->weigh == weight && parcours->neighbour == to) {
-            fprintf(stderr, "ERROR : addEdge(), existe déja\n");
+            fprintf(stderr, "ERROR : addEdge(), already exists\n");
             return -1;
         }
         parcours = parcours->nextNeighbour;
@@ -99,20 +123,26 @@ int addEdge(struct Graph **graph, int from, int weight, int to) {
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ * @param node
+ * @return
+ */
 int removeNode(struct Graph **graph, int node) {
     if ((*graph) == NULL) {
-        fprintf(stderr, "ERROR : removeNode() -> graph non cree\n");
+        fprintf(stderr, "ERROR : removeNode() -> uncreated graph\n");
         return -1;
     }
 
     if (!(0 < node && node <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : removeNode() -> node : %i, non comprise dans ]%i,%i]\n", node, 0,
+        fprintf(stderr, "ERROR : removeNode() -> node : %i, not included in ]%i,%i]\n", node, 0,
                 (*graph)->nbMaxNodes);
         return -1;
     }
 
     if ((*graph)->adjList[node - 1] == NULL) {
-        fprintf(stderr, "ERROR : removeNode() -> node : %i, n'existe pas\n", node);
+        fprintf(stderr, "ERROR : removeNode() -> node : %i, does not exist\n", node);
         return -1;
     }
 
@@ -126,47 +156,59 @@ int removeNode(struct Graph **graph, int node) {
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ * @param from
+ * @param weight
+ * @param to
+ * @return
+ */
 int removeEdge(struct Graph **graph, int from, int weight, int to) {
     if ((*graph) == NULL) {
-        fprintf(stderr, "ERROR : removeEdge() -> graph non cree\n");
+        fprintf(stderr, "ERROR : removeEdge() -> uncreated graph\n");
         return -1;
     }
 
     if (!(0 < from && from <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : removeEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0,
+        fprintf(stderr, "ERROR : removeEdge() -> from : %i, not included in ]%i,%i]\n", from, 0,
                 (*graph)->nbMaxNodes);
         return -1;
     }
 
     if (!(0 < to && to <= (*graph)->nbMaxNodes)) {
-        fprintf(stderr, "ERROR : removeEdge() -> to : %i, non comprise dans ]%i,%i]\n", to, 0, (*graph)->nbMaxNodes);
+        fprintf(stderr, "ERROR : removeEdge() -> to : %i, not included in ]%i,%i]\n", to, 0, (*graph)->nbMaxNodes);
         return -1;
     }
 
     if (weight <= 0) {
-        fprintf(stderr, "ERROR : removeEdge() -> weight : %i, poids incorrect\n", weight);
+        fprintf(stderr, "ERROR : removeEdge() -> weight : %i, incorrect weight\n", weight);
         return -1;
     }
 
     if ((*graph)->adjList[from - 1] == NULL) {
-        fprintf(stderr, "ERROR : removeEdge() -> from : %i, n'existe pas\n", from);
+        fprintf(stderr, "ERROR : removeEdge() -> from : %i, does not exist\n", from);
         return -1;
     }
 
     if ((*graph)->adjList[to - 1] == NULL) {
-        fprintf(stderr, "ERROR : removeEdge() -> to : %i, n'existe pas\n", to);
+        fprintf(stderr, "ERROR : removeEdge() -> to : %i, does not exist\n", to);
         return -1;
     }
 
     struct Neighbour *test = removeNeighbourList((*graph)->adjList[from - 1], to, weight);
     if (test == NULL) {
-        fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , n'existe pas\n", to, weight);
+        fprintf(stderr, "ERROR : removeEdge() -> (node,edge) : (%i,%i) , does not exist\n", to, weight);
     } else {
         (*graph)->adjList[from - 1] = test;
     }
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ */
 void viewGraph(struct Graph **graph) {
     if ((*graph) == NULL) {
         return;
@@ -187,6 +229,12 @@ void viewGraph(struct Graph **graph) {
     }
 }
 
+/**
+ *
+ * @param graph
+ * @param path
+ * @return
+ */
 int loadGraph(struct Graph **graph, char *path) {
     FILE *in;
     in = fopen(path, "r");
@@ -292,9 +340,15 @@ int loadGraph(struct Graph **graph, char *path) {
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ * @param path
+ * @return
+ */
 int saveGraph(struct Graph **graph, char *path) {
     if ((*graph) == NULL) {
-        fprintf(stderr, "ERROR : saveGraph() -> graph non cree\n");
+        fprintf(stderr, "ERROR : saveGraph() -> uncreated graph\n");
         return -1;
     }
 
@@ -322,6 +376,10 @@ int saveGraph(struct Graph **graph, char *path) {
     return 1;
 }
 
+/**
+ *
+ * @param graph
+ */
 void quit(struct Graph **graph) {
     if ((*graph) == NULL) {
         return;

@@ -1,3 +1,7 @@
+/**
+ * @authors Florian Joriot, Bastien Chanez
+ */
+
 #ifndef TP2_LIST_H
 #define TP2_LIST_H
 
