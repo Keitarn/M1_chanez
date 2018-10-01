@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "graph.h" // à retirer
+#include "Graph.h" // à retirer
 #include "Menu.h"
 
 int main() {

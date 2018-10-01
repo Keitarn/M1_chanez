@@ -43,21 +43,21 @@ int addNode(struct Graph **graph, int node) {
     return 1;
 }
 
-int addEdge(struct Graph *graph, int from, int weight, int to) {
+int addEdge(struct Graph **graph, int from, int weight, int to) {
     if (graph == NULL) {
         fprintf(stderr, "ERROR : addEdge() -> graph non cree\n");
         return -1;
     }
 
-    if (!(0 < from && from <= graph->nbMaxNodes)) {
+    if (!(0 < from && from <= (*graph)->nbMaxNodes)) {
         fprintf(stderr, "ERROR : addEdge() -> from : %i, non comprise dans ]%i,%i]\n", from, 0,
-                graph->nbMaxNodes);
+                (*graph)->nbMaxNodes);
         return -1;
     }
 
-    if (!(0 < to && to <= graph->nbMaxNodes)) {
+    if (!(0 < to && to <= (*graph)->nbMaxNodes)) {
         fprintf(stderr, "ERROR : addEdge() -> to : %i, non comprise dans ]%i,%i]\n", to, 0,
-                graph->nbMaxNodes);
+                (*graph)->nbMaxNodes);
         return -1;
     }
 
@@ -66,17 +66,17 @@ int addEdge(struct Graph *graph, int from, int weight, int to) {
         return -1;
     }
 
-    if (graph->adjList[from - 1] == NULL) {
+    if ((*graph)->adjList[from - 1] == NULL) {
         fprintf(stderr, "ERROR : addEdge() -> from : %i, n'existe pas\n", from);
         return -1;
     }
 
-    if (graph->adjList[to - 1] == NULL) {
+    if ((*graph)->adjList[to - 1] == NULL) {
         fprintf(stderr, "ERROR : addEdge() -> to : %i, n'existe pas\n", to);
         return -1;
     }
 
-    struct Neighbour *parcours = graph->adjList[from - 1];
+    struct Neighbour *parcours = (*graph)->adjList[from - 1];
     while (parcours->neighbour != -1) {
         if (parcours->weigh == weight && parcours->neighbour == to) {
             fprintf(stderr, "ERROR : addEdge(), existe déja\n");
@@ -85,9 +85,9 @@ int addEdge(struct Graph *graph, int from, int weight, int to) {
         parcours = parcours->nextNeighbour;
     }
 
-    graph->adjList[from - 1] = addNeighbourList(graph->adjList[from - 1], to, weight);
-    if (graph->isDirected == false && from != to) {
-        graph->adjList[to - 1] = addNeighbourList(graph->adjList[to - 1], from, weight);
+    (*graph)->adjList[from - 1] = addNeighbourList((*graph)->adjList[from - 1], to, weight);
+    if ((*graph)->isDirected == false && from != to) {
+        (*graph)->adjList[to - 1] = addNeighbourList((*graph)->adjList[to - 1], from, weight);
     }
     return 1;
 }
@@ -179,7 +179,7 @@ void viewGraph(struct Graph **graph) {
     }
 }
 
-int loadGraph(struct Graph *graph, char *path) {
+int loadGraph(struct Graph **graph, char *path) {
     FILE *in;
     in = fopen(path, "r");
     if (!in) {
@@ -265,7 +265,7 @@ int loadGraph(struct Graph *graph, char *path) {
     if (graph != NULL) {
         quit(graph);
     }
-    createGraph(&graph, nbMaxNodes, isDirected);
+    createGraph(graph, nbMaxNodes, isDirected);
     for (int i = 0; i < indice - 4; ++i) {
         addNode(graph, nodes[i]);
 

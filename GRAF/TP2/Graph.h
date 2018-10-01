@@ -17,7 +17,7 @@ int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected);
 
 int addNode(struct Graph **graph, int node);
 
-int addEdge(struct Graph *graph, int from, int weight, int to);
+int addEdge(struct Graph **graph, int from, int weight, int to);
 
 int removeNode(struct Graph **graph, int node);
 
@@ -25,7 +25,7 @@ int removeEdge(struct Graph **graph, int from, int weight, int to);
 
 void viewGraph(struct Graph **graph);
 
-int loadGraph(struct Graph *graph, char *path);
+int loadGraph(struct Graph **graph, char *path);
 
 int saveGraph(struct Graph **graph, char *path);
 
