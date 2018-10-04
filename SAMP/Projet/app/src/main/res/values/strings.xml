@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Projet</string>
+
+    <!--acceuil-->
+    <string name="tv_acceuil">Acceuil</string>
+    <string name="btn_jouer">Jouer</string>
+    <string name="btn_gerer">Gerer</string>
+    <string name="btn_quitter">Quitter</string>
+
+    <!--jouer-->
+
+    <!--retour-->
+    <string name="btn_retour">Retour</string>
+
+</resources>
