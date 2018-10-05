@@ -3,7 +3,9 @@
  */
 
 #include "Menu.h"
-
+ /**
+  * initiateMenu appel une fonction qui affiche un message de bienvenu, permet aussi de choisir les actions à faire sur le graph et appeller les fonctions correspondantes
+  */
 void initiateMenu() {
     messageBienvenu();
 
@@ -61,17 +63,23 @@ void initiateMenu() {
     }
 }
 
+/**
+ * messageBienvenu affiche un art ASCII de bienvenu sur la sortie standart
+ */
 void messageBienvenu() {
     printf("\n\n __          __  _                          \n"
            " \\ \\        / / | |                         \n"
            "  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___ \n"
            "   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\\n"
            "    \\  /\\  /  __/ | (_| (_) | | | | | |  __/\n"
-           "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|\n\n");
+           "     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|\n\n\n");
 }
 
+/**
+ * afficheListCommande propose une liste de choix d'actions possibles pour le graph
+ */
 void afficheListCommande() {
-    printf("\n\n1) Créer un graph\n"
+    printf("1) Créer un graph\n"
            "2) AJouter une node\n"
            "3) Supprimer une node\n"
            "4) AJouter une edge\n"
@@ -83,12 +91,19 @@ void afficheListCommande() {
            "10) Quitter\n");
 }
 
+/**
+ * viderBuffer permet de retirer tous les caractères présent dans l'entré standart pour éviter les problèmes
+ */
 void viderBuffer() {
     int c;
     while ((c = getchar()) != EOF && c != '\n');
 
 }
 
+/**
+ * newGraph permet de faire une vérification lors de la demande de création de graph, si un graph existe deja on s'assure que l'utilisateur veuille le remplacer
+ * @return
+ */
 bool newGraph() {
     int rep = 0;
     clear();
@@ -106,14 +121,19 @@ bool newGraph() {
 
 }
 
+/**
+ * clear permet de rendre plus lisible les informations du terminale
+ */
 void clear() {
-    char command[50];
-    strcpy( command, "clear" );
-    system(command);
-    system(command);
-    //printf("\n\n\n\n\n\n\n\n\n\n");
+    printf("\n###########################################\n\n");
 }
 
+/**
+ * callCreate récupère les informations nécéssaires et appels la fonction de création de graph
+ * @param graph
+ * @param create
+ * @return
+ */
 int callCreate(struct Graph **graph, bool create) {
     bool isDirected;
     int nbMaxNode ;
@@ -121,7 +141,6 @@ int callCreate(struct Graph **graph, bool create) {
         if (newGraph() == false) {
             return 1;
         }
-        quit(graph);
     }
         printf("Entrez le nombre de node maximale\n");
         scanf("%i", &nbMaxNode);
@@ -144,6 +163,10 @@ int callCreate(struct Graph **graph, bool create) {
     return res;
 }
 
+/**
+ * callAddNode récupère les informations nécéssaires et appels la fonction d'ajout de node
+ * @param graph
+ */
 void callAddNode(struct Graph **graph) {
     int node;
     printf("Entrez le numéro de node à ajouter\n");
@@ -153,6 +176,10 @@ void callAddNode(struct Graph **graph) {
     addNode(graph,node);
 }
 
+/**
+ * callDeleteNode récupère les informations nécéssaires et appels la fonction de suppression de node
+ * @param graph
+ */
 void callDeleteNode(struct Graph **graph) {
     int node;
     printf("Entrez le numéro de node à supprimer \n");
@@ -162,10 +189,18 @@ void callDeleteNode(struct Graph **graph) {
     addNode(graph,node);
 }
 
+/**
+ * callViewGraph appel la fonction d'affichage du graph
+ * @param graph
+ */
 void callViewGraph(struct Graph **graph) {
     viewGraph(graph);
 }
 
+/**
+ *récupère les informations nécéssaires et appels la fonction de suppression de edge
+ * @param graph
+ */
 void callDeleteEdge(struct Graph **graph) {
     int weight;
     int from;
@@ -183,6 +218,10 @@ void callDeleteEdge(struct Graph **graph) {
     removeEdge(graph,from,weight,to);
 }
 
+/**
+ * callAddEdge récupère les informations nécéssaires et appels la fonction d'ajout de edge
+ * @param graph
+ */
 void callAddEdge(struct Graph **graph) {
     int weight;
     int from;
@@ -200,6 +239,10 @@ void callAddEdge(struct Graph **graph) {
     addEdge(graph,from,weight,to);
 }
 
+/**
+ * callLoadGraph récupère les informations nécéssaires et appels la fonction de chargement d'un graph
+ * @param graph
+ */
 void callLoadGraph(struct Graph **graph) {
     char nameFile[50];
     printf("Entrez le nom du fichier a charger\n");
@@ -209,6 +252,10 @@ void callLoadGraph(struct Graph **graph) {
     loadGraph(graph,nameFile);
 }
 
+/**
+ * callSaveGraph récupère les informations nécéssaires et appels la fonction de sauvegarde d'un graph
+ * @param graph
+ */
 void callSaveGraph(struct Graph **graph) {
     char nameFile[50];
     printf("Entrez le nom du fichier a sauvegarder\n");
