@@ -5,8 +5,8 @@ DIRECSRC := ./src
 DIRECBIN := ./bin
 DIRECOBJ := ./obj
 
-CC := gcc# -std=c++14 -g#-O3 -s
-CFLAGS := -Wall -Wextra
+CC := gcc
+CFLAGS := -Wall -Wextra -g
 
 LIBS := -lm
 INCLUDES :=
@@ -30,6 +30,9 @@ install:
 	cp $(DIRECSRC)/$(EXENAME) $(DIRECBIN)
 	cp $(OBJ) $(DIRECOBJ)
 	chmod u+x $(DIRECBIN)/$(EXENAME)
+
+valgrind:
+	valgrind --leak-check=full --leak-resolution=med  --track-origins=yes $(DIRECBIN)/$(EXENAME)
 
 clean:
 	@echo "** Removing object files and executable..."
