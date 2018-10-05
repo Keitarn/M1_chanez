@@ -405,4 +405,5 @@ void quit(struct Graph **graph) {
     }
     free((*graph)->adjList);
     free((*graph));
+    *graph = NULL;
 }
