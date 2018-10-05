@@ -28,44 +28,34 @@ void initiateMenu() {
                 break;
             case 2:
                 callAddNode(&graph);
-                clear();
                 break;
             case 3:
                 callDeleteNode(&graph);
-                clear();
                 break;
             case 4:
                 callAddEdge(&graph);
-                clear();
                 break;
             case 5:
                 callDeleteEdge(&graph);
-                clear();
                 break;
             case 6:
                 quit(&graph);
-                clear();
                 break;
             case 7:
                 callViewGraph(&graph);
-                clear();
                 break;
             case 8:
                 callSaveGraph(&graph);
-                clear();
                 break;
             case 9:
                 callLoadGraph(&graph);
-                clear();
                 break;
             case 10:
                 quit(&graph);
                 stay = false;
-                clear();
                 break;
             default :
                 printf("aucune commande n'est lié à ce numéro\n");
-                clear();
                 break;
         }
     }
@@ -81,7 +71,7 @@ void messageBienvenu() {
 }
 
 void afficheListCommande() {
-    printf("1) Créer un graph\n"
+    printf("\n\n1) Créer un graph\n"
            "2) AJouter une node\n"
            "3) Supprimer une node\n"
            "4) AJouter une edge\n"
@@ -110,18 +100,16 @@ bool newGraph() {
             printf("Le graph a été supprimé\n\n");
             return true;
         }
-        if (rep == 2) {
-            printf("Le graph n'a pas été supprimé\n\n");
-            return false;
-        }
-
     }
+    printf("Le graph n'a pas été supprimé\n\n");
+    return false;
 
 }
 
 void clear() {
     char command[50];
     strcpy( command, "clear" );
+    system(command);
     system(command);
     //printf("\n\n\n\n\n\n\n\n\n\n");
 }
@@ -150,9 +138,9 @@ int callCreate(struct Graph **graph, bool create) {
     } else {
         isDirected = false;
     }
+    clear();
     int res = createGraph(graph, nbMaxNode, isDirected);
     nbMaxNode = 0;
-    clear();
     return res;
 }
 
@@ -161,6 +149,7 @@ void callAddNode(struct Graph **graph) {
     printf("Entrez le numéro de node à ajouter\n");
     scanf("%i", &node);
     viderBuffer();
+    clear();
     addNode(graph,node);
 }
 
@@ -169,6 +158,7 @@ void callDeleteNode(struct Graph **graph) {
     printf("Entrez le numéro de node à supprimer \n");
     scanf("%i", &node);
     viderBuffer();
+    clear();
     addNode(graph,node);
 }
 
@@ -189,6 +179,7 @@ void callDeleteEdge(struct Graph **graph) {
     printf("Entrez le numéro de la node d'arrivé \n");
     scanf("%i", &to);
     viderBuffer();
+    clear();
     removeEdge(graph,from,weight,to);
 }
 
@@ -205,21 +196,24 @@ void callAddEdge(struct Graph **graph) {
     printf("Entrez le numéro de la node d'arrivé\n");
     scanf("%i", &to);
     viderBuffer();
+    clear();
     addEdge(graph,from,weight,to);
 }
 
 void callLoadGraph(struct Graph **graph) {
     char nameFile[50];
     printf("Entrez le nom du fichier a charger\n");
-    scanf("%s", &nameFile);
+    scanf("%s", nameFile);
     viderBuffer();
+    clear();
     loadGraph(graph,nameFile);
 }
 
 void callSaveGraph(struct Graph **graph) {
     char nameFile[50];
     printf("Entrez le nom du fichier a sauvegarder\n");
-    scanf("%s", &nameFile);
+    scanf("%s", nameFile);
     viderBuffer();
+    clear();
     saveGraph(graph,nameFile);
 }
