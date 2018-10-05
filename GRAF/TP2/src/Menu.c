@@ -198,7 +198,7 @@ void callViewGraph(struct Graph **graph) {
 }
 
 /**
- *récupère les informations nécéssaires et appels la fonction de suppression de edge
+ * callDeleteEdge récupère les informations nécéssaires et appels la fonction de suppression de edge
  * @param graph
  */
 void callDeleteEdge(struct Graph **graph) {
