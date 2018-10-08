@@ -1,7 +1,7 @@
-#Se placer dans le dossier principal
-##Lancer la compilation + l'installation (file +.o +  executable + lib)
+##Place yourself in the main folder
+###Launch the compilation + installation (file +.o + executable + lib)
 `make`
-##Executer le programme
+###Run the program
 `make execute`
-##Nettoyer (supprime l'executable + lib + .o)
+###Clean (deletes the executable + lib + .o)
 `make clean`

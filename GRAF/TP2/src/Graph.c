@@ -5,8 +5,8 @@
 #include "Graph.h"
 
 /**
- * createGraph permet de creer un graph en initialisant le type de graph (isDirected), et d'allouer de la memoire pour le nombre de noeuds max (nbMaxNodes). 
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * createGraph allows you to create a graph by initializing the type of graph (isDirected), and to allocate memory for the maximum number of nodes (nbMaxNodes).
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param nbMaxNodes
  * @param isDirected
@@ -41,8 +41,8 @@ int createGraph(struct Graph **graph, int nbMaxNodes, bool isDirected) {
 }
 
 /**
- * addNode permet d'ajouter au graph un noeud (node). 
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * addNode allows you to add a node (node) to the graph.
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param node
  * @return
@@ -69,8 +69,8 @@ int addNode(struct Graph **graph, int node) {
 }
 
 /**
- * addEdge permet d'ajouter au graph un pont entre deux noeuds (from)(to) et d'y ajouter un poids(weight) .
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * addEdge allows to add to the graph a bridge between two nodes (from)(to) and to add a weight (weight) .
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param from
  * @param weight
@@ -120,15 +120,15 @@ int addEdge(struct Graph **graph, int from, int weight, int to) {
     }
 
     (*graph)->adjList[from - 1] = addNeighbourList((*graph)->adjList[from - 1], to, weight);
-    if ((*graph)->isDirected == false && from != to) {
+    if (!(*graph)->isDirected && from != to) {
         (*graph)->adjList[to - 1] = addNeighbourList((*graph)->adjList[to - 1], from, weight);
     }
     return 1;
 }
 
 /**
- * removeNode permet de supprimer au graph un noeud(node).
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * removeNode allows you to delete a node (node) from the graph.
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param node
  * @return
@@ -161,8 +161,8 @@ int removeNode(struct Graph **graph, int node) {
 }
 
 /**
- * removeNode permet de supprimer au graph un pont entre deux noeuds (from)(to) avec le poids (weight) correspondant.
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * removeNode allows you to remove a bridge between two nodes (from)(to) with the corresponding weight (weight) from the graph.
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param from
  * @param weight
@@ -211,7 +211,7 @@ int removeEdge(struct Graph **graph, int from, int weight, int to) {
 }
 
 /**
- * viewGraph permet d'afficher le graph dans la console.
+ * viewGraph allows you to display the graph in the console.
  * @param graph
  */
 void viewGraph(struct Graph **graph) {
@@ -235,8 +235,8 @@ void viewGraph(struct Graph **graph) {
 }
 
 /**
- * loadGraph permet de charger un graph enregistrer dans un fichier avec son chemin (path);
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * loadGraph allows you to load a graph saved in a file with its path (path);
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param path
  * @return
@@ -258,7 +258,7 @@ int loadGraph(struct Graph **graph, char *path) {
     int *tabWeight = NULL;
     int *tabTo = NULL;
 
-    // on part du principe que les fichiers son exactement formate pareillement donc on zaap les lignes de commentaire et on lit se qui nous interresse.
+    // we assume that the files are exactly the same format so we zaap the comment lines and read what we are interested in.
     while (fgets(buffer, 200, in) != NULL) {
         indice++;
         switch (indice) {
@@ -270,10 +270,10 @@ int loadGraph(struct Graph **graph, char *path) {
                 nbMaxNodes = atoi(strtok(buffer, "\n"));
                 break;
             case 3:
-                isDirected = buffer[0] == 'y' ? true : false;
+                isDirected = buffer[0] == 'y';
                 break;
             default:
-		// on ajoute toutes les noeuds et les ponts a des tableaux qui serviront pour creer le graph.
+		// all nodes and bridges are added to tables that will be used to create the graph.
                 nodes = realloc(nodes, (indice - 4) * sizeof(int));
                 int parcoursChaine = 0;
                 int node = (int) buffer[parcoursChaine] - '0';
@@ -328,14 +328,14 @@ int loadGraph(struct Graph **graph, char *path) {
         quit(graph);
     }
 
-    // ajoute les noeuds
+    // add nodes
     createGraph(graph, nbMaxNodes, isDirected);
     for (int i = 0; i < indice - 4; ++i) {
         addNode(graph, nodes[i]);
 
     }
 
-    // ajoute les ponts
+    // add edges
     int node = 0;
     for (int i = 0; i < position; ++i) {
         if (tabTo[i] == -1) {
@@ -351,8 +351,8 @@ int loadGraph(struct Graph **graph, char *path) {
 }
 
 /**
- * saveGraph permet de sauvegarder le graph dans un fichier avec son chemin (path).
- * Si la fonction a des parametres inattendu ou un probleme retourne -1 et si tout c'est bien passe return 1.
+ * saveGraph allows you to save the graph in a file with its path (path).
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
  * @param path
  * @return
@@ -388,8 +388,8 @@ int saveGraph(struct Graph **graph, char *path) {
 }
 
 /**
- * quit permet de dealloue la memoire alloue pour le graph.
- * Si la fonction a des parametres inattendu ou un probleme retourne rien.
+ * quit allows you to unallocate the memory allocated for the graph.
+ * If the function has unexpected settings or a problem returns nothing.
  * @param graph
  */
 void quit(struct Graph **graph) {

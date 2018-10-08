@@ -5,8 +5,8 @@
 #include "List.h"
 
 /**
- * addNeighbourList ajoute un nouveau neighbour dans une liste avec le poids ( weight ) et la node ( to ) donnée en paramètre
- * La liste est retournée avec le nouveau neighbour ajouté
+ * addNeighbourList  adds a new neighbour to a list with the weight (weight) and the node (to) given as a parameter
+ * The list is returned with the new neighbour added
  * @param list
  * @param to
  * @param weight
@@ -29,8 +29,8 @@ struct Neighbour *addNeighbourList(struct Neighbour *list, int to, int weight) {
 }
 
 /**
- * removeNeighbourList retire de la liste le neighbour ayant le poids ( weight ) et la node ( to ) donée en paramètre
- * retourne la liste si un élément à été supprimé et NULL si l'élément n'éxistait pas
+ * removeNeighbourList removes from the list the neighbour having the weight (weight) and the node (to) given as a parameter
+ * returns the list if an element has been deleted and NULL if the element did not exist
  * @param list
  * @param to
  * @param weight
@@ -57,7 +57,7 @@ struct Neighbour *removeNeighbourList(struct Neighbour *list, int to, int weight
 }
 
 /**
- * createList créer une nouvelle liste de neighbours possédant un neigbour ayant pour poids -1 et node -1
+ * createList create a new list of neighbours with a neigbour with a weight of -1 and node -1
  * @return
  */
 struct Neighbour *createList() {
@@ -74,8 +74,8 @@ struct Neighbour *createList() {
 }
 
 /**
- * removeList supprimes tous les élément d'une liste chainé de neigbhour
- * Renvoie NULL une fois que la suppression est terminée
+ * removeList delete all items from a chain list of neigbhour
+ * Returns NULL once the deletion is complete
  * @param list
  * @return
  */
@@ -92,8 +92,8 @@ struct Neighbour *removeList(struct Neighbour *list) {
 }
 
 /**
- * removeMultipleNeighbour retire toute les nodes d'une chaine possédant la node ciblé ( to )
- * retourne un pointeur sur le premier élément de la liste chainé
+ * removeMultipleNeighbour removes all nodes from a string with the targeted node (to)
+ * returns a pointer to the first item in the chained list
  * @param list
  * @param to
  * @return
@@ -120,7 +120,7 @@ struct Neighbour *removeMultipleNeighbour(struct Neighbour *list, int to) {
 }
 
 /**
- * viewList permet d'afficher une liste chainée sur le terminal
+ * viewList allows you to display a chained list on the terminal
  * @param list
  */
 void viewList(struct Neighbour *list) {
@@ -132,7 +132,7 @@ void viewList(struct Neighbour *list) {
 }
 
 /**
- * saveList enregistre une liste chainé dans un fichier
+ * saveList saves a chained list in a file
  * @param list
  * @param out
  */
