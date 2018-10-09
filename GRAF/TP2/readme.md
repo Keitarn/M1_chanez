@@ -5,3 +5,5 @@
 `make execute`
 ###Clean (deletes the executable + lib + .o)
 `make clean`
+###Valgrind
+`make valgrind`

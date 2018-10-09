@@ -42,6 +42,8 @@ void initiateMenu() {
                 break;
             case 6:
                 quit(&graph);
+                create = false;
+                clear();
                 break;
             case 7:
                 callViewGraph(&graph);
@@ -50,7 +52,11 @@ void initiateMenu() {
                 callSaveGraph(&graph);
                 break;
             case 9:
-                callLoadGraph(&graph);
+                if(callLoadGraph(&graph) == 1){
+                    create = true;
+                } else {
+                    create = false;
+                }
                 break;
             case 10:
                 quit(&graph);
@@ -186,7 +192,7 @@ void callDeleteNode(struct Graph **graph) {
     scanf("%i", &node);
     viderBuffer();
     clear();
-    addNode(graph,node);
+    removeNode(graph,node);
 }
 
 /**
@@ -195,6 +201,7 @@ void callDeleteNode(struct Graph **graph) {
  */
 void callViewGraph(struct Graph **graph) {
     viewGraph(graph);
+    printf("\n");
 }
 
 /**
@@ -241,15 +248,17 @@ void callAddEdge(struct Graph **graph) {
 
 /**
  * callLoadGraph retrieves the necessary information and calls the graph loading function
+ * If the function has unexpected parameters or a problem returns -1 and if all is well passed return 1.
  * @param graph
+ * @return
  */
-void callLoadGraph(struct Graph **graph) {
+int callLoadGraph(struct Graph **graph) {
     char nameFile[50];
     printf("Enter the name of the file to be loaded\n");
     scanf("%s", nameFile);
     viderBuffer();
     clear();
-    loadGraph(graph,nameFile);
+   return(loadGraph(graph,nameFile));
 }
 
 /**
