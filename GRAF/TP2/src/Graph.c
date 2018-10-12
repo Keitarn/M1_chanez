@@ -273,7 +273,7 @@ int loadGraph(struct Graph **graph, char *path) {
                 isDirected = buffer[0] == 'y';
                 break;
             default:
-		// all nodes and bridges are added to tables that will be used to create the graph.
+                // all nodes and bridges are added to tables that will be used to create the graph.
                 nodes = realloc(nodes, (indice - 4) * sizeof(int));
                 int parcoursChaine = 0;
                 int node = (int) buffer[parcoursChaine] - '0';

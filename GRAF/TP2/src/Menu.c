@@ -3,13 +3,14 @@
  */
 
 #include "Menu.h"
- /**
-  * initiateMenu calls a function that displays a welcome message, also allows you to choose the actions to do on the graph and call the corresponding functions
-  */
+
+/**
+ * initiateMenu calls a function that displays a welcome message, also allows you to choose the actions to do on the graph and call the corresponding functions
+ */
 void initiateMenu() {
     messageBienvenu();
 
-    struct Graph * graph = NULL;
+    struct Graph *graph = NULL;
     bool stay = true;
     bool create = false;
     int res;
@@ -22,7 +23,7 @@ void initiateMenu() {
         switch (reponse) {
             case 1:
                 res = callCreate(&graph, create);
-                if(res == 1){
+                if (res == 1) {
                     create = true;
                 } else {
                     create = false;
@@ -52,7 +53,7 @@ void initiateMenu() {
                 callSaveGraph(&graph);
                 break;
             case 9:
-                if(callLoadGraph(&graph) == 1){
+                if (callLoadGraph(&graph) == 1) {
                     create = true;
                 } else {
                     create = false;
@@ -142,15 +143,15 @@ void clear() {
  */
 int callCreate(struct Graph **graph, bool create) {
     bool isDirected;
-    int nbMaxNode ;
+    int nbMaxNode;
     if (create) {
         if (!newGraph()) {
             return 1;
         }
     }
-        printf("Enter the maximum number of nodes\n");
-        scanf("%i", &nbMaxNode);
-        viderBuffer();
+    printf("Enter the maximum number of nodes\n");
+    scanf("%i", &nbMaxNode);
+    viderBuffer();
 
     int reponse = 0;
     while (reponse != 1 && reponse != 2) {
@@ -179,7 +180,7 @@ void callAddNode(struct Graph **graph) {
     scanf("%i", &node);
     viderBuffer();
     clear();
-    addNode(graph,node);
+    addNode(graph, node);
 }
 
 /**
@@ -192,7 +193,7 @@ void callDeleteNode(struct Graph **graph) {
     scanf("%i", &node);
     viderBuffer();
     clear();
-    removeNode(graph,node);
+    removeNode(graph, node);
 }
 
 /**
@@ -222,7 +223,7 @@ void callDeleteEdge(struct Graph **graph) {
     scanf("%i", &to);
     viderBuffer();
     clear();
-    removeEdge(graph,from,weight,to);
+    removeEdge(graph, from, weight, to);
 }
 
 /**
@@ -243,7 +244,7 @@ void callAddEdge(struct Graph **graph) {
     scanf("%i", &to);
     viderBuffer();
     clear();
-    addEdge(graph,from,weight,to);
+    addEdge(graph, from, weight, to);
 }
 
 /**
@@ -258,7 +259,7 @@ int callLoadGraph(struct Graph **graph) {
     scanf("%s", nameFile);
     viderBuffer();
     clear();
-   return(loadGraph(graph,nameFile));
+    return (loadGraph(graph, nameFile));
 }
 
 /**
@@ -271,5 +272,5 @@ void callSaveGraph(struct Graph **graph) {
     scanf("%s", nameFile);
     viderBuffer();
     clear();
-    saveGraph(graph,nameFile);
+    saveGraph(graph, nameFile);
 }
