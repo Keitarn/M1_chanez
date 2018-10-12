@@ -16,11 +16,11 @@ SRC := $(shell find $(DIRECSRC) -name '*.c')
 OBJ := $(SRC:.c=.o)
 
 
-all: $(EXENAME) install lib cleansrc   
+all: $(EXENAME) install clean
 
-$(EXENAME): $(OBJ)
+$(EXENAME): $(OBJ) lib
 	@echo "** Building the game"
-	$(CC) -o $(DIRECSRC)/$@ $^ $(LIBS)
+	$(CC) -o $(DIRECBIN)/$@ $(DIRECOBJ)/main.o $(DIRECOBJ)/Menu.o $(LIBS) $(DIRECLIB)/libgraph.a $(DIRECLIB)/liblist.a
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<

@@ -34,6 +34,6 @@ void callAddEdge(struct Graph **graph);
 
 void callSaveGraph(struct Graph **graph);
 
-void callLoadGraph(struct Graph **graph);
+int callLoadGraph(struct Graph **graph);
 
 #endif //TP2_MENU_H
