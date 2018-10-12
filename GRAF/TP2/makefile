@@ -18,9 +18,9 @@ OBJ := $(SRC:.c=.o)
 
 all: $(EXENAME) install clean
 
-$(EXENAME): $(OBJ) lib
+$(EXENAME): $(DIRECSRC)/main.o $(DIRECSRC)/Menu.o lib
 	@echo "** Building the game"
-	$(CC) -o $(DIRECBIN)/$@ $(DIRECOBJ)/main.o $(DIRECOBJ)/Menu.o $(LIBS) $(DIRECLIB)/libgraph.a $(DIRECLIB)/liblist.a
+	$(CC) -o $(DIRECSRC)/$@ $(DIRECSRC)/main.o $(DIRECSRC)/Menu.o $(LIBS) $(DIRECSRC)/libgraph.a $(DIRECSRC)/liblist.a
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
@@ -28,35 +28,40 @@ $(EXENAME): $(OBJ) lib
 install:
 	@echo "** Installing..."
 	sh ./create_directories.sh
-	cp $(DIRECSRC)/$(EXENAME) $(DIRECBIN)
-	cp $(OBJ) $(DIRECOBJ)
-	chmod u+x $(DIRECBIN)/$(EXENAME)
-	
+	cp $(DIRECSRC)/$(EXENAME) $(DIRECBIN) || :
+	cp $(OBJ) $(DIRECOBJ) || :
+	cp $(DIRECSRC)/libgraph.a $(DIRECLIB) || :
+	cp $(DIRECSRC)/liblist.a $(DIRECLIB) || :
+	chmod u+x $(DIRECBIN)/$(EXENAME) || :
 
 lib: libgraph.a liblist.a
 
-libgraph.a: $(DIRECOBJ)/Graph.o
-	ar rcs $(DIRECLIB)/libgraph.a $(DIRECOBJ)/Graph.o
+libgraph.a: $(DIRECSRC)/Graph.o
+	ar rcs $(DIRECSRC)/libgraph.a $(DIRECSRC)/Graph.o
 
-liblist.a: $(DIRECOBJ)/List.o
-	ar rcs $(DIRECLIB)/liblist.a $(DIRECOBJ)/List.o
+liblist.a: $(DIRECSRC)/List.o
+	ar rcs $(DIRECSRC)/liblist.a $(DIRECSRC)/List.o
 
 valgrind:
 	@echo "** Valgrind"
 	valgrind --leak-check=full --leak-resolution=med  --track-origins=yes $(DIRECBIN)/$(EXENAME)
 
-cleansrc:
-	@echo "** Removing object files and executable in src..."
-	rm -f $(OBJ)
-	rm -f $(DIRECSRC)/$(EXENAME)
-
 clean:
-	@echo "** Removing object files, executable and libs..."
-	rm -f $(DIRECBIN)/*
-	rm -f $(DIRECOBJ)/*
-	rm -f $(DIRECLIB)/*
+	@echo "** Removing object files and executable and libs in src..."
 	rm -f $(OBJ)
 	rm -f $(DIRECSRC)/$(EXENAME)
+	rm -f $(DIRECSRC)/libgraph.a
+	rm -f $(DIRECSRC)/liblist.a
+
+cleanAll:
+	@echo "** Removing object files, executable ..."
+	rm -rf $(DIRECBIN)
+	rm -rf $(DIRECOBJ)
+	rm -rf $(DIRECLIB)
+	rm -f $(OBJ)
+	rm -f $(DIRECSRC)/$(EXENAME)
+	rm -f $(DIRECSRC)/libgraph.a
+	rm -f $(DIRECSRC)/liblist.a
 
 execute:
 	@echo "** start the game.."
