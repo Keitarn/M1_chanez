@@ -1,8 +1,10 @@
 package com.example.bchanez.projet;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,6 +14,24 @@ public class Acceuil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceuil);
+
+        MySQLite.getInstance(this);
+
+        QuizzManager qm = new QuizzManager(this);
+//        qm.open();
+//        Cursor c = qm.getQuizzs();
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.d("affichage question",
+//                        c.getInt(c.getColumnIndex(QuizzManager.KEY_ID_QUIZZ)) + "," +
+//                                c.getString(c.getColumnIndex(QuizzManager.KEY_NOM_QUIZZ))
+//                );
+//            }
+//            while (c.moveToNext());
+//
+//        }
+//        c.close();
+//        qm.close();
 
         ((Button) findViewById(R.id.id_btn_jouer)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

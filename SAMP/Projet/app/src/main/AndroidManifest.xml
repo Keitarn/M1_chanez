@@ -9,18 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Acceuil"
-            android:screenOrientation="portrait">
+        <activity android:name=".Acceuil">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Jouer_select_quizz"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Gerer_select_quizz"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".Jouer_select_quizz"/>
+        <activity android:name=".Gerer_select_quizz"/>
     </application>
 
 </manifest>
