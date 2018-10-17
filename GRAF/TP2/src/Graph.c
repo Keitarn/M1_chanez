@@ -216,6 +216,7 @@ int removeEdge(struct Graph **graph, int from, int weight, int to) {
  */
 void viewGraph(struct Graph **graph) {
     if ((*graph) == NULL) {
+        fprintf(stderr, "ERROR : viewGraph() -> uncreated graph\n");
         return;
     }
 
