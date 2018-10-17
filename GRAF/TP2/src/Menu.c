@@ -175,9 +175,12 @@ int callCreate(struct Graph **graph, bool create) {
  * @param graph
  */
 void callAddNode(struct Graph **graph) {
+    char nbNode[50];
+    char *endS;
     int node;
     printf("Enter the node number to add\n");
-    scanf("%i", &node);
+    scanf("%s", nbNode);
+    node = strtol(nbNode,&endS,10);
     viderBuffer();
     clear();
     addNode(graph, node);
@@ -188,9 +191,12 @@ void callAddNode(struct Graph **graph) {
  * @param graph
  */
 void callDeleteNode(struct Graph **graph) {
+    char nbNode[50];
+    char *endS;
     int node;
     printf("Enter the node number to be deleted \n");
-    scanf("%i", &node);
+    scanf("%s", nbNode);
+    node = strtol(nbNode,&endS,10);
     viderBuffer();
     clear();
     removeNode(graph, node);
