@@ -144,19 +144,26 @@ void clear() {
 int callCreate(struct Graph **graph, bool create) {
     bool isDirected;
     int nbMaxNode;
+    char nbMaxNodeS[50];
+    char reponseS[50];
+    char *endS;
+
     if (create) {
         if (!newGraph()) {
             return 1;
         }
     }
     printf("Enter the maximum number of nodes\n");
-    scanf("%i", &nbMaxNode);
+    scanf("%s", nbMaxNodeS);
+    nbMaxNode = strtol(nbMaxNodeS,&endS,10);
+
     viderBuffer();
 
     int reponse = 0;
     while (reponse != 1 && reponse != 2) {
         printf("Is the graph oriented ?\n1) yes\n2) no\n");
-        scanf("%i", &reponse);
+        scanf("%s", reponseS);
+        reponse = strtol(reponseS,&endS,10);
         viderBuffer();
     }
     if (reponse == 1) {
@@ -175,12 +182,12 @@ int callCreate(struct Graph **graph, bool create) {
  * @param graph
  */
 void callAddNode(struct Graph **graph) {
-    char nbNode[50];
+    char NodeS[50];
     char *endS;
     int node;
     printf("Enter the node number to add\n");
-    scanf("%s", nbNode);
-    node = strtol(nbNode,&endS,10);
+    scanf("%s", NodeS);
+    node = strtol(NodeS,&endS,10);
     viderBuffer();
     clear();
     addNode(graph, node);
@@ -191,12 +198,12 @@ void callAddNode(struct Graph **graph) {
  * @param graph
  */
 void callDeleteNode(struct Graph **graph) {
-    char nbNode[50];
+    char NodeS[50];
     char *endS;
     int node;
     printf("Enter the node number to be deleted \n");
-    scanf("%s", nbNode);
-    node = strtol(nbNode,&endS,10);
+    scanf("%s", NodeS);
+    node = strtol(NodeS,&endS,10);
     viderBuffer();
     clear();
     removeNode(graph, node);
@@ -219,15 +226,27 @@ void callDeleteEdge(struct Graph **graph) {
     int weight;
     int from;
     int to;
-    printf("Enter the number of the starting node \n");
-    scanf("%i", &from);
+    char weightS[50];
+    char fromS[50];
+    char toS[50];
+    char *endS;
+
+    printf("Enter the number of the starting node\n");
+    scanf("%s", fromS);
+    from = strtol(fromS,&endS,10);
     viderBuffer();
-    printf("Enter the weight of the edge \n");
-    scanf("%i", &weight);
+
+    printf("Enter the weight of the edge\n");
+    scanf("%s", weightS);
+    weight = strtol(weightS,&endS,10);
     viderBuffer();
-    printf("Enter the number of the arrival node \n");
-    scanf("%i", &to);
+
+
+    printf("Enter the number of the arrival node\n");
+    scanf("%s", toS);
+    to = strtol(toS,&endS,10);
     viderBuffer();
+
     clear();
     removeEdge(graph, from, weight, to);
 }
@@ -240,15 +259,27 @@ void callAddEdge(struct Graph **graph) {
     int weight;
     int from;
     int to;
+    char weightS[50];
+    char fromS[50];
+    char toS[50];
+    char *endS;
+
     printf("Enter the number of the starting node\n");
-    scanf("%i", &from);
+    scanf("%s", fromS);
+    from = strtol(fromS,&endS,10);
     viderBuffer();
+
     printf("Enter the weight of the edge\n");
-    scanf("%i", &weight);
+    scanf("%s", weightS);
+    weight = strtol(weightS,&endS,10);
     viderBuffer();
+
+
     printf("Enter the number of the arrival node\n");
-    scanf("%i", &to);
+    scanf("%s", toS);
+    to = strtol(toS,&endS,10);
     viderBuffer();
+
     clear();
     addEdge(graph, from, weight, to);
 }
