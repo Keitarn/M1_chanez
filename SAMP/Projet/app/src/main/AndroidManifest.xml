@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".Jouer_select_quizz" />
         <activity android:name=".Gerer_select_quizz" />
-        <activity android:name=".Jouer"></activity>
+        <activity android:name=".Jouer" />
+        <activity android:name=".Edit_quizz" />
+        <activity android:name=".Edit_question" />
+        <activity android:name=".Edit_reponse"/>
     </application>
 
 </manifest>

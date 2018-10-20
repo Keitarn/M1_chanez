@@ -7,7 +7,19 @@
     <string name="btn_gerer">Gerer</string>
     <string name="btn_quitter">Quitter</string>
 
-    <!--jouer-->
+    <!--gerer-->
+    <string name="btn_telecharger">Télécharger</string>
+
+    <!--titre-->
+    <string name="tv_activity_gerer_select_quizz">Sélectionnez un quizz à éditer</string>
+    <string name="tv_activity_jouer_select_quizz">Sélectionnez un quizz à jouer</string>
+    <string name="tv_activity_edit_quizz">Sélectionnez une question à éditer</string>
+    <string name="tv_activity_edit_question">Sélectionnez une réponse à éditer</string>
+    <string name="tv_activity_edit_reponse">Éditer une réponse</string>
+
+
+    <!--nouveau-->
+    <string name="btn_nouveau">Nouveau</string>
 
     <!--retour-->
     <string name="btn_retour">Retour</string>
