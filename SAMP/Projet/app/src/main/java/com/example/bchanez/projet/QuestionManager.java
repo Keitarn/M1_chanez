@@ -12,7 +12,7 @@ public class QuestionManager {
     public static final String KEY_ID_QUIZZ_QUESTION = "quizz_id";
     public static final
     String CREATE_TABLE_QUESTION = "CREATE TABLE " + TABLE_NAME_QUESTION + " (" +
-            " " + KEY_ID_QUESTION + " INTEGER primary key," +
+            " " + KEY_ID_QUESTION + " INTEGER primary key autoincrement," +
             " " + KEY_TEXT_QUESTION + " TEXT," +
             " " + KEY_ID_QUIZZ_QUESTION + " INTEGER," +
             " " + "FOREIGN KEY(" + KEY_ID_QUIZZ_QUESTION + ") REFERENCES " +
@@ -78,6 +78,12 @@ public class QuestionManager {
 
     public Cursor getQuestions() {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTION,
+                null);
+    }
+
+    public Cursor getQuestionsByQuizz(int id) {
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTION  + " WHERE " +
+                        KEY_ID_QUIZZ_QUESTION + "=" + id,
                 null);
     }
 }

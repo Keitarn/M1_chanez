@@ -13,9 +13,9 @@ public class ReponseManager {
     public static final String KEY_ID_QUESTION_REPONSE = "question_id";
     public static final
     String CREATE_TABLE_REPONSE = "CREATE TABLE " + TABLE_NAME_REPONSE + " (" +
-            " " + KEY_ID_REPONSE + " INTEGER primary key," +
+            " " + KEY_ID_REPONSE + " INTEGER primary key autoincrement," +
             " " + KEY_TEXT_REPONSE + " TEXT," +
-            " " + KEY_VRAI_REPONSE + " BOOL," +
+            " " + KEY_VRAI_REPONSE + " BOOLEAN," +
             " " + KEY_ID_QUESTION_REPONSE + " INTEGER," +
             " " + "FOREIGN KEY(" + KEY_ID_QUESTION_REPONSE + ") REFERENCES " +
             QuestionManager.TABLE_NAME_QUESTION + "(" + QuestionManager.KEY_ID_QUESTION + ")" +
@@ -81,6 +81,12 @@ public class ReponseManager {
 
     public Cursor getReponses() {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME_REPONSE,
+                null);
+    }
+
+    public Cursor getReponsesByQuestion(int id) {
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME_REPONSE + " WHERE " +
+                        KEY_ID_QUESTION_REPONSE + "=" + id,
                 null);
     }
 }

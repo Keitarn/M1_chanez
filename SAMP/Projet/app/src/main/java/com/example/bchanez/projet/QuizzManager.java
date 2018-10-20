@@ -11,7 +11,7 @@ public class QuizzManager {
     public static final String KEY_NOM_QUIZZ = "nom";
     public static final
     String CREATE_TABLE_QUIZZ = "CREATE TABLE " + TABLE_NAME_QUIZZ + " (" +
-            " " + KEY_ID_QUIZZ + " INTEGER primary key," +
+            " " + KEY_ID_QUIZZ + " INTEGER primary key autoincrement," +
             " " + KEY_NOM_QUIZZ + " TEXT" +
             ");";
 
