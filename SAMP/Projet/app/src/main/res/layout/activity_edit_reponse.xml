@@ -69,7 +69,7 @@
             android:id="@+id/id_input_text"
             android:layout_width="match_parent"
             android:layout_height="39dp"
-            android:hint="hint" />
+            android:hint="Reponse" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

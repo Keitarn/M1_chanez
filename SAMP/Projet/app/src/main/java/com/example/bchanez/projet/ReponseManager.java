@@ -72,7 +72,9 @@ public class ReponseManager {
             r.setText(c.getString(c.getColumnIndex(KEY_TEXT_REPONSE)));
             r.setVrai(c.getInt(c.getColumnIndex(KEY_VRAI_REPONSE)) > 0);
             QuestionManager qm = new QuestionManager(context);
+            qm.open();
             r.setQuestion(qm.getQuestion(c.getInt(c.getColumnIndex(KEY_ID_QUESTION_REPONSE))));
+            qm.close();
             c.close();
         }
 

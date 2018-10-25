@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +28,7 @@ public class Jouer extends AppCompatActivity {
     private int nbQuestion;
 
     private List<Integer> listIDQuestion = new ArrayList<Integer>();
-    private List<String> listNomQuestion = new ArrayList<String>();
+    private List<String> listTextQuestion = new ArrayList<String>();
     private List<Integer> listIDReponse = new ArrayList<Integer>();
     private List<String> listTextReponse = new ArrayList<String>();
     private List<Boolean> listVraiReponse = new ArrayList<Boolean>();
@@ -51,7 +50,7 @@ public class Jouer extends AppCompatActivity {
         if (c.moveToFirst()) {
             do {
                 listIDQuestion.add(c.getInt(c.getColumnIndex(QuestionManager.KEY_ID_QUESTION)));
-                listNomQuestion.add(c.getString(c.getColumnIndex(QuestionManager.KEY_TEXT_QUESTION)));
+                listTextQuestion.add(c.getString(c.getColumnIndex(QuestionManager.KEY_TEXT_QUESTION)));
             }
             while (c.moveToNext());
         }
@@ -93,7 +92,7 @@ public class Jouer extends AppCompatActivity {
         ((TextView) findViewById(R.id.id_tv_question)).setText("Fin");
 
         if (nbQuestion < listIDQuestion.size()) {
-            ((TextView) findViewById(R.id.id_tv_question)).setText(String.valueOf(listNomQuestion.get(nbQuestion)));
+            ((TextView) findViewById(R.id.id_tv_question)).setText(String.valueOf(listTextQuestion.get(nbQuestion)));
 
             ReponseManager reponseManager = new ReponseManager(this);
             reponseManager.open();

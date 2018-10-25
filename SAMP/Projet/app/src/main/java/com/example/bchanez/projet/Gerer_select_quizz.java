@@ -70,10 +70,9 @@ public class Gerer_select_quizz extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //todo
-//                Intent intent = new Intent(Gerer_select_quizz.this, Jouer.class);
-//                intent.putExtra("QUIZZ_ID", "" + listIDQuizz.get(position));
-//                startActivity(intent);
+                Intent intent = new Intent(Gerer_select_quizz.this, Edit_quizz.class);
+                intent.putExtra("QUIZZ_ID", "" + listIDQuizz.get(position));
+                startActivity(intent);
             }
         });
     }

@@ -69,7 +69,9 @@ public class QuestionManager {
             q.setId(c.getInt(c.getColumnIndex(KEY_ID_QUESTION)));
             q.setText(c.getString(c.getColumnIndex(KEY_TEXT_QUESTION)));
             QuizzManager qm = new QuizzManager(context);
+            qm.open();
             q.setQuizz(qm.getQuizz(c.getInt(c.getColumnIndex(KEY_ID_QUIZZ_QUESTION))));
+            qm.close();
             c.close();
         }
 
