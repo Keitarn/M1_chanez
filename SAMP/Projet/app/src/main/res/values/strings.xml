@@ -21,7 +21,19 @@
     <!--nouveau-->
     <string name="btn_nouveau">Nouveau</string>
 
+    <!--modifier-->
+    <string name="btn_modifier">Modifier</string>
+
+    <!--supprimer-->
+    <string name="btn_supprimer">Supprimer</string>
+
     <!--retour-->
     <string name="btn_retour">Retour</string>
+
+    <string name="hint_quizz">Quizz</string>
+    <string name="hint_question">Question</string>
+    <string name="hint_reponse">Réponse</string>
+
+
 
 </resources>

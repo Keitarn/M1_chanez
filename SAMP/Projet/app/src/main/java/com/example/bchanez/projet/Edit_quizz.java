@@ -73,6 +73,18 @@ public class Edit_quizz extends AppCompatActivity {
             }
         });
 
+        ((Button) findViewById(R.id.id_btn_supprime)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo
+            }
+        });
+
+        ((Button) findViewById(R.id.id_btn_modifier)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo
+            }
+        });
+
         ((Button) findViewById(R.id.id_btn_nouveau)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Edit_quizz.this, Edit_question.class);

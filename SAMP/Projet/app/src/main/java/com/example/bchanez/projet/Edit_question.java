@@ -74,6 +74,17 @@ public class Edit_question extends AppCompatActivity {
             }
         });
 
+        ((Button) findViewById(R.id.id_btn_supprime)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo
+            }
+        });
+
+        ((Button) findViewById(R.id.id_btn_modifier)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo
+            }
+        });
 
         ((Button) findViewById(R.id.id_btn_nouveau)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

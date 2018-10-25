@@ -83,7 +83,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="210dp"
+        android:layout_height="150dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -95,19 +95,19 @@
         <Button
             android:id="@+id/id_btn_jouer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:text="@string/btn_jouer" />
 
         <Button
             android:id="@+id/id_btn_gerer"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:text="@string/btn_gerer" />
 
         <Button
             android:id="@+id/id_btn_quitter"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:text="@string/btn_quitter" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

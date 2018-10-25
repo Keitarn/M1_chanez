@@ -36,6 +36,18 @@ public class Edit_reponse extends AppCompatActivity {
             textInputEditText.setText(reponse.getText());
         }
 
+        ((Button) findViewById(R.id.id_btn_supprime)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo
+            }
+        });
+
+        ((Button) findViewById(R.id.id_btn_modifier)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo
+            }
+        });
+
         ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Edit_reponse.this, Edit_question.class);
