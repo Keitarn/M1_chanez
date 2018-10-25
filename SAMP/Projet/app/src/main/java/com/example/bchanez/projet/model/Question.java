@@ -1,4 +1,4 @@
-package com.example.bchanez.projet;
+package com.example.bchanez.projet.model;
 
 public class Question {
     private int id;

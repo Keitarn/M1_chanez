@@ -1,16 +1,20 @@
-package com.example.bchanez.projet;
+package com.example.bchanez.projet.controler;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.bchanez.projet.model.Question;
+import com.example.bchanez.projet.bdd.QuestionManager;
+import com.example.bchanez.projet.R;
+import com.example.bchanez.projet.bdd.ReponseManager;
 
 import java.util.ArrayList;
 import java.util.List;

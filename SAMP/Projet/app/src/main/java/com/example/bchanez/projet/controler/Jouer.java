@@ -1,4 +1,4 @@
-package com.example.bchanez.projet;
+package com.example.bchanez.projet.controler;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.bchanez.projet.bdd.QuestionManager;
+import com.example.bchanez.projet.R;
+import com.example.bchanez.projet.bdd.ReponseManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,11 @@
-package com.example.bchanez.projet;
+package com.example.bchanez.projet.bdd;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.bchanez.projet.model.Question;
 
 public class QuestionManager {
     public static final String TABLE_NAME_QUESTION = "question";

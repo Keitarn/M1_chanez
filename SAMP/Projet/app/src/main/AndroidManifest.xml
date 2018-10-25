@@ -9,19 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Acceuil">
+        <activity android:name=".controler.Acceuil">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Jouer_select_quizz" />
-        <activity android:name=".Gerer_select_quizz" />
-        <activity android:name=".Jouer" />
-        <activity android:name=".Edit_quizz" />
-        <activity android:name=".Edit_question" />
-        <activity android:name=".Edit_reponse"/>
+        <activity android:name=".controler.Jouer_select_quizz" />
+        <activity android:name=".controler.Gerer_select_quizz" />
+        <activity android:name=".controler.Jouer" />
+        <activity
+            android:name=".controler.Edit_quizz"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".controler.Edit_question"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".controler.Edit_reponse"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
 
 </manifest>

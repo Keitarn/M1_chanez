@@ -1,4 +1,4 @@
-package com.example.bchanez.projet;
+package com.example.bchanez.projet.bdd;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

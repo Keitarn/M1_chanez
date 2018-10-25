@@ -1,4 +1,4 @@
-package com.example.bchanez.projet;
+package com.example.bchanez.projet.controler;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.bchanez.projet.bdd.QuizzManager;
+import com.example.bchanez.projet.R;
 
 import java.util.ArrayList;
 import java.util.List;
