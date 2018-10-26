@@ -44,10 +44,22 @@ public class Jouer extends AppCompatActivity {
 
         score = 0;
         nbQuestion = 0;
-
-        id_quizz = Integer.parseInt(getIntent().getStringExtra("QUIZZ_ID"));
         listView = (ListView) findViewById(R.id.id_listView_reponse);
 
+        getVariable();
+        init();
+        updateView();
+        gestionButton();
+    }
+
+    private void getVariable() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("QUIZZ_ID")) {
+            id_quizz = Integer.parseInt(intent.getStringExtra("QUIZZ_ID"));
+        }
+    }
+
+    private void init() {
         QuestionManager questionManager = new QuestionManager(this);
         questionManager.open();
         c = questionManager.getQuestionsByQuizz(id_quizz);
@@ -60,31 +72,6 @@ public class Jouer extends AppCompatActivity {
         }
         c.close();
         questionManager.close();
-
-        updateView();
-
-        ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(Jouer.this, Jouer_select_quizz.class);
-                startActivity(intent);
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (listVraiReponse.get(position)) {
-                    toastVrai();
-                    score++;
-                } else {
-                    toastFaux();
-                }
-
-                nbQuestion++;
-
-                updateView();
-            }
-        });
     }
 
     private void updateView() {
@@ -117,6 +104,31 @@ public class Jouer extends AppCompatActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listTextReponse);
         listView.setAdapter(adapter);
+    }
+
+    private void gestionButton() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listVraiReponse.get(position)) {
+                    toastVrai();
+                    score++;
+                } else {
+                    toastFaux();
+                }
+
+                nbQuestion++;
+
+                updateView();
+            }
+        });
+
+        ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Jouer.this, Jouer_select_quizz.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void toastFaux() {

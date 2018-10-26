@@ -17,6 +17,9 @@
     <string name="tv_activity_edit_question">Sélectionnez une réponse à éditer</string>
     <string name="tv_activity_edit_reponse">Éditer une réponse</string>
 
+    <!--switch-->
+    <string name="btn_switch">Vrai</string>
+
 
     <!--nouveau-->
     <string name="btn_nouveau">Nouveau</string>
@@ -30,9 +33,9 @@
     <!--retour-->
     <string name="btn_retour">Retour</string>
 
-    <string name="hint_quizz">Quizz</string>
-    <string name="hint_question">Question</string>
-    <string name="hint_reponse">Réponse</string>
+    <string name="hint_quizz">Nom quizz</string>
+    <string name="hint_question">Texte question</string>
+    <string name="hint_reponse">Texte réponse</string>
 
 
 

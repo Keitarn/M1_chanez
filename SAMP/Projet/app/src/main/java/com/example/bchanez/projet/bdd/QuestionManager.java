@@ -19,7 +19,7 @@ public class QuestionManager {
             " " + KEY_ID_QUIZZ_QUESTION + " INTEGER," +
             " " + "FOREIGN KEY(" + KEY_ID_QUIZZ_QUESTION + ") REFERENCES " +
             QuizzManager.TABLE_NAME_QUIZZ + "(" + QuizzManager.KEY_ID_QUIZZ + ")" +
-            ");";
+            " ON DELETE CASCADE);";
 
     private MySQLite maBaseSQLite;
     private SQLiteDatabase db;
@@ -41,6 +41,7 @@ public class QuestionManager {
     public long addQuestion(Question question) {
         ContentValues values = new ContentValues();
         values.put(KEY_TEXT_QUESTION, question.getText());
+        values.put(KEY_ID_QUIZZ_QUESTION, question.getQuizz().getId());
         return db.insert(TABLE_NAME_QUESTION, null, values);
     }
 
@@ -62,17 +63,22 @@ public class QuestionManager {
     }
 
     public Question getQuestion(int id) {
-        Question q = new Question(0, "", null);
+        Question q = null;
 
         Cursor c = db.rawQuery(
                 "SELECT * FROM " + TABLE_NAME_QUESTION + " WHERE " +
                         KEY_ID_QUESTION + "=" + id, null);
         if (c.moveToFirst()) {
-            q.setId(c.getInt(c.getColumnIndex(KEY_ID_QUESTION)));
-            q.setText(c.getString(c.getColumnIndex(KEY_TEXT_QUESTION)));
             QuizzManager qm = new QuizzManager(context);
             qm.open();
-            q.setQuizz(qm.getQuizz(c.getInt(c.getColumnIndex(KEY_ID_QUIZZ_QUESTION))));
+            try {
+                q = new Question(
+                        c.getInt(c.getColumnIndex(KEY_ID_QUESTION)),
+                        c.getString(c.getColumnIndex(KEY_TEXT_QUESTION)),
+                        qm.getQuizz(c.getInt(c.getColumnIndex(KEY_ID_QUIZZ_QUESTION))));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             qm.close();
             c.close();
         }
@@ -86,7 +92,7 @@ public class QuestionManager {
     }
 
     public Cursor getQuestionsByQuizz(int id) {
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTION  + " WHERE " +
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME_QUESTION + " WHERE " +
                         KEY_ID_QUIZZ_QUESTION + "=" + id,
                 null);
     }

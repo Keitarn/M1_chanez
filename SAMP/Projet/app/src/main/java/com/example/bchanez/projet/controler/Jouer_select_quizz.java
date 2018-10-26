@@ -27,9 +27,17 @@ public class Jouer_select_quizz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jouer_select_quizz);
 
+        listView = (ListView) findViewById(R.id.id_listView_jouer);
+
+        init();
+        updateView();
+        gestionButton();
+    }
+
+    private void init() {
+        Cursor c;
         QuizzManager quizzManager = new QuizzManager(this);
         quizzManager.open();
-        Cursor c;
         c = quizzManager.getQuizzs();
         if (c.moveToFirst()) {
             do {
@@ -40,25 +48,28 @@ public class Jouer_select_quizz extends AppCompatActivity {
         }
         c.close();
         quizzManager.close();
+    }
 
-        listView = (ListView) findViewById(R.id.id_listView_jouer);
-
+    private void updateView() {
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listNomQuizz);
         listView.setAdapter(adapter);
+    }
 
-        ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(Jouer_select_quizz.this, Acceuil.class);
-                startActivity(intent);
-            }
-        });
-
+    private void gestionButton() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Jouer_select_quizz.this, Jouer.class);
                 intent.putExtra("QUIZZ_ID", "" + listIDQuizz.get(position));
+                startActivity(intent);
+            }
+        });
+
+
+        ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Jouer_select_quizz.this, Acceuil.class);
                 startActivity(intent);
             }
         });

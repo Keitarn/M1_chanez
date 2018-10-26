@@ -19,6 +19,10 @@ public class Acceuil extends AppCompatActivity {
 
         MySQLite.getInstance(this);
 
+        gestionButton();
+    }
+
+    private void gestionButton() {
         ((Button) findViewById(R.id.id_btn_jouer)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Acceuil.this, Jouer_select_quizz.class);

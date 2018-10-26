@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.bchanez.projet.model.Quizz;
 
@@ -58,14 +59,20 @@ public class QuizzManager {
     }
 
     public Quizz getQuizz(int id) {
-        Quizz q = new Quizz(0, "");
+        Quizz q = null;
 
         Cursor c = db.rawQuery(
                 "SELECT * FROM " + TABLE_NAME_QUIZZ + " WHERE " +
                         KEY_ID_QUIZZ + "=" + id, null);
         if (c.moveToFirst()) {
-            q.setId(c.getInt(c.getColumnIndex(KEY_ID_QUIZZ)));
-            q.setNom(c.getString(c.getColumnIndex(KEY_NOM_QUIZZ)));
+            try {
+                q = new Quizz(
+                        c.getInt(c.getColumnIndex(KEY_ID_QUIZZ)),
+                        c.getString(c.getColumnIndex(KEY_NOM_QUIZZ))
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             c.close();
         }
 

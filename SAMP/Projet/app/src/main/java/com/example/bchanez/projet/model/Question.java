@@ -5,9 +5,15 @@ public class Question {
     private String text;
     private Quizz quizz;
 
-    public Question(int id, String text, Quizz quizz) {
+    public Question(int id, String text, Quizz quizz) throws Exception {
         this.id = id;
-        this.text = text;
+
+        if (text.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ.?_\\s-]+)$")) {
+            this.text = text;
+        } else {
+            throw new Exception("Erreur texte");
+        }
+
         this.quizz = quizz;
     }
 
