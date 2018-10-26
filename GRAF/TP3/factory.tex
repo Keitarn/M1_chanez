@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                       
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,11pt]{article}
+\usepackage{amsfonts,amssymb}
+\usepackage{fullpage}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+
+% \textheight = 25cm
+% \voffset = -0.5cm
+\parindent=0cm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      _      _           _   
+%   __| | ___| |__  _   _| |_ 
+%  / _` |/ _ \ '_ \| | | | __|
+% | (_| |  __/ |_) | |_| | |_ 
+%  \__,_|\___|_.__/ \__,_|\__|
+%                            
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\selectlanguage{francais}
+
+\vspace{-3cm}
+\begin{center}
+  \rule{15cm}{0.1mm} \\
+
+  \vspace{0.5cm}
+  {\huge \textbf{\textsc{Algorithmique Combinatoire}}} \\
+  Master 1 Informatique  \\  
+  {\Large TP 3 --  programmation dynamique} \\
+  \rule{15cm}{0.1mm}\\
+
+\end{center}
+
+Ci-joint sur la courbe de la figure~\ref{fig:perfChaine} les temps de
+calcul ou les temps estimés du calcul du meilleur temps de traversée
+d'une usine automobile, faite de deux chaînes de montage. Ce calcul se
+fait soit par un algorithme récurcif, soir par un algorithme issu du
+paradigme de la programmation dynamique. Pour ce faire j'ai eu recourt
+à la l'utilisation de la graine ??? afin de garantir de
+reproductibilité  des applications stochastiques. 
+
+\begin{figure}[h]
+  \centerline{%
+    \includegraphics[angle=-90,width=12cm]{perfFactory.pdf}}
+  \caption{Temps de calcul en fonction du mode de calcul (récursif ou itératif) et de la taille des chaînes de montage.}
+  \label{fig:perfChaine}
+\end{figure}
+
+
+\end{document}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% mode: flyspell
+%%% ispell-local-dictionary: "francais" 
+%%% TeX-master: "partiel2004"
+% LocalWords: 
+%%% End: 
