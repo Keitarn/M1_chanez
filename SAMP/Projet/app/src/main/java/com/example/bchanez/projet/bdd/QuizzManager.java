@@ -65,14 +65,10 @@ public class QuizzManager {
                 "SELECT * FROM " + TABLE_NAME_QUIZZ + " WHERE " +
                         KEY_ID_QUIZZ + "=" + id, null);
         if (c.moveToFirst()) {
-            try {
-                q = new Quizz(
-                        c.getInt(c.getColumnIndex(KEY_ID_QUIZZ)),
-                        c.getString(c.getColumnIndex(KEY_NOM_QUIZZ))
-                );
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            q = new Quizz(
+                    c.getInt(c.getColumnIndex(KEY_ID_QUIZZ)),
+                    c.getString(c.getColumnIndex(KEY_NOM_QUIZZ))
+            );
             c.close();
         }
 

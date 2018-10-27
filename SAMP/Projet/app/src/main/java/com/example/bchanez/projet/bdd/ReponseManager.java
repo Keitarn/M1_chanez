@@ -76,17 +76,12 @@ public class ReponseManager {
         if (c.moveToFirst()) {
             QuestionManager qm = new QuestionManager(context);
             qm.open();
-            try {
-                r = new Reponse(
-                        c.getInt(c.getColumnIndex(KEY_ID_REPONSE)),
-                        c.getString(c.getColumnIndex(KEY_TEXT_REPONSE)),
-                        c.getInt(c.getColumnIndex(KEY_VRAI_REPONSE)) > 0,
-                        qm.getQuestion(c.getInt(c.getColumnIndex(KEY_ID_QUESTION_REPONSE)))
-                );
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+            r = new Reponse(
+                    c.getInt(c.getColumnIndex(KEY_ID_REPONSE)),
+                    c.getString(c.getColumnIndex(KEY_TEXT_REPONSE)),
+                    c.getInt(c.getColumnIndex(KEY_VRAI_REPONSE)) > 0,
+                    qm.getQuestion(c.getInt(c.getColumnIndex(KEY_ID_QUESTION_REPONSE)))
+            );
             qm.close();
             c.close();
         }

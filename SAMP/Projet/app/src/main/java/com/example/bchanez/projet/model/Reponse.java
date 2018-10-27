@@ -6,15 +6,9 @@ public class Reponse {
     private boolean vrai;
     private Question question;
 
-    public Reponse(int id, String text, boolean vrai, Question question) throws Exception {
+    public Reponse(int id, String text, boolean vrai, Question question) {
         this.id = id;
-
-        if (text.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\\s-]+)$")) {
-            this.text = text;
-        } else {
-            throw new Exception("Erreur texte");
-        }
-
+        this.text = text;
         this.vrai = vrai;
         this.question = question;
     }
@@ -31,8 +25,12 @@ public class Reponse {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setText(String text) throws Exception {
+        if (text.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\\s-]+)$")) {
+            this.text = text;
+        } else {
+            throw new Exception("Erreur texte");
+        }
     }
 
     public boolean getVrai() {

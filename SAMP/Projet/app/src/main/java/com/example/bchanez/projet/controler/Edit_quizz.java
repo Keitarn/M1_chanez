@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,9 +31,7 @@ public class Edit_quizz extends AppCompatActivity {
     private ListView listView;
     private TextInputEditText textInputEditText;
 
-    private int id_quizz;
-
-    private String text_quizz;
+    private Quizz quizz;
 
     private List<Integer> listIDQuestion = new ArrayList<Integer>();
     private List<String> listTextQuestion = new ArrayList<String>();
@@ -51,8 +48,6 @@ public class Edit_quizz extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.id_listView_edit);
         textInputEditText = (TextInputEditText) findViewById(R.id.id_input_text);
 
-        text_quizz = "";
-
         getVariable();
         init();
         updateView();
@@ -62,21 +57,19 @@ public class Edit_quizz extends AppCompatActivity {
     private void getVariable() {
         Intent intent = getIntent();
         if (intent.hasExtra("QUIZZ_ID")) {
-            id_quizz = Integer.parseInt(intent.getStringExtra("QUIZZ_ID"));
+            quizzManager.open();
+            quizz = quizzManager.getQuizz(Integer.parseInt(intent.getStringExtra("QUIZZ_ID")));
+            quizzManager.close();
+        } else {
+            quizz = new Quizz(0, "");
+            quizz.setId(0);
         }
     }
 
     private void init() {
         Cursor c;
-        quizzManager.open();
-        Quizz quizz = quizzManager.getQuizz(id_quizz);
-        quizzManager.close();
-        if (quizz != null) {
-            text_quizz = quizz.getNom();
-        }
-
         questionManager.open();
-        c = questionManager.getQuestionsByQuizz(id_quizz);
+        c = questionManager.getQuestionsByQuizz(quizz.getId());
         if (c.moveToFirst()) {
             do {
                 listIDQuestion.add(c.getInt(c.getColumnIndex(QuestionManager.KEY_ID_QUESTION)));
@@ -93,7 +86,7 @@ public class Edit_quizz extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, listTextQuestion);
         listView.setAdapter(adapter);
 
-        textInputEditText.setText(text_quizz);
+        textInputEditText.setText(quizz.getNom());
     }
 
     private void gestionButton() {
@@ -101,7 +94,7 @@ public class Edit_quizz extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Edit_quizz.this, Edit_question.class);
-                intent.putExtra("QUIZZ_ID", "" + id_quizz);
+                intent.putExtra("QUIZZ_ID", "" + quizz.getId());
                 intent.putExtra("QUESTION_ID", "" + listIDQuestion.get(position));
                 startActivity(intent);
             }
@@ -110,19 +103,16 @@ public class Edit_quizz extends AppCompatActivity {
 
         ((Button) findViewById(R.id.id_btn_modifier)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Quizz quizz;
-
                 try {
-                    quizz = new Quizz(id_quizz, String.valueOf(textInputEditText.getText()));
+                    quizz.setNom(String.valueOf(textInputEditText.getText()));
                     quizzManager.open();
-                    if (id_quizz == 0) {
-                        id_quizz = (int) quizzManager.addQuizz(quizz);
+                    if (quizz.getId() == 0) {
+                        quizz.setId((int) quizzManager.addQuizz(quizz));
                     } else {
                         quizzManager.modQuizz(quizz);
                     }
                     quizzManager.close();
-                    Intent intent = new Intent(Edit_quizz.this, Gerer_select_quizz.class);
-                    startActivity(intent);
+                    retour();
                 } catch (Exception e) {
                     toastErrorMsg(e.getMessage());
                 }
@@ -132,25 +122,30 @@ public class Edit_quizz extends AppCompatActivity {
         ((Button) findViewById(R.id.id_btn_supprime)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 quizzManager.open();
-                quizzManager.supQuizz(quizzManager.getQuizz(id_quizz));
+                quizzManager.supQuizz(quizz);
                 quizzManager.close();
+                retour();
             }
         });
 
         ((Button) findViewById(R.id.id_btn_nouveau)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Edit_quizz.this, Edit_question.class);
-                intent.putExtra("QUIZZ_ID", "" + id_quizz);
+                intent.putExtra("QUIZZ_ID", "" + quizz.getId());
                 startActivity(intent);
             }
         });
 
         ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Edit_quizz.this, Gerer_select_quizz.class);
-                startActivity(intent);
+                retour();
             }
         });
+    }
+
+    private void retour() {
+        Intent intent = new Intent(Edit_quizz.this, Gerer_select_quizz.class);
+        startActivity(intent);
     }
 
     private void toastErrorMsg(String errorMsg) {

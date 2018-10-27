@@ -71,14 +71,10 @@ public class QuestionManager {
         if (c.moveToFirst()) {
             QuizzManager qm = new QuizzManager(context);
             qm.open();
-            try {
-                q = new Question(
-                        c.getInt(c.getColumnIndex(KEY_ID_QUESTION)),
-                        c.getString(c.getColumnIndex(KEY_TEXT_QUESTION)),
-                        qm.getQuizz(c.getInt(c.getColumnIndex(KEY_ID_QUIZZ_QUESTION))));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            q = new Question(
+                    c.getInt(c.getColumnIndex(KEY_ID_QUESTION)),
+                    c.getString(c.getColumnIndex(KEY_TEXT_QUESTION)),
+                    qm.getQuizz(c.getInt(c.getColumnIndex(KEY_ID_QUIZZ_QUESTION))));
             qm.close();
             c.close();
         }

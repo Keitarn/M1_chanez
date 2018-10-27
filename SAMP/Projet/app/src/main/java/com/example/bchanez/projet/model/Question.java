@@ -5,15 +5,9 @@ public class Question {
     private String text;
     private Quizz quizz;
 
-    public Question(int id, String text, Quizz quizz) throws Exception {
+    public Question(int id, String text, Quizz quizz) {
         this.id = id;
-
-        if (text.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ.?_\\s-]+)$")) {
-            this.text = text;
-        } else {
-            throw new Exception("Erreur texte");
-        }
-
+        this.text = text;
         this.quizz = quizz;
     }
 
@@ -29,8 +23,12 @@ public class Question {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setText(String text) throws Exception {
+        if (text.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ.?_\\s-]+)$")) {
+            this.text = text;
+        } else {
+            throw new Exception("Erreur texte");
+        }
     }
 
     public Quizz getQuizz() {

@@ -6,16 +6,15 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.bchanez.projet.R;
 import com.example.bchanez.projet.bdd.QuestionManager;
+import com.example.bchanez.projet.bdd.QuizzManager;
 import com.example.bchanez.projet.model.Question;
 import com.example.bchanez.projet.model.Quizz;
 import com.example.bchanez.projet.model.Reponse;
@@ -23,33 +22,30 @@ import com.example.bchanez.projet.bdd.ReponseManager;
 
 public class Edit_reponse extends AppCompatActivity {
 
+    private QuizzManager quizzManager;
     private QuestionManager questionManager;
     private ReponseManager reponseManager;
 
-    private ListView listView;
     private TextInputEditText textInputEditText;
     private Switch aSwitch;
 
-    private int id_quizz;
-    private int id_question;
-    private int id_reponse;
-
-    private String text_reponse;
-    private Boolean vrai_reponse;
+    private Quizz quizz;
+    private Question question;
+    private Reponse reponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_reponse);
 
+        quizzManager = new QuizzManager(this);
+        questionManager = new QuestionManager(this);
+        reponseManager = new ReponseManager(this);
+
         textInputEditText = (TextInputEditText) findViewById(R.id.id_input_text);
         aSwitch = (Switch) findViewById(R.id.id_switch);
 
-        text_reponse = "";
-        vrai_reponse = false;
-
         getVariable();
-        init();
         updateView();
         gestionButton();
     }
@@ -57,54 +53,46 @@ public class Edit_reponse extends AppCompatActivity {
     private void getVariable() {
         Intent intent = getIntent();
         if (intent.hasExtra("QUIZZ_ID")) {
-            id_quizz = Integer.parseInt(intent.getStringExtra("QUIZZ_ID"));
+            quizzManager.open();
+            quizz = quizzManager.getQuizz(Integer.parseInt(intent.getStringExtra("QUIZZ_ID")));
+            quizzManager.close();
         }
+
         if (intent.hasExtra("QUESTION_ID")) {
-            id_question = Integer.parseInt(intent.getStringExtra("QUESTION_ID"));
+            questionManager.open();
+            question = questionManager.getQuestion(Integer.parseInt(intent.getStringExtra("QUESTION_ID")));
+            questionManager.close();
         }
+
         if (intent.hasExtra("REPONSE_ID")) {
-            id_reponse = Integer.parseInt(intent.getStringExtra("REPONSE_ID"));
-        }
-    }
-
-    private void init() {
-        questionManager = new QuestionManager(this);
-
-        reponseManager = new ReponseManager(this);
-        reponseManager.open();
-        Reponse reponse = reponseManager.getReponse(id_reponse);
-        reponseManager.close();
-        if (reponse != null) {
-            text_reponse = reponse.getText();
-            vrai_reponse = reponse.getVrai();
+            reponseManager.open();
+            reponse = reponseManager.getReponse(Integer.parseInt(intent.getStringExtra("REPONSE_ID")));
+            reponseManager.close();
+        } else {
+            reponse = new Reponse(0, "", false, question);
         }
     }
 
     private void updateView() {
-        aSwitch.setChecked(vrai_reponse);
-        textInputEditText.setText(text_reponse);
+        textInputEditText.setText(reponse.getText());
+        aSwitch.setChecked(reponse.getVrai());
     }
 
     private void gestionButton() {
         ((Button) findViewById(R.id.id_btn_modifier)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Reponse reponse;
                 try {
-                    questionManager.open();
-                    reponse = new Reponse(id_reponse, String.valueOf(textInputEditText.getText()), aSwitch.isChecked(), questionManager.getQuestion(id_question));
-                    questionManager.close();
+                    reponse.setText(String.valueOf(textInputEditText.getText()));
+                    reponse.setVrai(aSwitch.isChecked());
 
                     reponseManager.open();
-                    if (id_reponse == 0) {
-                        id_reponse = (int) reponseManager.addReponse(reponse);
+                    if (reponse.getId() == 0) {
+                        reponse.setId((int) reponseManager.addReponse(reponse));
                     } else {
                         reponseManager.modReponse(reponse);
                     }
                     reponseManager.close();
-                    Intent intent = new Intent(Edit_reponse.this, Edit_question.class);
-                    intent.putExtra("QUIZZ_ID", "" + id_quizz);
-                    intent.putExtra("QUESTION_ID", "" + id_question);
-                    startActivity(intent);
+                    retour();
                 } catch (Exception e) {
                     toastErrorMsg(e.getMessage());
                 }
@@ -114,19 +102,24 @@ public class Edit_reponse extends AppCompatActivity {
         ((Button) findViewById(R.id.id_btn_supprime)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 reponseManager.open();
-                reponseManager.supReponse(reponseManager.getReponse(id_reponse));
+                reponseManager.supReponse(reponse);
                 reponseManager.close();
+                retour();
             }
         });
 
         ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Edit_reponse.this, Edit_question.class);
-                intent.putExtra("QUIZZ_ID", "" + id_quizz);
-                intent.putExtra("QUESTION_ID", "" + id_question);
-                startActivity(intent);
+                retour();
             }
         });
+    }
+
+    private void retour() {
+        Intent intent = new Intent(Edit_reponse.this, Edit_question.class);
+        intent.putExtra("QUIZZ_ID", "" + quizz.getId());
+        intent.putExtra("QUESTION_ID", "" + question.getId());
+        startActivity(intent);
     }
 
     private void toastErrorMsg(String errorMsg) {
