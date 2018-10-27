@@ -2,8 +2,10 @@ package com.example.bchanez.projet.controler;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,19 +15,30 @@ import android.widget.ListView;
 import com.example.bchanez.projet.R;
 import com.example.bchanez.projet.bdd.QuizzManager;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Gerer_select_quizz extends AppCompatActivity {
+    private static final String LOG_TAG = "HttpClientGET";
 
     private ListView listView;
     private List<Integer> listIDQuizz = new ArrayList<Integer>();
     private List<String> listNomQuizz = new ArrayList<String>();
 
+    private HttpPage tacheHttpPage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gerer_select_quizz);
+
+        tacheHttpPage = new HttpPage();
 
         listView = (ListView) findViewById(R.id.id_listView_gerer);
 
@@ -76,13 +89,7 @@ public class Gerer_select_quizz extends AppCompatActivity {
 
         ((Button) findViewById(R.id.id_btn_telecharger)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                    }
-                }).start();
+                tacheHttpPage.execute();
             }
         });
 
@@ -92,5 +99,74 @@ public class Gerer_select_quizz extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void getPage(String adresse) {
+        BufferedReader bufferedReader = null;
+        HttpURLConnection urlConnection = null;
+        try {
+
+            URL url = new URL(adresse);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream inputStream = urlConnection.getInputStream();
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String ligneLue = bufferedReader.readLine();
+                while (ligneLue != null) {
+                    Log.i(LOG_TAG, ligneLue);
+                    ligneLue = bufferedReader.readLine();
+                }
+
+			/*
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse (inputStream);
+			doc.getDocumentElement().normalize ();
+
+
+			NodeList nodeList ;
+			Node channelElement = doc.getElementsByTagName("channel").item(0);
+
+			nodeList = ((Element)channelElement).getElementsByTagName("title");
+			if(nodeList.getLength() != 0){
+				stringBuffer.append (nodeList.item(0).getChildNodes().item(0).getNodeValue()) ;
+			}
+			else{
+				//
+			}
+			*/
+            } else {
+                Log.i(LOG_TAG, "Response : " + responseCode);
+            }
+
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, e.getMessage());
+                }
+            }
+            if (urlConnection != null) urlConnection.disconnect();
+        }
+    }
+
+    private class HttpPage extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            getPage("https://dept-info.univ-fcomte.fr/joomla/images/CR0700/Quizzs.xml");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+//             System.out.println (page) ;
+//             Log.i("log", page.toString());
+        }
     }
 }
