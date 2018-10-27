@@ -2,16 +2,16 @@ package com.example.bchanez.projet.controler;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.bchanez.projet.bdd.QuizzManager;
 import com.example.bchanez.projet.R;
+import com.example.bchanez.projet.bdd.QuizzManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,13 @@ public class Gerer_select_quizz extends AppCompatActivity {
 
         ((Button) findViewById(R.id.id_btn_telecharger)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //todo
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                    }
+                }).start();
             }
         });
 
