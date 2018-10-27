@@ -23,6 +23,8 @@
 
     <!--nouveau-->
     <string name="btn_nouveau">Nouveau</string>
+    <string name="btn_modifier_nouveau">Créer</string>
+
 
     <!--modifier-->
     <string name="btn_modifier">Modifier</string>

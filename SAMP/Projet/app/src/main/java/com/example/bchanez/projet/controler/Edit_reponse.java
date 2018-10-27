@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bchanez.projet.R;
@@ -70,6 +71,10 @@ public class Edit_reponse extends AppCompatActivity {
             reponseManager.close();
         } else {
             reponse = new Reponse(0, "", false, question);
+
+            ((TextView) findViewById(R.id.textView)).setVisibility(View.GONE);
+            ((Button) findViewById(R.id.id_btn_modifier)).setText(getString(R.string.btn_modifier_nouveau));
+            ((Button) findViewById(R.id.id_btn_supprime)).setVisibility(View.GONE);
         }
     }
 

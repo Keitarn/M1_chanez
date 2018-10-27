@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bchanez.projet.bdd.QuestionManager;
@@ -63,6 +64,11 @@ public class Edit_quizz extends AppCompatActivity {
         } else {
             quizz = new Quizz(0, "");
             quizz.setId(0);
+
+            ((TextView) findViewById(R.id.textView)).setVisibility(View.GONE);
+            ((Button) findViewById(R.id.id_btn_modifier)).setText(getString(R.string.btn_modifier_nouveau));
+            ((Button) findViewById(R.id.id_btn_supprime)).setVisibility(View.GONE);
+            ((Button) findViewById(R.id.id_btn_nouveau)).setVisibility(View.GONE);
         }
     }
 
