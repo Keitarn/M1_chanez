@@ -1,25 +1,21 @@
 package com.example.bchanez.projet.controler;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bchanez.projet.R;
 import com.example.bchanez.projet.bdd.QuestionManager;
 import com.example.bchanez.projet.bdd.QuizzManager;
+import com.example.bchanez.projet.bdd.ReponseManager;
 import com.example.bchanez.projet.model.Question;
 import com.example.bchanez.projet.model.Quizz;
 import com.example.bchanez.projet.model.Reponse;
-import com.example.bchanez.projet.bdd.ReponseManager;
 
 public class Edit_reponse extends AppCompatActivity {
 
@@ -99,7 +95,7 @@ public class Edit_reponse extends AppCompatActivity {
                     reponseManager.close();
                     retour();
                 } catch (Exception e) {
-                    toastErrorMsg(e.getMessage());
+                    com.example.bchanez.projet.tools.Toast.toast(e.getMessage(), getApplicationContext(), getWindowManager());
                 }
             }
         });
@@ -125,18 +121,5 @@ public class Edit_reponse extends AppCompatActivity {
         intent.putExtra("QUIZZ_ID", "" + quizz.getId());
         intent.putExtra("QUESTION_ID", "" + question.getId());
         startActivity(intent);
-    }
-
-    private void toastErrorMsg(String errorMsg) {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-
-        Toast toast = Toast.makeText(context, errorMsg, duration);
-        toast.setGravity(Gravity.TOP, 0, height / 2);
-        toast.show();
     }
 }

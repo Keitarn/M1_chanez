@@ -1,22 +1,18 @@
 package com.example.bchanez.projet.controler;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bchanez.projet.bdd.QuestionManager;
 import com.example.bchanez.projet.R;
+import com.example.bchanez.projet.bdd.QuestionManager;
 import com.example.bchanez.projet.bdd.ReponseManager;
 
 import java.util.ArrayList;
@@ -100,7 +96,6 @@ public class Jouer extends AppCompatActivity {
             reponseManager.close();
         }
 
-
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listTextReponse);
         listView.setAdapter(adapter);
@@ -111,10 +106,10 @@ public class Jouer extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (listVraiReponse.get(position)) {
-                    toastVrai();
+                    com.example.bchanez.projet.tools.Toast.toast("Correct !", getApplicationContext(), getWindowManager());
                     score++;
                 } else {
-                    toastFaux();
+                    com.example.bchanez.projet.tools.Toast.toast("erreur !", getApplicationContext(), getWindowManager());
                 }
 
                 nbQuestion++;
@@ -129,33 +124,5 @@ public class Jouer extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void toastFaux() {
-        Context context = getApplicationContext();
-        CharSequence text = "erreur !";
-        int duration = Toast.LENGTH_SHORT;
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.TOP, 0, height / 2);
-        toast.show();
-    }
-
-    private void toastVrai() {
-        Context context = getApplicationContext();
-        CharSequence text = "Correct !";
-        int duration = Toast.LENGTH_SHORT;
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.TOP, 0, height / 2);
-        toast.show();
     }
 }

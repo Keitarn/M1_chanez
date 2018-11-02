@@ -89,7 +89,8 @@ public class Gerer_select_quizz extends AppCompatActivity {
 
         ((Button) findViewById(R.id.id_btn_telecharger)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                tacheHttpPage.execute();
+//                tacheHttpPage.execute();
+                com.example.bchanez.projet.tools.Toast.toast("test", getApplicationContext(), getWindowManager());
             }
         });
 
@@ -100,6 +101,17 @@ public class Gerer_select_quizz extends AppCompatActivity {
             }
         });
     }
+
+//    private void loadPage() {
+//        if((sPref.equals(ANY)) && (wifiConnected || mobileConnected)) {
+//            new DownloadXmlTask().execute(URL);
+//        }
+//        else if ((sPref.equals(WIFI)) && (wifiConnected)) {
+//            new DownloadXmlTask().execute(URL);
+//        } else {
+//            // show error
+//        }
+//    }
 
     private void getPage(String adresse) {
         BufferedReader bufferedReader = null;
