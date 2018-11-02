@@ -1,8 +1,14 @@
 package com.example.bchanez.projet.controler;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +18,14 @@ import android.widget.ListView;
 
 import com.example.bchanez.projet.R;
 import com.example.bchanez.projet.bdd.QuizzManager;
-import com.example.bchanez.projet.model.DownloadXmlTask;
+import com.example.bchanez.projet.tools.QuizzXmlParser;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +33,11 @@ public class Gerer_select_quizz extends AppCompatActivity {
 
     public static final String WIFI = "Wi-Fi";
     public static final String ANY = "Any";
-    private static final String URL = "https://dept-info.univ-fcomte.fr/joomla/images/CR0700/Quizzs.xml";
+    private static final String URL_QUIZZS = "https://dept-info.univ-fcomte.fr/joomla/images/CR0700/Quizzs.xml";
 
     private static boolean wifiConnected = false;
     private static boolean mobileConnected = false;
+
     public static String sPref = null;
 
     private static final String LOG_TAG = "HttpClientGET";
@@ -44,6 +57,17 @@ public class Gerer_select_quizz extends AppCompatActivity {
         init();
         updateView();
         gestionButton();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        sPref = sharedPrefs.getString("listPref", "Wi-Fi");
+
+        updateConnectedFlags();
     }
 
     private void init() {
@@ -100,13 +124,74 @@ public class Gerer_select_quizz extends AppCompatActivity {
         });
     }
 
+    private void updateConnectedFlags() {
+        ConnectivityManager connMgr =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+        if (activeInfo != null && activeInfo.isConnected()) {
+            wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+        } else {
+            wifiConnected = false;
+            mobileConnected = false;
+        }
+    }
+
     private void loadPage() {
         if ((sPref.equals(ANY)) && (wifiConnected || mobileConnected)) {
-            new DownloadXmlTask().execute(URL);
+            new DownloadXmlTask().execute(URL_QUIZZS);
         } else if ((sPref.equals(WIFI)) && (wifiConnected)) {
-            new DownloadXmlTask().execute(URL);
+            new DownloadXmlTask().execute(URL_QUIZZS);
         } else {
-            com.example.bchanez.projet.tools.Toast.toast("Probleme connection internet", getApplicationContext(), getWindowManager());
+            com.example.bchanez.projet.tools.Toast.toast(getResources().getString(R.string.connection_error), getApplicationContext(), getWindowManager());
         }
+    }
+
+    private class DownloadXmlTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return loadXmlFromNetwork(urls[0]);
+            } catch (IOException e) {
+                return getResources().getString(R.string.connection_error);
+            } catch (XmlPullParserException e) {
+                return getResources().getString(R.string.xml_error);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            com.example.bchanez.projet.tools.Toast.toast(result, getApplicationContext(), getWindowManager());
+        }
+    }
+
+    private String loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
+        InputStream stream = null;
+
+        QuizzXmlParser quizzXmlParser = new QuizzXmlParser();
+
+        try {
+            stream = downloadUrl(urlString);
+            quizzXmlParser.parse(stream, getApplicationContext());
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
+        }
+
+        return getResources().getString(R.string.download_finished);
+    }
+
+    private InputStream downloadUrl(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000);
+        conn.setConnectTimeout(15000);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        conn.connect();
+        return conn.getInputStream();
     }
 }

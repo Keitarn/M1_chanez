@@ -106,10 +106,10 @@ public class Jouer extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (listVraiReponse.get(position)) {
-                    com.example.bchanez.projet.tools.Toast.toast("Correct !", getApplicationContext(), getWindowManager());
+                    com.example.bchanez.projet.tools.Toast.toast(getResources().getString(R.string.jeu_reponse_bonne), getApplicationContext(), getWindowManager());
                     score++;
                 } else {
-                    com.example.bchanez.projet.tools.Toast.toast("erreur !", getApplicationContext(), getWindowManager());
+                    com.example.bchanez.projet.tools.Toast.toast(getResources().getString(R.string.jeu_reponse_fausse), getApplicationContext(), getWindowManager());
                 }
 
                 nbQuestion++;
