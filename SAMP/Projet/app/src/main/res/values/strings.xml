@@ -44,12 +44,10 @@
     <string name="jeu_reponse_fausse">erreur !</string>
 
     <!--  NetworkActivity -->
-    <string name="lost_connection">Lost connection.</string>
-    <string name="wifi_connected">Wi-Fi reconnected.</string>
-    <string name="connection_error">Unable to load content. Check your network connection.</string>
-    <string name="xml_error">Error parsing XML.</string>
+    <string name="lost_connection">Connexion perdu.</string>
+    <string name="wifi_connected">Wi-Fi reconnecté.</string>
+    <string name="connection_error">Impossible de charger le contenu. Vérifiez votre connexion réseau.</string>
+    <string name="xml_error">Erreur d\'analyse XML.</string>
 
-    <string name="download_finished">Download finished.</string>
-
-
+    <string name="download_finished">Téléchargement terminé.</string>
 </resources>

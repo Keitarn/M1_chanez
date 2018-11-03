@@ -65,7 +65,7 @@ public class Gerer_select_quizz extends AppCompatActivity {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        sPref = sharedPrefs.getString("listPref", "Wi-Fi");
+        sPref = sharedPrefs.getString("listPref", "Any");
 
         updateConnectedFlags();
     }

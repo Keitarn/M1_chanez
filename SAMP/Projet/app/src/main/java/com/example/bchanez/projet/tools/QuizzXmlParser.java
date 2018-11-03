@@ -7,8 +7,6 @@ import android.util.Xml;
 import com.example.bchanez.projet.bdd.QuestionManager;
 import com.example.bchanez.projet.bdd.QuizzManager;
 import com.example.bchanez.projet.bdd.ReponseManager;
-import com.example.bchanez.projet.model.Question;
-import com.example.bchanez.projet.model.Quizz;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -29,157 +27,142 @@ public class QuizzXmlParser {
             questionManager = new QuestionManager(context);
             reponseManager = new ReponseManager(context);
             XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+//            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
-            readQuizzs(parser);
+            readDocument(parser);
         } finally {
             in.close();
         }
     }
 
+    private void readDocument(XmlPullParser parser) throws XmlPullParserException, IOException {
+        int eventType = parser.getEventType();
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            if (eventType != XmlPullParser.START_TAG) {
+                continue;
+            }
+            if (parser.getName().equals("Quizzs")) {
+                readQuizzs(parser);
+            }
+            eventType = parser.next();
+        }
+    }
+
     private void readQuizzs(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "Quizzs");
-        while (parser.next() != XmlPullParser.END_TAG) {
+
+//        Log.d("log-parser", parser.getName());
+
+        while (!(parser.next() == XmlPullParser.END_TAG && parser.getName().equals("Quizzs"))) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
 
             switch (parser.getName()) {
                 case "Quizz":
-
-
                     readQuizz(parser);
+                    break;
                 default:
                     skip(parser);
                     break;
             }
         }
+
+        parser.require(XmlPullParser.END_TAG, ns, "Quizzs");
     }
 
     private void readQuizz(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "Quizz");
 
-        Log.d("log", parser.getName());
-        Log.d("log", parser.getAttributeValue(ns, "type"));
+//        Log.d("log-parser", parser.getName() + " " + parser.getAttributeValue(ns, "type"));
 
-        Quizz quizz = new Quizz(-1, parser.getAttributeValue(ns, "type"));
-        quizzManager.open();
-        quizz.setId((int) quizzManager.addQuizz(quizz));
-        quizzManager.close();
-
-        while (parser.next() != XmlPullParser.END_TAG) {
+        while (!(parser.next() == XmlPullParser.END_TAG && parser.getName().equals("Quizz"))) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
 
             switch (parser.getName()) {
                 case "Question":
-                    readQuestion(parser, quizz);
+                    readQuestion(parser);
                     break;
                 default:
                     skip(parser);
                     break;
             }
         }
+
+        parser.require(XmlPullParser.END_TAG, ns, "Quizz");
     }
 
-    private void readQuestion(XmlPullParser parser, Quizz quizz) throws XmlPullParserException, IOException {
+    private void readQuestion(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "Question");
 
-        Log.d("log", parser.getName());
-        Log.d("log", readText(parser));
-        Log.d("log", parser.getName());
+//        Log.d("log-parser", parser.getName() + " " + readText(parser));
 
-        Question question = new Question(-1, readText(parser), quizz);
-        questionManager.open();
-        question.setId((int) questionManager.addQuestion(question));
-        questionManager.close();
-
-        while (parser.next() != XmlPullParser.END_TAG) {
+        while (!(parser.next() == XmlPullParser.END_TAG && parser.getName().equals("Question"))) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
 
-            Log.d("log", parser.getName());
             switch (parser.getName()) {
                 case "Propositions":
-                    Log.d("log", parser.getName());
-//                    readPropositions(parser);
-
+                    readPropositions(parser);
                     break;
                 case "Reponse":
-                    Log.d("log", parser.getName());
-                    Log.d("log", parser.getAttributeValue(ns, "valeur"));
-//                    readReponse(parser);
+                    readReponse(parser);
                     break;
                 default:
                     skip(parser);
                     break;
             }
         }
+
+        parser.require(XmlPullParser.END_TAG, ns, "Question");
     }
 
-    //    private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
-//        parser.require(XmlPullParser.START_TAG, ns, "Quizz");
-//        String quizz = null;
-//        String question = null;
-//        String reponse = null;
-//        int bonne_reponse = -1;
-//
-//        while (parser.next() != XmlPullParser.END_TAG) {
-//            if (parser.getEventType() != XmlPullParser.START_TAG) {
-//                continue;
-//            }
-//            String name = parser.getName();
-//            Log.d("log", name);
-//            if (name.equals("Quizz")) {
-//                Log.d("log", "test");
-//                quizz = readQuizz(parser);
-//            } else {
-//                skip(parser);
-//            }
-//        }
-//        return new Entry("", "", "");
-//    }
-//
-//    private String readQuizz(XmlPullParser parser) throws IOException, XmlPullParserException {
-//        parser.require(XmlPullParser.START_TAG, ns, "Quizz");
-//
-//        Log.d("log", parser.getAttributeValue(ns, "type"));
-//
-//        String title = readText(parser);
-//        parser.require(XmlPullParser.END_TAG, ns, "Quizz");
-//        return title;
-//    }
-//
-//    private String readLink(XmlPullParser parser) throws IOException, XmlPullParserException {
-//        String link = "";
-//        parser.require(XmlPullParser.START_TAG, ns, "link");
-//        String tag = parser.getName();
-//        String relType = parser.getAttributeValue(null, "rel");
-//        if (tag.equals("link")) {
-//            if (relType.equals("alternate")) {
-//                link = parser.getAttributeValue(null, "href");
-//                parser.nextTag();
-//            }
-//        }
-//        parser.require(XmlPullParser.END_TAG, ns, "link");
-//        return link;
-//    }
-//
-//    private String readSummary(XmlPullParser parser) throws IOException, XmlPullParserException {
-//        parser.require(XmlPullParser.START_TAG, ns, "summary");
-//        String summary = readText(parser);
-//        parser.require(XmlPullParser.END_TAG, ns, "summary");
-//        return summary;
-//    }
-//
+
+    private void readPropositions(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, ns, "Propositions");
+
+        Log.d("log-parser", parser.getName());
+
+        while (!(parser.next() == XmlPullParser.END_TAG && parser.getName().equals("Propositions"))) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+
+            switch (parser.getName()) {
+                case "Proposition":
+                    readProposition(parser);
+                    break;
+                default:
+                    skip(parser);
+                    break;
+            }
+        }
+
+        parser.require(XmlPullParser.END_TAG, ns, "Propositions");
+    }
+
+    private void readProposition(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, ns, "Proposition");
+        Log.d("log-parser", parser.getName() + " " + readText(parser));
+        parser.nextTag();
+        parser.require(XmlPullParser.END_TAG, ns, "Proposition");
+    }
+
+    private void readReponse(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, ns, "Reponse");
+        Log.d("log-parser", parser.getAttributeValue(ns, "valeur"));
+        parser.nextTag();
+        parser.require(XmlPullParser.END_TAG, ns, "Reponse");
+    }
+
     private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
         String result = "";
         if (parser.next() == XmlPullParser.TEXT) {
             result = parser.getText();
-            parser.nextTag();
         }
         return result;
     }
