@@ -164,6 +164,8 @@ public class Gerer_select_quizz extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             com.example.bchanez.projet.tools.Toast.toast(result, getApplicationContext(), getWindowManager());
+            Intent intent = new Intent(Gerer_select_quizz.this, Gerer_select_quizz.class);
+            startActivity(intent);
         }
     }
 

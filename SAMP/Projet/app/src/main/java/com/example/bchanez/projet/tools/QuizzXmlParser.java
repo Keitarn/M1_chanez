@@ -31,7 +31,6 @@ public class QuizzXmlParser {
             questionManager = new QuestionManager(context);
             reponseManager = new ReponseManager(context);
             XmlPullParser parser = Xml.newPullParser();
-//            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
             readDocument(parser);
