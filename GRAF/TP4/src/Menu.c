@@ -92,9 +92,9 @@ void afficheListCommande() {
            "4) Add an edge\n"
            "5) Delete an edge\n"
            "6) Delete a graph\n"
-           "7) Display a graph ( PW 2 )\n"
-           "8) Save a graph ( PW 2 ) \n"
-           "9) Load a graph ( PW 2 ) \n"
+           "7) Display a graph\n"
+           "8) Save a graph\n"
+           "9) Load a graph\n"
            "10) Exit\n");
 }
 
