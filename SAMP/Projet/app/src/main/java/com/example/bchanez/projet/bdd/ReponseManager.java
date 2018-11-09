@@ -21,7 +21,7 @@ public class ReponseManager {
             " " + KEY_ID_QUESTION_REPONSE + " INTEGER," +
             " " + "FOREIGN KEY(" + KEY_ID_QUESTION_REPONSE + ") REFERENCES " +
             QuestionManager.TABLE_NAME_QUESTION + "(" + QuestionManager.KEY_ID_QUESTION + ")" +
-            ");";
+            " ON DELETE CASCADE);";
 
     private MySQLite maBaseSQLite;
     private SQLiteDatabase db;
@@ -43,12 +43,15 @@ public class ReponseManager {
     public long addReponse(Reponse reponse) {
         ContentValues values = new ContentValues();
         values.put(KEY_TEXT_REPONSE, reponse.getText());
+        values.put(KEY_VRAI_REPONSE, reponse.getVrai());
+        values.put(KEY_ID_QUESTION_REPONSE, reponse.getQuestion().getId());
         return db.insert(TABLE_NAME_REPONSE, null, values);
     }
 
     public int modReponse(Reponse reponse) {
         ContentValues values = new ContentValues();
         values.put(KEY_TEXT_REPONSE, reponse.getText());
+        values.put(KEY_VRAI_REPONSE, reponse.getVrai());
 
         String where = KEY_ID_REPONSE + " = ?";
         String[] whereArgs = {reponse.getId() + ""};
@@ -64,18 +67,21 @@ public class ReponseManager {
     }
 
     public Reponse getReponse(int id) {
-        Reponse r = new Reponse(0, "", false, null);
+        Reponse r = null;
+
 
         Cursor c = db.rawQuery(
                 "SELECT * FROM " + TABLE_NAME_REPONSE + " WHERE " +
                         KEY_ID_REPONSE + "=" + id, null);
         if (c.moveToFirst()) {
-            r.setId(c.getInt(c.getColumnIndex(KEY_ID_REPONSE)));
-            r.setText(c.getString(c.getColumnIndex(KEY_TEXT_REPONSE)));
-            r.setVrai(c.getInt(c.getColumnIndex(KEY_VRAI_REPONSE)) > 0);
             QuestionManager qm = new QuestionManager(context);
             qm.open();
-            r.setQuestion(qm.getQuestion(c.getInt(c.getColumnIndex(KEY_ID_QUESTION_REPONSE))));
+            r = new Reponse(
+                    c.getInt(c.getColumnIndex(KEY_ID_REPONSE)),
+                    c.getString(c.getColumnIndex(KEY_TEXT_REPONSE)),
+                    c.getInt(c.getColumnIndex(KEY_VRAI_REPONSE)) > 0,
+                    qm.getQuestion(c.getInt(c.getColumnIndex(KEY_ID_QUESTION_REPONSE)))
+            );
             qm.close();
             c.close();
         }

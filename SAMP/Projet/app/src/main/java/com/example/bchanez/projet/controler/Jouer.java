@@ -1,22 +1,18 @@
 package com.example.bchanez.projet.controler;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bchanez.projet.bdd.QuestionManager;
 import com.example.bchanez.projet.R;
+import com.example.bchanez.projet.bdd.QuestionManager;
 import com.example.bchanez.projet.bdd.ReponseManager;
 
 import java.util.ArrayList;
@@ -44,10 +40,22 @@ public class Jouer extends AppCompatActivity {
 
         score = 0;
         nbQuestion = 0;
-
-        id_quizz = Integer.parseInt(getIntent().getStringExtra("QUIZZ_ID"));
         listView = (ListView) findViewById(R.id.id_listView_reponse);
 
+        getVariable();
+        init();
+        updateView();
+        gestionButton();
+    }
+
+    private void getVariable() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("QUIZZ_ID")) {
+            id_quizz = Integer.parseInt(intent.getStringExtra("QUIZZ_ID"));
+        }
+    }
+
+    private void init() {
         QuestionManager questionManager = new QuestionManager(this);
         questionManager.open();
         c = questionManager.getQuestionsByQuizz(id_quizz);
@@ -60,31 +68,6 @@ public class Jouer extends AppCompatActivity {
         }
         c.close();
         questionManager.close();
-
-        updateView();
-
-        ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(Jouer.this, Jouer_select_quizz.class);
-                startActivity(intent);
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (listVraiReponse.get(position)) {
-                    toastVrai();
-                    score++;
-                } else {
-                    toastFaux();
-                }
-
-                nbQuestion++;
-
-                updateView();
-            }
-        });
     }
 
     private void updateView() {
@@ -113,37 +96,33 @@ public class Jouer extends AppCompatActivity {
             reponseManager.close();
         }
 
-
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, listTextReponse);
         listView.setAdapter(adapter);
     }
 
-    private void toastFaux() {
-        Context context = getApplicationContext();
-        CharSequence text = "erreur !";
-        int duration = Toast.LENGTH_SHORT;
+    private void gestionButton() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listVraiReponse.get(position)) {
+                    com.example.bchanez.projet.tools.Toast.toast(getResources().getString(R.string.jeu_reponse_bonne), getApplicationContext(), getWindowManager());
+                    score++;
+                } else {
+                    com.example.bchanez.projet.tools.Toast.toast(getResources().getString(R.string.jeu_reponse_fausse), getApplicationContext(), getWindowManager());
+                }
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
+                nbQuestion++;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.TOP, 0, height / 2);
-        toast.show();
-    }
+                updateView();
+            }
+        });
 
-    private void toastVrai() {
-        Context context = getApplicationContext();
-        CharSequence text = "Correct !";
-        int duration = Toast.LENGTH_SHORT;
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.TOP, 0, height / 2);
-        toast.show();
+        ((Button) findViewById(R.id.id_btn_retour)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Jouer.this, Jouer_select_quizz.class);
+                startActivity(intent);
+            }
+        });
     }
 }

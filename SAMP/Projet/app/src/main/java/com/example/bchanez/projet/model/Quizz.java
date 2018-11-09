@@ -21,7 +21,11 @@ public class Quizz {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String nom) throws Exception {
+        if (nom.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\\s-]+)$")) {
+            this.nom = nom;
+        } else {
+            throw new Exception("Erreur nom");
+        }
     }
 }

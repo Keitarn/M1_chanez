@@ -1,14 +1,13 @@
 package com.example.bchanez.projet.controler;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.bchanez.projet.bdd.MySQLite;
 import com.example.bchanez.projet.R;
+import com.example.bchanez.projet.bdd.MySQLite;
 
 public class Acceuil extends AppCompatActivity {
 
@@ -19,6 +18,10 @@ public class Acceuil extends AppCompatActivity {
 
         MySQLite.getInstance(this);
 
+        gestionButton();
+    }
+
+    private void gestionButton() {
         ((Button) findViewById(R.id.id_btn_jouer)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Acceuil.this, Jouer_select_quizz.class);

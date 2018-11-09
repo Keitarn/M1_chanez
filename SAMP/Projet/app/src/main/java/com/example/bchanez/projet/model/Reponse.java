@@ -25,11 +25,15 @@ public class Reponse {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setText(String text) throws Exception {
+        if (text.matches("^([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\\s-]+)$")) {
+            this.text = text;
+        } else {
+            throw new Exception("Erreur texte");
+        }
     }
 
-    public boolean isVrai() {
+    public boolean getVrai() {
         return vrai;
     }
 

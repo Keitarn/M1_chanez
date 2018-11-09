@@ -17,9 +17,14 @@
     <string name="tv_activity_edit_question">Sélectionnez une réponse à éditer</string>
     <string name="tv_activity_edit_reponse">Éditer une réponse</string>
 
+    <!--switch-->
+    <string name="btn_switch">Vrai</string>
+
 
     <!--nouveau-->
     <string name="btn_nouveau">Nouveau</string>
+    <string name="btn_modifier_nouveau">Créer</string>
+
 
     <!--modifier-->
     <string name="btn_modifier">Modifier</string>
@@ -30,10 +35,19 @@
     <!--retour-->
     <string name="btn_retour">Retour</string>
 
-    <string name="hint_quizz">Quizz</string>
-    <string name="hint_question">Question</string>
-    <string name="hint_reponse">Réponse</string>
+    <string name="hint_quizz">Nom quizz</string>
+    <string name="hint_question">Texte question</string>
+    <string name="hint_reponse">Texte réponse</string>
 
+    <!--jouer-->
+    <string name="jeu_reponse_bonne">Correct !</string>
+    <string name="jeu_reponse_fausse">erreur !</string>
 
+    <!--  NetworkActivity -->
+    <string name="lost_connection">Connexion perdu.</string>
+    <string name="wifi_connected">Wi-Fi reconnecté.</string>
+    <string name="connection_error">Impossible de charger le contenu. Vérifiez votre connexion réseau.</string>
+    <string name="xml_error">Erreur d\'analyse XML.</string>
 
+    <string name="download_finished">Téléchargement terminé.</string>
 </resources>
