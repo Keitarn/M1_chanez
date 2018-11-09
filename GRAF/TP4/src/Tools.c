@@ -4,6 +4,6 @@
 
 #include "Tools.h"
 
-public void GraphCopy(struct Graph **graph, struct Copy **graph) {
+void GraphCopy(struct Graph **graph, struct Copy **graph) {
 
 }
