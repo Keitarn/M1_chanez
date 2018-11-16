@@ -3,3 +3,7 @@
  */
 
 #include "Dijkstra.h"
+
+Neighbour* dijkstra(struct Graph **graph){
+
+}
