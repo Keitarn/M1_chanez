@@ -155,7 +155,7 @@ int callCreate(struct Graph **graph, bool create) {
     }
     printf("Enter the maximum number of nodes\n");
     scanf("%s", nbMaxNodeS);
-    nbMaxNode = strtol(nbMaxNodeS,&endS,10);
+    nbMaxNode = strtol(nbMaxNodeS, &endS, 10);
 
     viderBuffer();
 
@@ -163,7 +163,7 @@ int callCreate(struct Graph **graph, bool create) {
     while (reponse != 1 && reponse != 2) {
         printf("Is the graph oriented ?\n1) yes\n2) no\n");
         scanf("%s", reponseS);
-        reponse = strtol(reponseS,&endS,10);
+        reponse = strtol(reponseS, &endS, 10);
         viderBuffer();
     }
     if (reponse == 1) {
@@ -187,7 +187,7 @@ void callAddNode(struct Graph **graph) {
     int node;
     printf("Enter the node number to add\n");
     scanf("%s", NodeS);
-    node = strtol(NodeS,&endS,10);
+    node = strtol(NodeS, &endS, 10);
     viderBuffer();
     clear();
     addNode(graph, node);
@@ -203,7 +203,7 @@ void callDeleteNode(struct Graph **graph) {
     int node;
     printf("Enter the node number to be deleted \n");
     scanf("%s", NodeS);
-    node = strtol(NodeS,&endS,10);
+    node = strtol(NodeS, &endS, 10);
     viderBuffer();
     clear();
     removeNode(graph, node);
@@ -233,18 +233,18 @@ void callDeleteEdge(struct Graph **graph) {
 
     printf("Enter the number of the starting node\n");
     scanf("%s", fromS);
-    from = strtol(fromS,&endS,10);
+    from = strtol(fromS, &endS, 10);
     viderBuffer();
 
     printf("Enter the weight of the edge\n");
     scanf("%s", weightS);
-    weight = strtol(weightS,&endS,10);
+    weight = strtol(weightS, &endS, 10);
     viderBuffer();
 
 
     printf("Enter the number of the arrival node\n");
     scanf("%s", toS);
-    to = strtol(toS,&endS,10);
+    to = strtol(toS, &endS, 10);
     viderBuffer();
 
     clear();
@@ -266,18 +266,18 @@ void callAddEdge(struct Graph **graph) {
 
     printf("Enter the number of the starting node\n");
     scanf("%s", fromS);
-    from = strtol(fromS,&endS,10);
+    from = strtol(fromS, &endS, 10);
     viderBuffer();
 
     printf("Enter the weight of the edge\n");
     scanf("%s", weightS);
-    weight = strtol(weightS,&endS,10);
+    weight = strtol(weightS, &endS, 10);
     viderBuffer();
 
 
     printf("Enter the number of the arrival node\n");
     scanf("%s", toS);
-    to = strtol(toS,&endS,10);
+    to = strtol(toS, &endS, 10);
     viderBuffer();
 
     clear();
@@ -310,4 +310,15 @@ void callSaveGraph(struct Graph **graph) {
     viderBuffer();
     clear();
     saveGraph(graph, nameFile);
+}
+
+void callMaximumFlow(struct Graph **graph) {
+    int choix = MenuBis();
+    MaxFlow(
+    struct Graph **graph, 1,2 choix);
+}
+
+int MenuBis() {
+    //TODO
+    return 1;
 }

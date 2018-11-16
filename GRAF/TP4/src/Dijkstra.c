@@ -4,6 +4,6 @@
 
 #include "Dijkstra.h"
 
-Neighbour* dijkstra(struct Graph **graph){
+Neighbour *dijkstra(struct Graph **graph, int nodeDepart, int nodeFin) {
 
 }
