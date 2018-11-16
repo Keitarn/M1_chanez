@@ -36,4 +36,8 @@ void callSaveGraph(struct Graph **graph);
 
 int callLoadGraph(struct Graph **graph);
 
+void callMaximumFlow(struct Graph **graph);
+
+int MenuBis();
+
 #endif //TP2_MENU_H
