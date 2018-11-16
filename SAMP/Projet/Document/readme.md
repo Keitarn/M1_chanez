@@ -6,7 +6,7 @@ Nettoie le projet en allant dans :
 > barre d'outils, Bouton build, Clean Project
 
 ## Reconstruie le projet
-Effectue la meme operation que nettoyer le projet mais en plus reconstruie le projet en allant dans :
+Effectue la meme operation que nettoyer le projet mais en plus, reconstruie le projet en allant dans :
 > barre d'outils, Bouton build, Rebuild Project
 
 ## Run
