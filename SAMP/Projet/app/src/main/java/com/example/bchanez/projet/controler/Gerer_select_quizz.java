@@ -40,9 +40,6 @@ public class Gerer_select_quizz extends AppCompatActivity {
 
     public static String sPref = null;
 
-    private static final String LOG_TAG = "HttpClientGET";
-
-
     private ListView listView;
     private List<Integer> listIDQuizz = new ArrayList<Integer>();
     private List<String> listNomQuizz = new ArrayList<String>();
