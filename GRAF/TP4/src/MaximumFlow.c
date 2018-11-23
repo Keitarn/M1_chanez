@@ -5,7 +5,7 @@
 #include "MaximumFlow.h"
 
 int MaxFlow(struct Graph **graph, int nodeDepart, int nodeFin, int algo) {
-    if((*graph) == NULL){
+    if ((*graph) == NULL) {
         return -1;
     }
     if (nodeDepart >= (*graph)->nbMaxNodes || nodeDeprt < 0) {
