@@ -5,8 +5,9 @@
 #ifndef TP4_DIJKSTRA_H
 #define TP4_DIJKSTRA_H
 
-#include "list.h"
+#include "List.h"
+#include "Graph.h"
 
-Neighbour *dijkstra(struct Graph **graph, int nodeDepart, int nodeFin);
+struct Neighbour *dijkstra(struct Graph **graph, int nodeDepart, int nodeFin);
 
 #endif //TP4_DIJKSTRA_H

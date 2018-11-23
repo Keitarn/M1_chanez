@@ -4,6 +4,7 @@
 
 #include "Dijkstra.h"
 
-Neighbour *dijkstra(struct Graph **graph, int nodeDepart, int nodeFin) {
-
+struct Neighbour *dijkstra(struct Graph **graph, int nodeDepart, int nodeFin) {
+// todo
+    return NULL;
 }

@@ -7,7 +7,7 @@
 
 #include "Tools.h"
 #include "Dijkstra.h"
-#include "graph.h"
+#include "Graph.h"
 
 int MaxFlow(struct Graph **graph, int nodeDepart, int nodeFin, int algo);
 

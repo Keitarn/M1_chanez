@@ -5,10 +5,10 @@
 #include "Tools.h"
 
 int GraphCopy(struct Graph **graph, struct Graph **copy) {
-    int tabWeight[graph->nbMaxNodes];
+    int tabWeight[(*graph)->nbMaxNodes];
     struct Neighbour *parcours = NULL;
 
-    createGraph(copy, graph->nbMaxNodes, true);
+    createGraph(copy, (*graph)->nbMaxNodes, true);
 
     for (int i = 0; i < (*graph)->nbMaxNodes; i++) {
         if ((*graph)->adjList[i] == NULL) {
@@ -18,7 +18,7 @@ int GraphCopy(struct Graph **graph, struct Graph **copy) {
     }
 
     for (int i = 0; i < (*graph)->nbMaxNodes; i++) {
-        tab[i] = 0;
+        tabWeight[i] = 0;
         if ((*graph)->adjList[i] == NULL) {
             continue;
         }

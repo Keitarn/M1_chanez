@@ -314,7 +314,7 @@ void callSaveGraph(struct Graph **graph) {
 
 void callMaximumFlow(struct Graph **graph) {
     int choix = MenuBis();
-    MaxFlow(Graph **graph, 1,2, choix);
+    MaxFlow(graph, 1,2, choix);
 }
 
 int MenuBis() {
